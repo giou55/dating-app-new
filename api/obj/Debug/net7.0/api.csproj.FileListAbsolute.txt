@@ -60,3 +60,8 @@ C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\obj\Debug\net7.0\api.csproj.CopyComplete
+C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
