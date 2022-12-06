@@ -1,7 +1,6 @@
+using System.Text;
 using api.Data;
-using api.Interfaces;
-using api.Services;
-using Microsoft.EntityFrameworkCore;
+using api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,14 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<DataContext>(options => 
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.Services.AddApplicationServices(builder.Configuration);
 
-builder.Services.AddCors();
-
-builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -24,6 +18,9 @@ var app = builder.Build();
 app.UseCors(policyBuilder => 
     policyBuilder.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:4200")
 );
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
