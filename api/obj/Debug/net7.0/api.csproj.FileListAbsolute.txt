@@ -68,3 +68,4 @@ C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app\api\bin\Debug\net7.0\Data\UserSeedData.json
