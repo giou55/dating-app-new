@@ -9,6 +9,6 @@ namespace api.Data
         {
         }
 
-        public DbSet<AppUser> Users { get; set; }
+        public DbSet<AppUser> Users { get; set; } // creates a table in database called "Users"
     }
 }

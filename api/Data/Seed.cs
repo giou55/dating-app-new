@@ -17,7 +17,9 @@ namespace api.Data
 
             var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
 
-            var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
+            var users = JsonSerializer.Deserialize<List<AppUser>>(userData, options);
+
+            //var users = JsonConvert.DeserializeObject<List<AppUser>>(userData);
 
             foreach (var user in users)
             {
