@@ -7,9 +7,11 @@ namespace api.Extensions
 {
     public static class ApplicationServiceExtensions
     {
-        public static IServiceCollection AddApplicationServices(
+        public static IServiceCollection AddApplicationServices
+        (
             this IServiceCollection services,
-            IConfiguration config)
+            IConfiguration config
+        )
         {
             services.AddDbContext<DataContext>(options => 
             {

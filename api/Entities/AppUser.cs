@@ -20,9 +20,10 @@ namespace api.Entities
         public string Country { get; set; }
         public List<Photo> Photos { get; set; }
 
-        public int GetAge()
-        {
-            return DateOfBirth.CalculateAge();
-        }
+        // if add this method, automapper will need full AppUser entity
+        // public int GetAge()
+        // {
+        //     return DateOfBirth.CalculateAge();
+        // }
     }
 }
