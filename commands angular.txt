@@ -4,3 +4,8 @@ ng generate component members/member-detail --dry-run
 
 RUN APPLICATION
 ng serve
+
+INSTALL PACKAGES
+npm install @kolkov/ngx-gallery
+npm install @kolkov/ngx-gallery --force
+npm install @kolkov/ngx-gallery --legacy-peer-deps (if the package is not updated for later Angular version)
