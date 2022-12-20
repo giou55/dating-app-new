@@ -1,0 +1,6 @@
+CREATE NEW
+ng generate component members/member-detail --skip-tests
+ng generate component members/member-detail --dry-run
+
+RUN APPLICATION
+ng serve

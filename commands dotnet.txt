@@ -1,0 +1,37 @@
+CREATE A NEW PROJECT:
+dotnet new globaljson --sdk-version 6.0.100 --output ProjectName
+dotnet new mvc --no-https --output ProjectName --framework net6.0
+dotnet new sln -o ProjectName (create a new solution file with a name)
+dotnet sln ProjectName add ProjectName (add one or more projects to a solution file)
+dotnet sln list (display all projects in a solution file)
+
+MIGRATIONS:
+dotnet ef migrations add InitialCreate --context StoreDbContext
+dotnet ef migrations remove (removes the last migration)
+dotnet ef migrations list
+dotnet ef migrations script
+
+DATABASES:
+dotnet ef database update --context StoreDbContext (updates your database to the latest migration)
+dotnet ef database update --context StoreDbContext AddNewTables (updates your database to a given migration)
+dotnet ef database drop --force --context StoreDbContext (delete the database)
+
+RUN APPLICATION:
+dotnet run
+dotnet run -lp https (run at specific profile)
+dotnet watch
+dotnet watch --no-hot-reload (at every change it builds again)
+
+VARIOUS:
+dotnet dev-certs https --clean (cleans https development certificates from the machine)
+dotnet dev-certs https --trust (creates and trusts a new https certificate)
+dotnet restore
+
+TOOLS:
+dotnet tool list -g (diplays all tools are installed globally, like dotnet-ef)
+dotnet tool install --global dotnet-ef --version 7.0.0 (installs dotnet-ef tool globally)
+dotnet tool uninstall --global dotnet-ef --version 7.0.0 (uninstalls dotnet-ef tool globally)
+dotnet tool update --global dotnet-ef (updates a global or local tool)
+
+BUILD:
+dotnet build
