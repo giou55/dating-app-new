@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using api.Data;
 using api.DTOs;
 using api.Entities;
@@ -36,6 +37,25 @@ namespace api.Controllers
             return await _userRepository.GetMemberAsync(username);
             // remove this because mapping now happened in UserRepository.cs
             // return _mapper.Map<MemberDto>(user);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;          
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            if (user == null) return NotFound();
+
+            // the properties of memberUpdateDto are overwriting the properties of user
+            _mapper.Map(memberUpdateDto, user);
+
+            // NoContent means status code 204, everything OK and nothing to send back
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            // failed to update user because there were no changes to be saved,
+            // so we return a 400 bad request with a message
+            return BadRequest("Failed to update user");
         }
     }
 }

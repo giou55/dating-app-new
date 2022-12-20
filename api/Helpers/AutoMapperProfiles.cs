@@ -18,7 +18,12 @@ namespace api.Helpers
                     dest => dest.Age, 
                     opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge())
                 );
+
             CreateMap<Photo, PhotoDto>();
+
+            // because the property names of MemberUpdateDto match exactly with what we have inside
+            // the AppUser, we do not need to add any additional configuration
+            CreateMap<MemberUpdateDto, AppUser>();
         }
     }
 }
