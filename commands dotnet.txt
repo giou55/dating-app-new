@@ -26,6 +26,7 @@ VARIOUS:
 dotnet dev-certs https --clean (cleans https development certificates from the machine)
 dotnet dev-certs https --trust (creates and trusts a new https certificate)
 dotnet restore
+dotnet new gitignore (creates a .gitignore file)
 
 TOOLS:
 dotnet tool list -g (diplays all tools are installed globally, like dotnet-ef)
