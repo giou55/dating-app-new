@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj": {}
+    "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj": {}
   },
   "projects": {
-    "c:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj": {
+    "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "c:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj",
+        "projectPath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj",
         "packagesPath": "C:\\Users\\giour\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\obj\\",
+        "outputPath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\giour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -21,6 +21,7 @@
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
