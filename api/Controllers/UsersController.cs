@@ -48,10 +48,10 @@ namespace api.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
         {
-            // we created a new extension method to get username from a token
+            // we created a new extension method to get username from the token
             //var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            // we use a extension method to get username
+            // we use a extension method to get username from the token
             var username = User.GetUsername();
 
             var user = await _userRepository.GetUserByUsernameAsync(username);
@@ -72,7 +72,7 @@ namespace api.Controllers
         [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {
-            // we use a extension method to get username
+            // we use a extension method to get username from the token
             var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
@@ -109,6 +109,30 @@ namespace api.Controllers
             }
 
             return BadRequest("Problem adding photo");
+        }
+
+        [HttpPut("set-main-photo/{photoId}")]
+        public async Task<ActionResult> SetMainPhoto(int photoId) 
+        {
+           // we use a extension method to get username from the token
+            var username = User.GetUsername();
+            var user = await _userRepository.GetUserByUsernameAsync(username); 
+
+            if (user == null) return NotFound();
+
+            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+            if (photo == null) return NotFound();
+
+            if (photo.IsMain) return BadRequest("This is already your main photo");
+
+            var currentMain = user.Photos.FirstOrDefault(x => x.IsMain);
+            if (currentMain != null) currentMain.IsMain = false;
+            photo.IsMain = true;
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Problem setting the main photo");
         }
     }
 }
