@@ -51,7 +51,7 @@ namespace api.Controllers
             // we created a new extension method to get username from a token
             //var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            // we use a extension method
+            // we use a extension method to get username
             var username = User.GetUsername();
 
             var user = await _userRepository.GetUserByUsernameAsync(username);
@@ -72,7 +72,7 @@ namespace api.Controllers
         [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {
-            // we use a extension method
+            // we use a extension method to get username
             var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
@@ -93,7 +93,20 @@ namespace api.Controllers
 
             user.Photos.Add(photo);
 
-            if (await _userRepository.SaveAllAsync()) return _mapper.Map<PhotoDto>(photo);
+            if (await _userRepository.SaveAllAsync()) 
+            {
+                // wrong response when we create a new resource
+                //return _mapper.Map<PhotoDto>(photo);
+
+                // it returns a 201 created response along with location header about 
+                // where to find the newly created resource
+                return CreatedAtAction(
+                    nameof(GetUser), 
+                    new {username = user.UserName}, 
+                    // also sends back the newly created resource
+                    _mapper.Map<PhotoDto>(photo)
+                );
+            }
 
             return BadRequest("Problem adding photo");
         }
