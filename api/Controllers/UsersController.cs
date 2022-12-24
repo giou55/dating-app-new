@@ -78,8 +78,8 @@ namespace api.Controllers
 
             if (user == null) return NotFound();
 
+            // result is coming from cloudinary
             var result = await _photoService.AddPhotoAsync(file); 
-
             if (result.Error != null) return BadRequest(result.Error.Message);
 
             var photo = new Photo
@@ -96,7 +96,7 @@ namespace api.Controllers
             if (await _userRepository.SaveAllAsync()) 
             {
                 // wrong response when we create a new resource
-                //return _mapper.Map<PhotoDto>(photo);
+                // return _mapper.Map<PhotoDto>(photo);
 
                 // it returns a 201 created response along with location header about 
                 // where to find the newly created resource
@@ -114,7 +114,7 @@ namespace api.Controllers
         [HttpPut("set-main-photo/{photoId}")]
         public async Task<ActionResult> SetMainPhoto(int photoId) 
         {
-           // we use a extension method to get username from the token
+            // we use a extension method to get username from the token
             var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(username); 
 
@@ -133,6 +133,33 @@ namespace api.Controllers
             if (await _userRepository.SaveAllAsync()) return NoContent();
 
             return BadRequest("Problem setting the main photo");
+        }
+
+        [HttpDelete("delete-photo/{photoId}")]
+        public async Task<ActionResult> DeletePhoto(int photoId) 
+        {
+            // we use a extension method to get username from the token
+            var username = User.GetUsername();
+            var user = await _userRepository.GetUserByUsernameAsync(username); 
+
+            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+            if (photo == null) return NotFound();
+
+            if (photo.IsMain) return BadRequest("You cannot delete your main photo");
+
+            if (photo.PublicId != null) 
+            {
+                // result is coming from cloudinary
+                var result = await _photoService.DeletePhotoAsync(photo.PublicId);
+                if (result.Error != null) return BadRequest(result.Error.Message);
+            }
+
+            user.Photos.Remove(photo);
+
+            if (await _userRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Problem deleting photo");
         }
     }
 }
