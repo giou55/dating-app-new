@@ -24,6 +24,10 @@ namespace api.Helpers
             // because the property names of MemberUpdateDto match exactly with what we have inside
             // the AppUser, we do not need to add any additional configuration
             CreateMap<MemberUpdateDto, AppUser>();
+
+            // because the property names of RegisterDto match exactly with what we have inside
+            // the AppUser, we do not need to add any additional configuration
+            CreateMap<RegisterDto, AppUser>();
         }
     }
 }
