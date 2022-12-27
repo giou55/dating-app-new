@@ -7,7 +7,7 @@ import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
   styleUrls: ['./text-input.component.css']
 })
 
-// we create a custom reusable input component for the reactive form
+// we create a custom reusable input component for the register reactive form
 export class TextInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() type = 'text';
