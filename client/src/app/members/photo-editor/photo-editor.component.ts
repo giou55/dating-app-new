@@ -85,6 +85,15 @@ export class PhotoEditorComponent implements OnInit {
       if (response) {
         const photo = JSON.parse(response);
         this.member?.photos.push(photo);
+
+        // when we upload a photo and it's the user's first photo
+        // then the photo will be the main by the API
+        // and the photo url will be that first photo 
+        if (photo.isMain && this.user && this.member) {
+          this.user.photoUrl = photo.url;      
+          this.member.photoUrl = photo.url;  
+          this.accountService.setCurrentUser(this.user);    
+        }
       }
     }
   }
