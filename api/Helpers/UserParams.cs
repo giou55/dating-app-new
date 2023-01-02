@@ -3,6 +3,9 @@ namespace api.Helpers
     public class UserParams
     {
       private const int MaxPageSize = 50;  
+
+      // if the client want to get users with no query string,
+      // then our API is going to use these default values 
       public int PageNumber { get; set; } = 1;
       private int _pageSize = 10;
       public int PageSize

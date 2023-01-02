@@ -1,5 +1,6 @@
 using api.DTOs;
 using api.Entities;
+using api.Helpers;
 using api.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -37,13 +38,18 @@ namespace api.Data
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            return await _context.Users
+            var query = _context.Users
                 // here not need to write: 
                 // Include(p => p.Photos)
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                // it means that Entity framework isn't going to keep track 
+                // of what we return from this method
+                .AsNoTracking();
+
+            // we use this static async method from PagedList.cs to execute queries against the database
+            return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);     
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)

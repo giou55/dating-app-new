@@ -1,8 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
+import { PaginatedResult } from '../_models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +12,37 @@ export class MembersService {
   baseUrl = environment.apiUrl;
 
   // we store members here, so they will be available to every component
-  // without making a new request to database 
+  // without making a new request to database (caching data)
   members: Member[] = [];
+
+  paginatedResult: PaginatedResult<Member[]> = new PaginatedResult<Member[]>;
 
   constructor(private http:HttpClient) { }
 
-  getMembers() {
-    if (this.members.length > 0) return of(this.members);
+  getMembers(page?: number, itemsPerPage?: number) {
+    let params = new HttpParams();
 
-    //return this.http.get<Member[]>(this.baseUrl + 'users', this.getHttpOptions())
-    return this.http.get<Member[]>(this.baseUrl + 'users').pipe(
-      map(members => {
-        this.members = members;
-        // here we return members because our components are using the members 
-        return members;
+    if (page && itemsPerPage) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    // we turned off the caching of members
+    //if (this.members.length > 0) return of(this.members);
+
+    // we want to observe the response, and not just the body
+    // and also we want to pass the params
+    return this.http.get<Member[]>(this.baseUrl + 'users', {observe: 'response', params}).pipe(
+      map(response => {
+        if (response.body) {
+          this.paginatedResult.result = response.body;        
+        }
+        const pagination = response.headers.get('Pagination');
+        if (pagination) {
+          this.paginatedResult.pagination = JSON.parse(pagination);        
+        }
+        // we return because the component need this
+        return this.paginatedResult;
       })
     )
   }

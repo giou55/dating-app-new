@@ -2,6 +2,7 @@ using System.Security.Claims;
 using api.DTOs;
 using api.Entities;
 using api.Extensions;
+using api.Helpers;
 using api.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -29,11 +30,20 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        // client will send to our API the UserParams as a query string
+        // and with [FromQuery] the API will know where to find UserParams  
+        public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _userRepository.GetMembersAsync();
+            var users = await _userRepository.GetMembersAsync(userParams);
             // remove this because mapping now happened in UserRepository.cs
             // var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+
+            // we'll return our pagination infos via the pagination header 
+            // with the extension method called AddPaginationHeader
+            Response.AddPaginationHeader(new PaginationHeader(
+                    users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages)
+            );
+
             return Ok(users);
         }
 

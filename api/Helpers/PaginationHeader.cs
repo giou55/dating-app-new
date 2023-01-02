@@ -17,3 +17,6 @@ namespace api.Helpers
         public int TotalPages { get; set; }
     }
 }
+
+// Pagination header sent to client will have a value like this:
+// {"currentPage":1,"itemsPerPage":10,"totalItems":24,"totalPages":3}
