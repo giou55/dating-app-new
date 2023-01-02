@@ -10,12 +10,10 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
-  members: Member[] = [];
-
-  // we make members an observable of type Member array
-  // and remove loadMembers method
+  // we do not need members as an observable of type Member array
   //members$: Observable<Member[]> | undefined;
 
+  members: Member[] = [];
   pagination: Pagination | undefined;
   pageNumber = 1;
   pageSize = 5;
@@ -23,6 +21,9 @@ export class MemberListComponent implements OnInit {
   constructor(private membersService: MembersService) { }
 
   ngOnInit(): void {
+    // getMembers method now does not return all members
+    // because we added pagination and
+    // getMembers method now need parameters 
     //this.members$ = this.membersService.getMembers();
     this.loadMembers();
   }
@@ -44,5 +45,4 @@ export class MemberListComponent implements OnInit {
       this.loadMembers();
     }
   }
-
 }
