@@ -40,16 +40,33 @@ namespace api.Data
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            var query = _context.Users
-                // here not need to write: 
-                // Include(p => p.Photos)
-                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                // it means that Entity framework isn't going to keep track 
-                // of what we return from this method
-                .AsNoTracking();
+            var query = _context.Users.AsQueryable();
+
+            // now we're going to built up our query based on the userParams
+            query = query.Where(u => u.UserName != userParams.CurrentUsername); // exclude the current user
+            query = query.Where(u => u.Gender == userParams.Gender); // get only the specific gender
+
+            // minDob refers to the oldest member that we want to get,
+            // so we do a subtraction (this year - max age) to find the dob of the oldest member
+            var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
+
+            // maxDob refers to the younger member that we want to get,
+            // so we do a subtraction (this year - min age) to find the dob of the younger member
+            var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge - 1));
+
+            query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
 
             // we use this static async method from PagedList.cs to execute queries against the database
-            return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);     
+            return await PagedList<MemberDto>.CreateAsync(
+                // here not need to write: 
+                // Include(p => p.Photos)
+                query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                    // it means that Entity framework isn't going to keep track 
+                    // of what we return from this method
+                    .AsNoTracking(), 
+                userParams.PageNumber, 
+                userParams.PageSize
+            );     
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)

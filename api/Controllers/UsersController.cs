@@ -30,11 +30,19 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        // client will send to our API the UserParams as a query string
+        // the client will send to our API the UserParams as a query string
         // and with [FromQuery] the API will know where to find UserParams  
         public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
+            var currentUser = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            userParams.CurrentUsername = currentUser.UserName;
+            
+            if (string.IsNullOrEmpty(userParams.Gender)) {
+                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+            }
+
             var users = await _userRepository.GetMembersAsync(userParams);
+
             // remove this because mapping now happened in UserRepository.cs
             // var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
 
