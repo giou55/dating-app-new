@@ -18,13 +18,13 @@ namespace api.Helpers
             // we want to do something only when the user is logged in
             if (!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
 
-            var username = resultContext.HttpContext.User.GetUsername();
+            var userId = resultContext.HttpContext.User.GetUserId();
 
             // also we need access to the repository, because we're going to update something for our user
             var repo = resultContext.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
 
             // now we can update the LastActive property of user
-            var user = await repo.GetUserByUsernameAsync(username);
+            var user = await repo.GetUserByIdAsync(int.Parse(userId));
             user.LastActive = DateTime.UtcNow;
             await repo.SaveAllAsync();
         }
