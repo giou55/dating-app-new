@@ -52,9 +52,16 @@ namespace api.Data
 
             // maxDob refers to the younger member that we want to get,
             // so we do a subtraction (this year - min age) to find the dob of the younger member
-            var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge - 1));
+            var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
 
             query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+
+            query = userParams.OrderBy switch
+            {
+                "created" => query.OrderByDescending(u => u.Created),
+                // this is the default
+                _ => query.OrderByDescending(u => u.LastActive)
+            };
 
             // we use this static async method from PagedList.cs to execute queries against the database
             return await PagedList<MemberDto>.CreateAsync(

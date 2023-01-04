@@ -30,6 +30,9 @@ namespace api.Extensions
 
             services.AddScoped<IPhotoService, PhotoService>();
 
+            // this is a action filter class
+            services.AddScoped<LogUserActivity>();
+
             return services;
         }
     }
