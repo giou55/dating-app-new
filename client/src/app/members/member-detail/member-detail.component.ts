@@ -13,6 +13,7 @@ export class MemberDetailComponent implements OnInit {
   member: Member | undefined;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
+  lastActiveDate: Date | undefined; 
 
   constructor(private membersService: MembersService, private route: ActivatedRoute) { }
 
@@ -52,6 +53,7 @@ export class MemberDetailComponent implements OnInit {
     this.membersService.getMember(username).subscribe({
       next: member => {
         this.member = member;
+        this.lastActiveDate = new Date(member.lastActive + 'Z');
         this.galleryImages = this.getImages();
       }
     })

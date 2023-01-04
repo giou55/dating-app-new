@@ -21,6 +21,7 @@ export class MemberEditComponent implements OnInit {
   }
   member: Member | undefined;
   user: User | null = null;
+  lastActiveDate: Date | undefined; 
 
   constructor(
     private accountService: AccountService,
@@ -41,6 +42,7 @@ export class MemberEditComponent implements OnInit {
     this.membersService.getMember(this.user.username).subscribe({
       next: (member) => {
         this.member = member;
+        this.lastActiveDate = new Date(member.lastActive + 'Z');
       }
     })
   }

@@ -9,3 +9,15 @@ INSTALL PACKAGES
 npm install @kolkov/ngx-gallery
 npm install @kolkov/ngx-gallery --force
 npm install @kolkov/ngx-gallery --legacy-peer-deps (if the package is not updated for later Angular version)
+ng add <package-name>
+
+UNINSTALL PACKAGES
+npm uninstall <package-name>
+npm uninstall <package-name> --legacy-peer-deps
+
+UNINSTALL DEV PACKAGES
+npm uninstall -D <package-name> 
+or npm uninstall --save-dev <package-name>
+
+UNINSTALL GLOBAL PACKAGES
+npm uninstall -g <package-name>
