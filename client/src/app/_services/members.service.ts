@@ -16,7 +16,7 @@ export class MembersService {
   // without making a new request to database (caching data)
   members: Member[] = [];
 
-  // for caching members we store the param queries as a key and the results as a value
+  // for caching members we store the param queries as a key and the paginated results as a value
   // so for every call of getMembers method we first check the memberCache
   // if there are results for this param query
   memberCache = new Map(); // with map we can use get and set
@@ -53,39 +53,26 @@ export class MembersService {
     )
   }
 
-  // we made this generic, so the method will be reusable for many urls
-  private getPaginatedResult<T>(url: string, params: HttpParams) {
-    const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
-
-    // we want to observe the response, and not just the body
-    // and also we want to pass the params
-    return this.http.get<T>(url, { observe: 'response', params }).pipe(
-      map((response) => {
-        if (response.body) {
-          paginatedResult.result = response.body;
-        }
-        const pagination = response.headers.get('Pagination');
-        if (pagination) {
-          paginatedResult.pagination = JSON.parse(pagination);
-        }
-        // we return because the component need this
-        return paginatedResult;
-      })
-    );
-  }
-
-  private getPaginationHeaders(pageNumber: number, pageSize: number) {
-    let params = new HttpParams();
-    params = params.append('pageNumber', pageNumber);
-    params = params.append('pageSize', pageSize);
-    return params;
-  }
-
-  // I think I do not use this method
   getMember(username: string) {
-    const member = this.members.find((x) => x.userName === username);
+    const member = [...this.memberCache.values()]
+      .reduce((arr, elem) => arr.concat(elem.result), [])
+      .find((member: Member) => member.userName === username);
+    
+    // after reduce method the member variable will be an array like bellow,
+    // and on every request the array will become larger,
+    // and there will be duplicate users, but it does not matter
 
-    // if member exists inside members array, return the member without making a request
+    // [{id: 12, userName: 'george', photoUrl: '85.jpg', age: 24, knownAs: 'george', …},
+    //  {id: 1, userName: 'leigh', photoUrl: '37.jpg', age: 59, knownAs: 'Leigh', …},
+    //  {id: 11, userName: 'bob', photoUrl: null, age: 37, knownAs: 'Bob', …},
+    //  {id: 9, userName: 'todd', photoUrl: '51.jpg', age: 60, knownAs: 'Todd', …},
+    //  {id: 1, userName: 'leigh', photoUrl: '37.jpg', age: 59, knownAs: 'Leigh', …},
+    //  {id: 5, userName: 'kay', photoUrl: '74.jpg', age: 27, knownAs: 'Kay', …},
+    //  {id: 3, userName: 'jenny', photoUrl: '77.jpg', age: 38, knownAs: 'Jenny', …}]
+
+    // after find method we are finding the individual member from member array
+
+    // if member is found we return it, else we will request to the API
     if (member) return of(member);
 
     // we do not need getHttpOptions method because we use jwt.interceptor to add Authorization header
@@ -122,5 +109,33 @@ export class MembersService {
 
   deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
+  }
+
+  // we made this generic, so the method will be reusable for many urls
+  private getPaginatedResult<T>(url: string, params: HttpParams) {
+    const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
+
+    // we want to observe the response, and not just the body
+    // and also we want to pass the params
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
+      map((response) => {
+        if (response.body) {
+          paginatedResult.result = response.body;
+        }
+        const pagination = response.headers.get('Pagination');
+        if (pagination) {
+          paginatedResult.pagination = JSON.parse(pagination);
+        }
+        // we return because the component need this
+        return paginatedResult;
+      })
+    );
+  }
+
+  private getPaginationHeaders(pageNumber: number, pageSize: number) {
+    let params = new HttpParams();
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+    return params;
   }
 }
