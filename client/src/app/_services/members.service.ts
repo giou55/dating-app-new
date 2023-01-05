@@ -1,10 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, of } from 'rxjs';
+import { map, of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
 import { PaginatedResult } from '../_models/pagination';
+import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,35 @@ export class MembersService {
   // if there are results for this param query
   memberCache = new Map(); // with map we can use get and set
 
-  constructor(private http: HttpClient) {}
+  user: User | undefined;
+  userParams: UserParams | undefined;
+
+  constructor(private http: HttpClient, private accountService: AccountService) {
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        if (user) {
+          this.userParams = new UserParams(user);
+          this.user = user;
+        }
+      }
+    })
+  }
+
+  getUserParams() {
+    return this.userParams;
+  }
+
+  setUserParams(params: UserParams) {
+    this.userParams = params;
+  }
+
+  resetUserParams() {
+    if (this.user) {
+      this.userParams = new UserParams(this.user);
+      return this.userParams;
+    }
+    return;
+  }
 
   getMembers(userParams: UserParams) {
     // Object.values(userParams) --> [18, 99, 1, 5, 'lastActive', 'male']
@@ -55,6 +85,8 @@ export class MembersService {
 
   getMember(username: string) {
     const member = [...this.memberCache.values()]
+      // we use reduce function for converting a big array with many PaginatedResult objects
+      // into a single array with only user objects  
       .reduce((arr, elem) => arr.concat(elem.result), [])
       .find((member: Member) => member.userName === username);
     
