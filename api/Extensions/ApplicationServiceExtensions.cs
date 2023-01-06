@@ -33,6 +33,8 @@ namespace api.Extensions
             // this is a action filter class
             services.AddScoped<LogUserActivity>();
 
+            services.AddScoped<ILikesRepository, LikesRepository>();
+
             return services;
         }
     }
