@@ -20,6 +20,14 @@ namespace api.Entities
         public string Country { get; set; }
         public List<Photo> Photos { get; set; }
 
+        // these are the users that like AppUser
+        public List<UserLike> LikedByUsers { get; set; }
+
+
+        // these are the users that the AppUser likes
+        public List<UserLike> LikedUsers { get; set; }
+
+
         // if add this method, automapper will need full AppUser entity
         // public int GetAge()
         // {
