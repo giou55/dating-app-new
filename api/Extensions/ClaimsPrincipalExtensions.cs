@@ -12,7 +12,7 @@ namespace api.Extensions
         }
 
         // we extend ClaimsPrincipal class, so we can call HttpContext.User.GetUserId()  
-        //to get the userId from the token easier
+        // to get the userId from the token easier
         public static string GetUserId(this ClaimsPrincipal user)
         {
             return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
