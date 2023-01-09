@@ -7,19 +7,25 @@ namespace api.Data
 {
     public class MessageRepository : IMessageRepository
     {
+        private readonly DataContext _context;
+        public MessageRepository(DataContext context)
+        {
+            _context = context;  
+        }
+
         public void AddMessage(Message message)
         {
-            throw new NotImplementedException();
+            _context.Messages.Add(message);
         }
 
         public void DeleteMessage(Message message)
         {
-            throw new NotImplementedException();
+            _context.Messages.Remove(message);
         }
 
-        public Task<Message> GetMessage(int id)
+        public async Task<Message> GetMessage(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Messages.FindAsync(id);
         }
 
         public Task<PagedList<MessageDto>> GetMessagesForUser()
@@ -32,9 +38,9 @@ namespace api.Data
             throw new NotImplementedException();
         }
 
-        public Task<bool> SaveAllAsync()
+        public async Task<bool> SaveAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
