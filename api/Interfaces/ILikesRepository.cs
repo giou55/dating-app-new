@@ -1,5 +1,6 @@
 using api.DTOs;
 using api.Entities;
+using api.Helpers;
 
 namespace api.Interfaces
 {
@@ -13,6 +14,6 @@ namespace api.Interfaces
 
         // predicate indicates if we want to get the users that likes
         // or the users that are liked by  
-        Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId);
+        Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams);
     }
 }

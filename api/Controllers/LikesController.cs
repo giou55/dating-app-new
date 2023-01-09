@@ -1,6 +1,7 @@
 using api.DTOs;
 using api.Entities;
 using api.Extensions;
+using api.Helpers;
 using api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace api.Controllers
         public async Task<ActionResult> AddLike(string username)
         {
             // this is the user that's going to be liking another user
-            var sourceUserId = int.Parse(User.GetUserId());
+            var sourceUserId = User.GetUserId();
 
             var likedUser = await _userRepository.GetUserByUsernameAsync(username);
             var sourceUser = await _likesRepository.GetUserWithLikes(sourceUserId);
@@ -51,10 +52,18 @@ namespace api.Controllers
         }
 
         [HttpGet] // api/likes?predicate=liked or api/likes?predicate=likedBy
-        public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes(string predicate)
+        // we add [FromQuery] because likesParams is an object instead of a string
+        // and our API controller can't bind easily to it, 
+        // so we need to tell it where to find these parameters 
+        public async Task<ActionResult<PagedList<LikeDto>>> GetUserLikes([FromQuery]LikesParams likesParams)
         {
-            // User.GetUserId() method comes from claims principal extensions
-            var users = await _likesRepository.GetUserLikes(predicate, int.Parse(User.GetUserId()));
+            // inside likesParams we'll not have the UserId, so we get it from claims principal extensions 
+            likesParams.UserId = User.GetUserId();
+
+            var users = await _likesRepository.GetUserLikes(likesParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(
+                users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));
 
             return Ok(users);
         }

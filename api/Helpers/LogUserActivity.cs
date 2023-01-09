@@ -24,7 +24,7 @@ namespace api.Helpers
             var repo = resultContext.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
 
             // now we can update the LastActive property of user
-            var user = await repo.GetUserByIdAsync(int.Parse(userId));
+            var user = await repo.GetUserByIdAsync(userId);
             user.LastActive = DateTime.UtcNow;
             await repo.SaveAllAsync();
         }
