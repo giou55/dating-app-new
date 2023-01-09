@@ -27,6 +27,9 @@ namespace api.Entities
         // these are the users that the AppUser likes
         public List<UserLike> LikedUsers { get; set; }
 
+        public List<Message> MessagesSent { get; set; }
+        public List<Message> MessagesReceived { get; set; }
+
 
         // if add this method, automapper will need full AppUser entity
         // public int GetAge()

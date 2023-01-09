@@ -20,6 +20,13 @@ namespace api.Data
         // and two the TargetUserId also with integers
         public DbSet<UserLike> Likes { get; set; }
 
+        // creates a table in database called "Messages",
+        // it is going to be used as a join table to relate our entities
+        // so that we have got our many to many relationship,
+        public DbSet<Message> Messages { get; set; }
+
+
+
         // we override this method that's inside the DbContext class
         protected override void OnModelCreating(ModelBuilder builder)
         { 
@@ -55,6 +62,21 @@ namespace api.Data
             // with this:
             // OnDelete(DeleteBehavior.NoAction)
             // otherwise we'll get an error
+
+            builder.Entity<Message>()
+                .HasOne(u => u.Recipient)
+                .WithMany(m => m.MessagesReceived)
+                // if a sender user deletes his profile, we want the recipient of the message 
+                // should still be able to see that message
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Message>()
+                .HasOne(u => u.Sender)
+                .WithMany(m => m.MessagesSent)
+                // if a sender user deletes his profile, we want the recipient of the message 
+                // should still be able to see that message
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }
