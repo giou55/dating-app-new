@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using api.Extensions;
 using api.Entities;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -56,6 +57,23 @@ namespace api.Controllers
             if (await _messageRepository.SaveAllAsync()) return Ok(_mapper.Map<MessageDto>(message));
 
             return BadRequest("Failed to send message");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PagedList<MessageDto>>> GetMessagesForUser
+            ([FromQuery]MessageParams messageParams)
+        {
+            // we get username from claims principal extension
+            messageParams.Username = User.GetUsername();
+
+            var messages = await _messageRepository.GetMessagesForUser(messageParams);
+
+            Response.AddPaginationHeader(
+                new PaginationHeader(
+                    messages.CurrentPage, messages.PageSize, messages.TotalCount, messages.TotalPages
+            ));
+
+            return messages;
         }
     }
 }
