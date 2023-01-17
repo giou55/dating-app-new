@@ -62,7 +62,7 @@ namespace api.Data
                     m => m.RecipientUsername == currentUserName && m.SenderUsername == recipientUserName || 
                         m.RecipientUsername == recipientUserName && m.SenderUsername == currentUserName
                 )
-                .OrderBy(m => m.MessageSent)
+                .OrderByDescending(m => m.MessageSent)
                 .ToListAsync();
             
             // get from memory only unread messages that current user has received
@@ -74,11 +74,13 @@ namespace api.Data
             {
                 foreach (var message in unreadMessages)
                 {
-                    message.DateRead = DateTime.UtcNow; // we update the DateTime
+                    message.DateRead = DateTime.UtcNow; // we update the DateRead with right now
                 }
 
                 await _context.SaveChangesAsync();
             }
+
+            return _mapper.Map<IEnumerable<MessageDto>>(messages); 
         }
 
         public async Task<bool> SaveAllAsync()
