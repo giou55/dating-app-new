@@ -13,7 +13,7 @@ export class MessagesComponent implements OnInit {
   // messages: Message[] | undefined;
   messages?: Message[];
   pagination?: Pagination;
-  container = 'Outbox';
+  container = 'Unread';
   pageNumber = 1;
   pageSize = 5;
   
