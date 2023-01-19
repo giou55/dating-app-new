@@ -65,7 +65,7 @@
                         <strong>{{message.senderUsername | titlecase}}</strong>
                     </div>
                 </td>
-                <td>{{message.messageSent | date: 'dd MMM yyyy'}}</td>
+                <td>{{message.messageSent | timeAgo}}</td>
                 <td><button class="btn btn-danger">Delete</button></td>
             </tr>
         </tbody>

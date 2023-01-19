@@ -26,6 +26,10 @@ export class MessagesComponent implements OnInit {
   loadMessages() {
     this.messageService.getMessages(this.pageNumber, this.pageSize, this.container).subscribe({
       next: response => {
+        response.result?.map(message => {
+          message.messageSent = new Date(message.messageSent + 'Z');
+          message.dateRead = new Date(message.dateRead + 'Z');
+        });
         this.messages = response.result;
         this.pagination = response.pagination;
       }

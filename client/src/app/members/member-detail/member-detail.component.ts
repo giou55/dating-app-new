@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Member } from 'src/app/_models/member';
+import { Message } from 'src/app/_models/message';
 import { MembersService } from 'src/app/_services/members.service';
+import { MessageService } from 'src/app/_services/message.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -10,12 +13,21 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
+  // we don't have access to the View until the View has actually been created,
+  // so we make memberTabs optional
+  @ViewChild('memberTabs') memberTabs?: TabsetComponent;
+
   member: Member | undefined;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   lastActiveDate: Date | undefined; 
+  activeTab?: TabDirective;
+  messages: Message[] = [];
 
-  constructor(private membersService: MembersService, private route: ActivatedRoute) { }
+  constructor(
+    private membersService: MembersService, 
+    private route: ActivatedRoute,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.loadMember();
@@ -57,6 +69,29 @@ export class MemberDetailComponent implements OnInit {
         this.galleryImages = this.getImages();
       }
     })
+  }
+
+  loadMessages() {
+    if (this.member) {
+      this.messageService.getMesssageThread(this.member.userName).subscribe({
+        next: messages => {
+          messages.map(message => {
+                message.messageSent = new Date(message.messageSent + 'Z');
+                message.dateRead = new Date(message.dateRead + 'Z');
+          });
+          this.messages = messages;
+
+        }
+      })
+    }
+  }
+
+  onTabActivated(data: TabDirective) {
+    this.activeTab = data;
+    // if we are on the messages tab, we want to load the messages
+    if (this.activeTab.heading === 'Messages') {
+      this.loadMessages();
+    }
   }
 
 }

@@ -18,7 +18,7 @@ namespace api.Controllers
         (
             IUserRepository userRepository,
             IMessageRepository messageRepository,
-            IMapper mapper // we want to map from Message to MessageDtoParameters
+            IMapper mapper // we want to map from Message to MessageDto
         )
         {
             _userRepository = userRepository;
