@@ -15,7 +15,11 @@ import { MessageService } from 'src/app/_services/message.service';
 export class MemberDetailComponent implements OnInit {
   // we don't have access to the View until the View has actually been created,
   // so we make memberTabs optional
-  @ViewChild('memberTabs') memberTabs?: TabsetComponent;
+  // @ViewChild('memberTabs') memberTabs?: TabsetComponent;
+
+  // we add the static property, so instead of waiting for the view to load
+  // we can specify that it is static and not dynamic
+  @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
 
   member: Member | undefined;
   galleryOptions: NgxGalleryOptions[] = [];
@@ -31,6 +35,14 @@ export class MemberDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMember();
+
+    // we access the queryParams of our route and it returns an observable
+    this.route.queryParams.subscribe({
+      next: params => {
+        // this line is to make sure that we have the params before we attempt to use the params
+        params['tab'] && this.selectTab(params['tab'])
+      }
+    })
 
     this.galleryOptions = [
       {
@@ -72,10 +84,8 @@ export class MemberDetailComponent implements OnInit {
   }
 
   selectTab(heading: string) {
-    if (this.memberTabs) {
-      // inside memberTabs we have a tabs array
-      this.memberTabs.tabs.find(x => x.heading === heading)!.active = true;
-    }
+    // inside memberTabs we have a tabs array
+    this.memberTabs!.tabs!.find(x => x.heading === heading)!.active = true;
   }
 
   loadMessages() {

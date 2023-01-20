@@ -43,10 +43,13 @@
             </tr>
         </thead>
         <tbody class="align-middle">
+            <!-- we add queryParams and we're passing an object using single curly brackets
+                and not using interpolation  -->
             <tr *ngFor="let message of messages"
                 routerLink="{{container === 'Outbox' 
                     ? '/members/' + message.recipientUsername
                     : '/members/' + message.senderUsername}}"
+                [queryParams]="{tab: 'Messages'}"
             >
                 <td>{{message.content}}</td>
                 <td>
