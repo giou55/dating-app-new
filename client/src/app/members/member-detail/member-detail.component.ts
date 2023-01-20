@@ -21,7 +21,8 @@ export class MemberDetailComponent implements OnInit {
   // we can specify that it is static and not dynamic
   @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
 
-  member: Member | undefined;
+  //member: Member | undefined;
+  member: Member = {} as Member;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   lastActiveDate: Date | undefined; 
@@ -29,12 +30,20 @@ export class MemberDetailComponent implements OnInit {
   messages: Message[] = [];
 
   constructor(
-    private membersService: MembersService, 
     private route: ActivatedRoute,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.loadMember();
+    // we no longer need to use this, because we're going to get the member from our route instead
+    //this.loadMember();
+
+    // our resolver is going to place the member here 
+    this.route.data.subscribe({
+      next: data => {
+        this.member = data['member'];
+        this.lastActiveDate = new Date(data['member'].lastActive + 'Z');
+      }
+    })
 
     // we access the queryParams of our route and it returns an observable
     this.route.queryParams.subscribe({
@@ -71,21 +80,24 @@ export class MemberDetailComponent implements OnInit {
     return imageUrls;
   }
 
-  loadMember() {
-    const username = this.route.snapshot.paramMap.get('username');
-    if (!username) return;
-    this.membersService.getMember(username).subscribe({
-      next: member => {
-        this.member = member;
-        this.lastActiveDate = new Date(member.lastActive + 'Z');
-        this.galleryImages = this.getImages();
-      }
-    })
-  }
+  // we don't need this because we now use resolver to get the member
+  // loadMember() {
+  //   const username = this.route.snapshot.paramMap.get('username');
+  //   if (!username) return;
+  //   this.membersService.getMember(username).subscribe({
+  //     next: member => {
+  //       this.member = member;
+  //       this.lastActiveDate = new Date(member.lastActive + 'Z');
+  //       this.galleryImages = this.getImages();
+  //     }
+  //   })
+  // }
 
   selectTab(heading: string) {
     // inside memberTabs we have a tabs array
-    this.memberTabs!.tabs!.find(x => x.heading === heading)!.active = true;
+    if (this.memberTabs) {
+      this.memberTabs.tabs.find(x => x.heading === heading)!.active = true;
+    }
   }
 
   loadMessages() {
