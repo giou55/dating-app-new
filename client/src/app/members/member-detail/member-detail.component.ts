@@ -71,6 +71,13 @@ export class MemberDetailComponent implements OnInit {
     })
   }
 
+  selectTab(heading: string) {
+    if (this.memberTabs) {
+      // inside memberTabs we have a tabs array
+      this.memberTabs.tabs.find(x => x.heading === heading)!.active = true;
+    }
+  }
+
   loadMessages() {
     if (this.member) {
       this.messageService.getMesssageThread(this.member.userName).subscribe({
