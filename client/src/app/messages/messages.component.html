@@ -45,7 +45,7 @@
         <tbody class="align-middle">
             <!-- we add queryParams and we're passing an object using single curly brackets
                 and not using interpolation  -->
-            <tr *ngFor="let message of messages"
+            <tr [hidden]="loading" *ngFor="let message of messages"
                 routerLink="{{container === 'Outbox' 
                     ? '/members/' + message.recipientUsername
                     : '/members/' + message.senderUsername}}"
@@ -75,7 +75,7 @@
     </table>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination && messages && messages.length > 0">
+<div class="d-flex justify-content-center" *ngIf="!loading && pagination && messages && messages.length > 0">
     <pagination
       [boundaryLinks]="true"
       [totalItems]="pagination.totalItems"

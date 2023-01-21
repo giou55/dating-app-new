@@ -22,4 +22,9 @@ export class MessageService {
   getMesssageThread(username: string) {
     return this.http.get<Message[]>(this.baseUrl + 'messages/thread/' + username);
   }
+
+  sendMessage(username: string, content: string) {
+    // recipientUsername and content must match what API expect to receive in the CreateMessageDto  
+    return this.http.post<Message>(this.baseUrl + 'messages', {recipientUsername: username, content});
+  }
 }

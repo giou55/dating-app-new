@@ -54,6 +54,7 @@ namespace api.Controllers
             // we need to use AddMessage to add the message
             _messageRepository.AddMessage(message);
 
+            // after the message is saved, it'll be sent to the client to be displayed to the view
             if (await _messageRepository.SaveAllAsync()) return Ok(_mapper.Map<MessageDto>(message));
 
             return BadRequest("Failed to send message");
@@ -83,6 +84,33 @@ namespace api.Controllers
             var currentUsername = User.GetUsername();
 
             return Ok(await _messageRepository.GetMessageThread(currentUsername, username));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteMessage(int id)
+        {
+            // we get username from claims principal extension
+            var username = User.GetUsername();
+
+            var message = await _messageRepository.GetMessage(id);
+
+            if (message.SenderUsername != username && message.RecipientUsername != username)
+                return Unauthorized();
+
+            if (message.SenderUsername == username) message.SenderDeleted = true;
+            if (message.RecipientUsername == username) message.RecipientDeleted = true;
+
+            // we're only deleting the message itself if both the sender and the
+            // recipient have both decided they want to delete the message,
+            // otherwise we're going to keep it in our database
+            if (message.SenderDeleted && message.RecipientDeleted)
+            {
+                _messageRepository.DeleteMessage(message);
+            }
+
+            if (await _messageRepository.SaveAllAsync()) return Ok();
+            
+            return BadRequest("Problem deleting the message");
         }
     }
 }
