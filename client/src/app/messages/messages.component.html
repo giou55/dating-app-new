@@ -69,7 +69,9 @@
                     </div>
                 </td>
                 <td>{{message.messageSent | timeAgo}}</td>
-                <td><button class="btn btn-danger">Delete</button></td>
+                <!-- stopPropagation means that the routerLink for the row will not be working, 
+                if the button is clicked -->
+                <td><button (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)" class="btn btn-danger">Delete</button></td>
             </tr>
         </tbody>
     </table>

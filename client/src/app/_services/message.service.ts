@@ -27,4 +27,8 @@ export class MessageService {
     // recipientUsername and content must match what API expect to receive in the CreateMessageDto  
     return this.http.post<Message>(this.baseUrl + 'messages', {recipientUsername: username, content});
   }
+
+  deleteMessage(id: number) {
+    return this.http.delete(this.baseUrl + 'messages/' + id);
+  }
 }
