@@ -1,5 +1,8 @@
 using System.Text;
+using api.Data;
+using api.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace api.Extensions
@@ -10,17 +13,26 @@ namespace api.Extensions
             this IServiceCollection services,
             IConfiguration config)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            services.AddIdentityCore<AppUser>(options => 
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(config["TokenKey"])),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-            });
+                options.Password.RequireNonAlphanumeric = false;
+            })
+                .AddRoles<AppRole>()
+                .AddRoleManager<RoleManager<AppRole>>()
+                .AddEntityFrameworkStores<DataContext>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(config["TokenKey"])),
+                            ValidateIssuer = false,
+                            ValidateAudience = false
+                        };
+                });
 
             return services;
         }

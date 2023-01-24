@@ -1,16 +1,16 @@
 using api.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
-    public class DataContext : IdentityDbContext<AppUser, AppRole, int, IdentityUserClaim<int>, AppUserRole,
-        IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options)
         {
         }
+
+        // creates a table in database called "Users"
+        public DbSet<AppUser> Users { get; set; } 
 
         // creates a table in database called "Likes",
         // it is going to be used as a join table to relate our entities
@@ -33,20 +33,6 @@ namespace api.Data
             // we use this method from base DbContext class, 
             // even if in most cases it ins't necessary
             base.OnModelCreating(builder);
-
-            builder.Entity<AppUser>()
-                .HasMany(ur => ur.UserRoles)
-                .WithOne(u => u.User)
-                .HasForeignKey(ur => ur.UserId)
-                // we don't want our foreign keys to be allowed to be null
-                .IsRequired();
-
-            builder.Entity<AppRole>()
-                .HasMany(ur => ur.UserRoles)
-                .WithOne(u => u.Role)
-                .HasForeignKey(ur => ur.RoleId)
-                // we don't want our foreign keys to be allowed to be null
-                .IsRequired();
 
             // we add configuration for Likes table
             builder.Entity<UserLike>()
