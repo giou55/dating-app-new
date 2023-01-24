@@ -37,8 +37,10 @@
         <thead>
             <tr>
                 <th style="width: 40%">Message</th>
-                <th style="width: 20%">From / To</th>
-                <th style="width: 20%">Sent / Received</th>
+                <th *ngIf="container !== 'Outbox'" style="width: 20%">From</th>
+                <th *ngIf="container === 'Outbox'" style="width: 20%">To</th>
+                <th *ngIf="container !== 'Outbox'" style="width: 20%">Received</th>
+                <th *ngIf="container === 'Outbox'" style="width: 20%">Sent</th>
                 <th style="width: 20%"></th>
             </tr>
         </thead>

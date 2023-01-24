@@ -106,7 +106,9 @@ export class MemberDetailComponent implements OnInit {
         next: messages => {
           messages.map(message => {
                 message.messageSent = new Date(message.messageSent + 'Z');
-                message.dateRead = new Date(message.dateRead + 'Z');
+                if (message.dateRead) {
+                  message.dateRead = new Date(message.dateRead + 'Z');
+                }
           });
           this.messages = messages;
 
