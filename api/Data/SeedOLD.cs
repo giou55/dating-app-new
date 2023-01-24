@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
-    public class Seed
+    public class SeedOLD
     {
         public static async Task SeedUsers(DataContext context)
         {
@@ -23,7 +23,10 @@ namespace api.Data
 
             foreach (var user in users)
             {
+                using var hmac = new HMACSHA512();
                 user.UserName = user.UserName.ToLower();
+                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("123456"));
+                user.PasswordSalt = hmac.Key;
                 context.Users.Add(user);
             }
 

@@ -13,13 +13,13 @@ namespace api.Controllers
 // in this class we implements our custom user authentication system,
 // including hashing, salting and storage of the password in our database 
 {
-    public class AccountController : BaseApiController
+    public class AccountControllerOLD : BaseApiController
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
 
-        public AccountController(DataContext context, ITokenService tokenService, IMapper mapper)
+        public AccountControllerOLD(DataContext context, ITokenService tokenService, IMapper mapper)
         {
             _mapper = mapper;
             _tokenService = tokenService;
@@ -33,7 +33,11 @@ namespace api.Controllers
 
             var user = _mapper.Map<AppUser>(registerDto);
 
+            using var hmac = new HMACSHA512();
+
             user.UserName = registerDto.Username.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            user.PasswordSalt = hmac.Key;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -55,6 +59,15 @@ namespace api.Controllers
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
             
             if (user == null) return Unauthorized("invalid username");
+
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("invalid password");
+            }
 
             return new UserDto
             {
