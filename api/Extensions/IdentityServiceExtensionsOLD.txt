@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace api.Extensions
 {
+    // in this class we are not using Identity
+
     public static class IdentityServiceExtensions
     {
         public static IServiceCollection AddIdentityServices(

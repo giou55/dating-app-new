@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
+    // in this class we are using Identity to store the users 
     public class Seed
     {
         public static async Task SeedUsers(UserManager<AppUser> userManager)
@@ -18,14 +19,14 @@ namespace api.Data
 
             var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
 
-            var users = JsonSerializer.Deserialize<List<AppUser>>(userData, options);
+            var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
 
             //var users = JsonConvert.DeserializeObject<List<AppUser>>(userData);
 
             foreach (var user in users)
             {
                 user.UserName = user.UserName.ToLower();
-                await userManager.CreateAsync(user, "abcdef");
+                await userManager.CreateAsync(user, "123456");
             }
         }
     }

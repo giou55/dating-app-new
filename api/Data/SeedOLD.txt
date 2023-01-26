@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
+    // in this class we are using DataContext to store the users 
+
     public class SeedOLD
     {
         public static async Task SeedUsers(DataContext context)

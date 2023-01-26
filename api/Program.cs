@@ -39,14 +39,14 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
 
-    // we add this because we use Identity for authentication
+    // we add this because we are using Identity for authentication
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
 
     await context.Database.MigrateAsync();
     
     //await Seed.SeedUsers(context);
 
-    // we add this because we use Identity for authentication
+    // we add this because we are using Identity for authentication
     await Seed.SeedUsers(userManager);
 }
 catch (Exception ex)

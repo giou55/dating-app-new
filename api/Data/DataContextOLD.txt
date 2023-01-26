@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
+    // in this class we are using DbContext to create and configure the tables
+
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options)

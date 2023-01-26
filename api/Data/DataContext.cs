@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
+    // in this class we are using IdentityDbContext to create and configure the tables
+    
     public class DataContext : IdentityDbContext<AppUser, AppRole, int, IdentityUserClaim<int>, AppUserRole,
         IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
