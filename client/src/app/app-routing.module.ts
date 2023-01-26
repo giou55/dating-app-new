@@ -27,7 +27,7 @@ const routes: Routes = [
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},
-      // admin can be accessed only by users with admin role,
+      // admin can be accessed only by authenticated users with admin role,
       // so we must to create a new guard to check the role of user,
       // and we are able to do this because we have access to the users token
       {path: 'admin', component: AdminPanelComponent}
