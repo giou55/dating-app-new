@@ -39,15 +39,16 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
 
-    // we add this because we are using Identity for authentication
+    // we add these two lines because we are using Identity for authentication and roles
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
 
     await context.Database.MigrateAsync();
     
     //await Seed.SeedUsers(context);
 
-    // we add this because we are using Identity for authentication
-    await Seed.SeedUsers(userManager);
+    // we add this because we are using Identity for authentication and roles
+    await Seed.SeedUsers(userManager, roleManager);
 }
 catch (Exception ex)
 {

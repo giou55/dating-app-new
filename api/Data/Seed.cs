@@ -1,17 +1,14 @@
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 using api.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
-    // in this class we are using Identity to store the users 
+    // in this class we are using Identity to store the users and add roles 
     public class Seed
     {
-        public static async Task SeedUsers(UserManager<AppUser> userManager)
+        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             if(await userManager.Users.AnyAsync()) return;
 
@@ -23,11 +20,32 @@ namespace api.Data
 
             //var users = JsonConvert.DeserializeObject<List<AppUser>>(userData);
 
+            var roles = new List<AppRole> 
+            {
+                new AppRole{Name = "Member"},
+                new AppRole{Name = "Admin"},
+                new AppRole{Name = "Moderator"}
+            };
+
+            foreach (var role in roles)
+            {
+                await roleManager.CreateAsync(role); // stores the roles to database
+            }
+
             foreach (var user in users)
             {
                 user.UserName = user.UserName.ToLower();
-                await userManager.CreateAsync(user, "123456");
+                await userManager.CreateAsync(user, "123456"); // stores the users to database
+                await userManager.AddToRoleAsync(user, "Member");
             }
+
+            var admin = new AppUser
+            {
+                UserName = "admin"
+            };
+
+            await userManager.CreateAsync(admin, "123456");
+            await userManager.AddToRolesAsync(admin, new[] {"Admin", "Moderator"});
         }
     }
 }
