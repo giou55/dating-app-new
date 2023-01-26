@@ -44,6 +44,14 @@ namespace api.Extensions
                         };
                 });
 
+            services.AddAuthorization(options => 
+            {
+                // "RequireAdminRole" and "ModeratePhotoRole" comes from AdminController class
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                // this policy means that the user must have Admin or Moderator role
+                options.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+            });
+
             return services;
         }
         
