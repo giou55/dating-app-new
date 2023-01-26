@@ -29,6 +29,9 @@ namespace api.Controllers
             _photoService = photoService;
         }
 
+        // this Authorize attribute overrides the Authorize attribute at the top of the class, 
+        // and we can specify which roles we want to allowed to access this endpoint
+        // [Authorize(Roles = "Admin")]
         [HttpGet]
         // the client will send to our API the UserParams as a query string
         // and with [FromQuery] the API will know where to find UserParams  
