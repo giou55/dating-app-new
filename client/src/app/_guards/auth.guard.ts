@@ -8,6 +8,10 @@ import { AccountService } from '../_services/account.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
+
+  // remember that the route guards automatically subscribe and unsubscribe to observables,
+  // so we don't need to subscribe to this
+
   constructor(private accountService: AccountService, private toastr: ToastrService) {}
 
   canActivate(): Observable<boolean> {
