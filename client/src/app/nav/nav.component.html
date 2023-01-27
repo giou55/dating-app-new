@@ -25,7 +25,8 @@
             >Messages</a
           >
         </li>
-        <li class="nav-item">
+        <!-- here we're using our custom directive to display or not the link -->
+        <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
           <a class="nav-link" routerLink="/admin" routerLinkActive="active"
             >Admin</a
           >
