@@ -2,6 +2,7 @@ using api.Data;
 using api.Entities;
 using api.Extensions;
 using api.Middlewares;
+using api.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,9 @@ app.UseCors(policyBuilder =>
     policyBuilder
         .AllowAnyHeader()
         .AllowAnyMethod()
+        // we need to add AllowCredentials, otherwise we get a problem from SignalR 
+        // authenticating to the server from the client
+        .AllowCredentials() 
         .WithOrigins("http://localhost:4200")
 );
 
@@ -31,6 +35,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// we create an endpoint for SignalR, so client can find our hub
+app.MapHub<PresenceHub>("hubs/presence");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

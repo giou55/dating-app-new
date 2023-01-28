@@ -12,7 +12,8 @@ namespace api.Extensions
     {
         public static IServiceCollection AddIdentityServices(
             this IServiceCollection services,
-            IConfiguration config)
+            IConfiguration config
+        )
         {
             services.AddIdentityCore<AppUser>(options => 
             {
@@ -35,13 +36,38 @@ namespace api.Extensions
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(config["TokenKey"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+
+                    // we add a new option for how are we going to authenticate inside SignalR
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
                         {
-                            ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = new SymmetricSecurityKey(
-                                Encoding.UTF8.GetBytes(config["TokenKey"])),
-                            ValidateIssuer = false,
-                            ValidateAudience = false
-                        };
+                            // because we cannot pass the bearer token as a HTTP header,
+                            // we need to pass this up as a query string
+
+                            // here we get the bearer token from the query string,
+                            // and this is what SignalR from the client side is going to use 
+                            // when it sends up the token
+                            var accessToken = context.Request.Query["access_token"];
+
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                            {
+                                // this gives our hub the access to our bearer token
+                                // because we're adding it to the context
+                                context.Token = accessToken;
+                            }
+
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
 
             services.AddAuthorization(options => 
