@@ -67,6 +67,13 @@ namespace api.Extensions
 
                             return Task.CompletedTask;
                         }
+
+                        // this is how the URL looks like from client to the server
+                        // for connection with WebSocket
+                        // wss://localhost:5001/hubs/presence?id=IkIj9HkbzENChUbwDFoeIA
+                        // &access_token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9
+                        // .eyJuYW1laWQiOiIxMiIsInVuaXF1ZV9uYW1lIjoiYm9iIiwicm9sZSI6WyJNZW1iZXIiLCJNb2RlcmF0b3IiXSwibmJmIjoxNjc0OTM4NDQxLCJleHAiOjE2NzU1NDMyNDEsImlhdCI6MTY3NDkzODQ0MX0
+                        // .2vZ6dzqyhy4_mpgZSshWNKrBb9tAEoMFu6YZo2E18ky-txKhINM427i7AU_0naYzU2obBdyPhpkjNYA7Bi5QjQ
                     };
                 });
 
