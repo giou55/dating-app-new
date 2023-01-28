@@ -10,6 +10,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import {NgPipesModule} from 'ngx-pipes';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [],
@@ -28,7 +29,8 @@ import {NgPipesModule} from 'ngx-pipes';
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     ButtonsModule,
-    NgPipesModule
+    NgPipesModule,
+    ModalModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
@@ -40,7 +42,8 @@ import {NgPipesModule} from 'ngx-pipes';
     BsDatepickerModule,
     PaginationModule,
     ButtonsModule,
-    NgPipesModule
+    NgPipesModule,
+    ModalModule
   ]
 })
 export class SharedModule { }
