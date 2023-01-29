@@ -6,6 +6,7 @@ import { Member } from 'src/app/_models/member';
 import { Message } from 'src/app/_models/message';
 import { MembersService } from 'src/app/_services/members.service';
 import { MessageService } from 'src/app/_services/message.service';
+import { PresenceService } from 'src/app/_services/presence.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -31,7 +32,10 @@ export class MemberDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    // we make it public, so that we can use the async pipe in the template
+    public presenceService: PresenceService 
+  ) { }
 
   ngOnInit(): void {
     // we no longer need to use this, because we're going to get the member from our route instead

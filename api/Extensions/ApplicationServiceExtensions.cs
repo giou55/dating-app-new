@@ -2,6 +2,7 @@ using api.Data;
 using api.Helpers;
 using api.Interfaces;
 using api.Services;
+using api.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Extensions
@@ -36,6 +37,10 @@ namespace api.Extensions
             services.AddScoped<ILikesRepository, LikesRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddSignalR();
+
+            // we want the dictionary of OnlineUsers to be available application wide 
+            // for every user that connects to our service
+            services.AddSingleton<PresenceTracker>();
 
             return services;
         }
