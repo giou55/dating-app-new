@@ -6,13 +6,14 @@
 
         <ul *ngIf="messages.length > 0" class="chat">
             <li *ngFor="let message of messages">
-                <div>
+                <div [ngClass]="message.senderUsername !== username 
+                    ? 'd-flex flex-row' : 'd-flex flex-row-reverse'">
                     <span class="chat-img float-end">
                         <img class="rounded-circle"
                             src="{{message.senderPhotoUrl || './assets/user.png'}}" 
                             alt="image of user">
                     </span>
-                    <div class="chat-body">
+                    <div class="chat-body px-3">
                         <div class="header">
                             <small class="text-muted">
                                 <span class="fa fa-clock-o"> {{message.messageSent | timeAgo}}</span>
