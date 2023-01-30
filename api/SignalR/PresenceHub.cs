@@ -13,6 +13,8 @@ namespace api.SignalR
             _tracker = tracker;
         }
 
+        // we're going to override the two methods: OnConnectedAsync and OnDisconnectedAsync
+
         public override async Task OnConnectedAsync()
         {
             await _tracker.UserConnected(Context.User.GetUsername(), Context.ConnectionId);

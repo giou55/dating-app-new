@@ -36,8 +36,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// we create an endpoint for SignalR, so client can find our hub
+// we create the endpoints for SignalR, so client can find our hubs
 app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
