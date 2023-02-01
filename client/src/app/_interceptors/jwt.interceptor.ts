@@ -8,7 +8,7 @@ import {
 import { Observable, take } from 'rxjs';
 import { AccountService } from '../_services/account.service';
 
-// interceptor handles and transform the outgoing request
+// interceptors handles and transform the outgoing request
 // or the response
 
 @Injectable()

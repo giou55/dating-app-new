@@ -7,9 +7,7 @@ namespace api.Data
 
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions options) : base(options)
-        {
-        }
+        public DataContext(DbContextOptions options) : base(options) {}
 
         // creates a table in database called "Users"
         public DbSet<AppUser> Users { get; set; } 
@@ -26,8 +24,6 @@ namespace api.Data
         // it is going to be used as a join table to relate our entities
         // so that we have got our many to many relationship,
         public DbSet<Message> Messages { get; set; }
-
-
 
         // we override this method that's inside the DbContext class
         protected override void OnModelCreating(ModelBuilder builder)

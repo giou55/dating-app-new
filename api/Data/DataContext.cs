@@ -27,8 +27,6 @@ namespace api.Data
         // so that we have got our many to many relationship,
         public DbSet<Message> Messages { get; set; }
 
-
-
         // we override this method that's inside the DbContext class
         protected override void OnModelCreating(ModelBuilder builder)
         { 
