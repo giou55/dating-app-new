@@ -19,15 +19,29 @@ export class MemberMessagesComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  // sendMessage method is different now with SignalR,
+  // we're not subscribing anymore to this.messageService.sendMessage
+  // because now it's returning a promise
+
+  // sendMessage() {
+  //   if (!this.username) return;
+  //   this.messageService.sendMessage(this.username, this.messageContent).subscribe({
+  //     next: message => {
+  //       message.messageSent = new Date(message.messageSent + 'Z');
+  //         this.messages.push(message);
+  //         this.messageForm?.reset();
+  //     }
+  //   })
+  // }
+
+  // this.messageService.sendMessage is returning a promise
   sendMessage() {
     if (!this.username) return;
-    this.messageService.sendMessage(this.username, this.messageContent).subscribe({
-      next: message => {
-        message.messageSent = new Date(message.messageSent + 'Z');
-        // this.messages.push(message);
-        // this.messageForm?.reset();
-      }
-    })
+      this.messageService.sendMessage(this.username, this.messageContent).then(() => {
+        // we don't need to do anything with the message we get back,
+        // because messageThread$ observable from MessageService class is handling that
+        this.messageForm?.reset();
+      })
   }
 
 }
