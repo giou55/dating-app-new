@@ -11,12 +11,12 @@ import { User } from '../_models/user';
 })
 
 // we want to maintain a permanent connection to the hub when user are logged in,
-// and we're going to create this connection in our AccountService class
+// and we're going to create this connection in setCurrentUser method inside AccountService class
 
 export class PresenceService {
   hubUrl = environment.hubUrl;
   private hubConnection?: HubConnection;
-  private onlineUsersSource = new BehaviorSubject<string[]>([]); 
+  private onlineUsersSource = new BehaviorSubject<string[]>([]); // initialize with an empty array 
   
   // we create an observable from onlineUsersSource,
   // so we'll have something to subscribe to from our components
@@ -38,19 +38,19 @@ export class PresenceService {
     // successfully established or rejects with an error
     this.hubConnection.start().catch(error => console.log(error));
 
-    // 'UserIsOnline' needs to match the name inside PresenceHub.cs in our api
+    // 'UserIsOnline' needs to match the name inside PresenceHub.cs in our api,
     // we get the username back from SignalR
     this.hubConnection.on('UserIsOnline', username => {
       this.toastr.info(username + ' has connected');
     })
 
-    // 'UserIsOffline' needs to match the name inside PresenceHub.cs in our api
+    // 'UserIsOffline' needs to match the name inside PresenceHub.cs in our api,
     // we get the username back from SignalR
     this.hubConnection.on('UserIsOffline', username => {
       this.toastr.warning(username + ' has disconnected');
     })
 
-    // 'GetOnlineUsers' needs to match the name inside PresenceHub.cs in our api
+    // 'GetOnlineUsers' needs to match the name inside PresenceHub.cs in our api,
     // we get the usernames back from SignalR
     this.hubConnection.on('GetOnlineUsers', usernames => {
       this.onlineUsersSource.next(usernames);

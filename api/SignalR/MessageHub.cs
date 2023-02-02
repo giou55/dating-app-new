@@ -1,17 +1,29 @@
+using api.DTOs;
+using api.Entities;
 using api.Extensions;
 using api.Interfaces;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace api.SignalR
 {
+    [Authorize] // only authorized users are able to access this hub
     public class MessageHub: Hub
     {
         private readonly IMessageRepository _messageRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public MessageHub(IMessageRepository messageRepository)
+        public MessageHub(
+            IMessageRepository messageRepository, 
+            IUserRepository userRepository,
+            IMapper mapper
+        )
         {
             _messageRepository = messageRepository;
-            
+            _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         // we're going to override the two methods: OnConnectedAsync and OnDisconnectedAsync
@@ -44,6 +56,53 @@ namespace api.SignalR
             // because we're passing an exception to this method,
             // we do need to call the base onDisconnected method
             return base.OnDisconnectedAsync(exception);
+        }
+
+        public async Task SendMessage(CreateMessageDto createMessageDto)
+        {
+            // we get username from Hub.Context
+            var username = Context.User.GetUsername();
+
+            if (username == createMessageDto.RecipientUsername.ToLower())
+                // because we're not inside an API controller,
+                // we cannot return HTTP responses, so we throw exceptions,
+                // exceptions cost more resources on our server, than a simple HTTP response
+
+                // return BadRequest("You cannot send messages to yourself");
+                throw new HubException("You cannot send messages to yourself");
+
+
+            var sender = await _userRepository.GetUserByUsernameAsync(username);
+            var recipient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
+
+            // recipient is a property we're receiving from the client, and we need a check
+            if (recipient == null) 
+            // return NotFound();
+            throw new HubException("Not found user");
+
+
+            var message = new Message 
+            {
+                Sender = sender,
+                Recipient = recipient,
+                SenderUsername = sender.UserName,
+                RecipientUsername = recipient.UserName,
+                Content = createMessageDto.Content
+            };
+
+            // in order for Entity framework to track this, 
+            // we need to use AddMessage to add the message
+            _messageRepository.AddMessage(message);
+
+            // after the message is saved, it'll be sent to the client to be displayed to the view
+            if (await _messageRepository.SaveAllAsync()) 
+            {
+                //return Ok(_mapper.Map<MessageDto>(message));
+                var group = GetGroupName(sender.UserName, recipient.UserName);
+                await Clients.Group(group).SendAsync("NewMessage", _mapper.Map<MessageDto>(message));
+            }
+
+            //return BadRequest("Failed to send message");
         }
 
         private string GetGroupName(string caller, string other)

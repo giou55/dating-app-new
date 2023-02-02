@@ -29,6 +29,9 @@ namespace api.Controllers
         [HttpPost]
         public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto createMessageDto)
         {
+            // we have copied all this code inside this method, 
+            // and paste it at SendMessage method inside MessageHub class
+
             // we get username from claims principal extension
             var username = User.GetUsername();
 
