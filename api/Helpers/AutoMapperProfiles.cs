@@ -39,6 +39,13 @@ namespace api.Helpers
                     o => o.MapFrom(s => s.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url)
                 );
 
+            // it is about the MessageSent datetime
+            CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
+
+            // it is about the DateRead datetime, which is optional
+            CreateMap<DateTime?, DateTime?>()
+                .ConvertUsing(d => d.HasValue ? DateTime.SpecifyKind(d.Value, DateTimeKind.Utc) : null);
+
         }
     }
 }
