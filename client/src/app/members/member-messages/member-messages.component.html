@@ -1,17 +1,33 @@
 <div class="card">
     <div class="card-body">
-        <!-- <div *ngIf="messages.length === 0"> -->
 
-            <!-- we have initialized messageThread$ with an empty array,
-            so we've always got access to the length property  -->
+        <!-- 
+
+        if we want to use messageService.messageThread$ observable,
+        directly inside the template with async pipe to get the message thread,
+        first we must do that dependency public in the constructor,
+        and then write this code:
+
         <div *ngIf="(messageService.messageThread$ | async)?.length === 0">
             No messages yet... say hi by using the message box below
         </div>
 
-        <!-- <ul *ngIf="messages.length > 0" class="chat"> -->
         <ul *ngIf="(messageService.messageThread$ | async)!.length > 0" class="chat">
-            <!-- <li *ngFor="let message of messages"> -->
             <li *ngFor="let message of(messageService.messageThread$ | async)">
+           </li>
+        </ul>
+
+        we have initialized messageThread$ with an empty array,
+        so we've always got access to the length property
+
+         -->
+
+        <div *ngIf="messages.length === 0">
+            No messages yet... say hi by using the message box below
+        </div>
+
+        <ul *ngIf="messages.length > 0" class="chat">
+            <li *ngFor="let message of messages">
                 <div [ngClass]="message.senderUsername !== username 
                     ? 'd-flex flex-row' : 'd-flex flex-row-reverse'">
                     <span class="chat-img float-end">
@@ -22,14 +38,14 @@
                     <div class="chat-body px-3">
                         <div class="header">
                             <small class="text-muted">
-                                <span class="fa fa-clock-o"> {{message.messageSent}}</span>
+                                <span class="fa fa-clock-o"> {{message.messageSent | timeAgo}}</span>
                                 <span class="text-danger" 
                                     *ngIf="!message.dateRead && message.senderUsername !== username">
                                         (unread)
                                 </span>
                                 <span class="text-success" 
                                     *ngIf="message.dateRead && message.senderUsername !== username">
-                                        (read {{message.dateRead | date}})                                   
+                                        (read {{message.dateRead | timeAgo}})                                   
                                 </span>
                             </small>
                         </div>

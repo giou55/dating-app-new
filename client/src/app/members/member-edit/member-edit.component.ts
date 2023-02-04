@@ -42,7 +42,7 @@ export class MemberEditComponent implements OnInit {
     this.membersService.getMember(this.user.username).subscribe({
       next: (member) => {
         this.member = member;
-        this.lastActiveDate = new Date(member.lastActive + 'Z');
+        this.lastActiveDate = new Date(member.lastActive);
       }
     })
   }

@@ -55,7 +55,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     this.route.data.subscribe({
       next: data => {
         this.member = data['member'];
-        this.lastActiveDate = new Date(data['member'].lastActive + 'Z');
+        this.lastActiveDate = new Date(data['member'].lastActive);
       }
     })
 

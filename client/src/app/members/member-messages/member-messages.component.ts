@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Message } from 'src/app/_models/message';
 import { MessageService } from 'src/app/_services/message.service';
 
 @Component({
@@ -12,11 +13,25 @@ export class MemberMessagesComponent implements OnInit {
   @Input() username?: string;
   // @Input() messages: Message[] = [];
   messageContent = '';
+  messages: Message[] = [];
 
-  // we're using messageService inside template with async pipe to get the message thread
-  constructor(public messageService: MessageService) { }
+  constructor(private messageService: MessageService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadMessages();
+  }
+
+  loadMessages() {
+    this.messageService.messageThread$.subscribe({
+      next: messages => {
+        messages.map(m => {
+          m.messageSent = new Date(m.messageSent);
+          m.dateRead = m.dateRead ? new Date(m.dateRead) : undefined;
+        });
+        this.messages = messages;
+      }
+    })
+  }
 
   // sendMessage method is different now with SignalR,
   // we're not subscribing anymore to this.messageService.sendMessage
