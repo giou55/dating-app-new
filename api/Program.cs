@@ -52,6 +52,17 @@ try
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
 
     await context.Database.MigrateAsync();
+
+    // everytime our application starts or restarts, this removes all of connections from our database,
+    // this is a remove operation and it is good for small scale,
+    // but if we have thousands of rows in database, that could cause a problem
+    // context.Connections.RemoveRange(context.Connections);
+
+    // an alternative approach to previous operation is to literally create a SQL query
+    // that's going to truncate the Connections table when application starts or restarts,
+    // and this a SQL query without using Entity framework
+    // await context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [Connections]"); // doesn't work for SQLite
+    await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]"); // we use this for SQLite
     
     //await Seed.SeedUsers(context);
 
