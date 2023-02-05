@@ -84,7 +84,10 @@ namespace api.Data
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserName, string recipientUserName)
         {
+            // this is the old bad query that we don't use anymore
             var messages = await _context.Messages
+                // if we're using projection, we don't need to load the other related entities,
+                // so we can remove this two lines
                 .Include(u => u.Sender).ThenInclude(p => p.Photos)
                 .Include(u => u.Recipient).ThenInclude(p => p.Photos)
                 .Where(
@@ -97,9 +100,22 @@ namespace api.Data
                 )
                 .OrderBy(m => m.MessageSent)
                 .ToListAsync();
+
+            // this is the new better query
+            var query = _context.Messages
+                .Where(
+                    m => m.RecipientUsername == currentUserName 
+                        && m.RecipientDeleted == false 
+                        && m.SenderUsername == recipientUserName || 
+                        m.RecipientUsername == recipientUserName
+                        && m.SenderDeleted == false 
+                        && m.SenderUsername == currentUserName
+                )
+                .OrderBy(m => m.MessageSent)
+                .AsQueryable();
             
-            // get from memory only unread messages that current user has received
-            var unreadMessages = messages
+            // we replaced messages with query for the new query 
+            var unreadMessages = query
                 .Where(m => m.DateRead == null && m.RecipientUsername == currentUserName)
                 .ToList();
 
@@ -111,11 +127,14 @@ namespace api.Data
                 }
                 // we don't need to save changes here inside the repository,
                 // now the responsibility goes to OnConnectedAsync method inside MessageHub.cs
-                // with _uow.Complete() method
+                // with _uow.Complete method
                 // await _context.SaveChangesAsync();
             }
 
-            return _mapper.Map<IEnumerable<MessageDto>>(messages); 
+            // this is what we return for the old query without projection
+            //return _mapper.Map<IEnumerable<MessageDto>>(messages); 
+
+            return await query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider).ToListAsync(); 
         }
 
         public void RemoveConnection(Connection connection)

@@ -37,11 +37,11 @@ namespace api.Controllers
         // and with [FromQuery] the API will know where to find UserParams  
         public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var currentUser = await _uow.UserRepository.GetUserByUsernameAsync(User.GetUsername());
-            userParams.CurrentUsername = currentUser.UserName;
+            var gender = await _uow.UserRepository.GetUserGender(User.GetUsername());
+            userParams.CurrentUsername = User.GetUsername(); // we get username from the token
             
             if (string.IsNullOrEmpty(userParams.Gender)) {
-                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+                userParams.Gender = gender == "male" ? "female" : "male"; // we want the opposite gender
             }
 
             var users = await _uow.UserRepository.GetMembersAsync(userParams);
