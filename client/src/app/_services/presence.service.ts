@@ -42,13 +42,19 @@ export class PresenceService {
     // 'UserIsOnline' needs to match the name inside PresenceHub.cs in our api,
     // we get the username back from SignalR
     this.hubConnection.on('UserIsOnline', username => {
-      this.toastr.info(username + ' has connected');
+      // this.toastr.info(username + ' has connected');
+      this.onlineUsers$.pipe(take(1)).subscribe({
+        next: usernames => this.onlineUsersSource.next([...usernames, username])
+      })
     })
 
     // 'UserIsOffline' needs to match the name inside PresenceHub.cs in our api,
     // we get the username back from SignalR
     this.hubConnection.on('UserIsOffline', username => {
-      this.toastr.warning(username + ' has disconnected');
+      //this.toastr.warning(username + ' has disconnected');
+      this.onlineUsers$.pipe(take(1)).subscribe({
+        next: usernames => this.onlineUsersSource.next(usernames.filter(x => x !== username))
+      })
     })
 
     // 'GetOnlineUsers' needs to match the name inside PresenceHub.cs in our api,

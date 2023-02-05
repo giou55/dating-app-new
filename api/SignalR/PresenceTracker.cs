@@ -16,8 +16,10 @@ namespace api.SignalR
         // dictionary is not a thread safe type of object,
         // and if we have multiple concurrent users trying to access this 
         // dictionary at the same time, we could run into an issue
-        public Task UserConnected(string username, string connectionId)
+        public Task<bool> UserConnected(string username, string connectionId)
         {
+            bool isOnLine = false;
+
             // we're going to lock our online users whilst we're adding 
             // the on connecting user to this dictionary,
             // and anyone else that's connecting, 
@@ -29,23 +31,26 @@ namespace api.SignalR
                     // add connectionId to the list of connection Ids  
                     OnlineUsers[username].Add(connectionId);
                 } 
-                else // they are not connected
+                else // they are not already connected
                 {
                    OnlineUsers.Add(username, new List<string>{connectionId}); 
+                   isOnLine = true;
                 }
             }
 
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
+            return Task.FromResult(isOnLine);
         }
 
-        public Task UserDisconnected(string username, string connectionId)
+        public Task<bool> UserDisconnected(string username, string connectionId)
         {
+            bool isOffLine = false;
+
             lock(OnlineUsers) 
             {
                 // if username is not in our dictionary as a key,
                 // then we've got nothing to remove
-                 if (!OnlineUsers.ContainsKey(username)) return Task.CompletedTask;
-
+                 if (!OnlineUsers.ContainsKey(username)) return Task.FromResult(isOffLine);
                 // else remove the connectionId 
                 OnlineUsers[username].Remove(connectionId);
 
@@ -54,10 +59,12 @@ namespace api.SignalR
                 if (OnlineUsers[username].Count == 0) 
                 {
                     OnlineUsers.Remove(username);
+                    isOffLine = true;
                 }
             }
 
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
+            return Task.FromResult(isOffLine);
         }
 
         public Task<string[]> GetOnlineUsers() 

@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using api.DTOs;
 using api.Entities;
 using api.Extensions;
@@ -47,7 +48,9 @@ namespace api.SignalR
             // then we need to put the two users in a group
             var groupName = GetGroupName(Context.User.GetUsername(), otherUser);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            await AddToGroup(groupName);
+            var group = await AddToGroup(groupName);
+
+            await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
             // we get the message thread between him and the user he is connected to
             var messages = await _messageRepository.GetMessageThread(Context.User.GetUsername(), otherUser);
@@ -55,12 +58,14 @@ namespace api.SignalR
             // when a user connects to the Message hub,
             // he is going to receive the message thread from SignalR,
             // instead of making an API call from Angular component
-            await Clients.Group(groupName).SendAsync("ReceiveMessageTread", messages);
+            await Clients.Caller.SendAsync("ReceiveMessageTread", messages);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await RemoveFromMessageGroup();
+            var group = await RemoveFromMessageGroup();
+
+            await Clients.Group(group.Name).SendAsync("UpdatedGroup");
 
             // because we're passing an exception to this method,
             // we do need to call the base onDisconnected method
@@ -149,7 +154,7 @@ namespace api.SignalR
 
         // this is called inside OnConnectedAsync method,
         // when the user connects to the Message hub
-        private async Task<bool> AddToGroup(string groupName) 
+        private async Task<Group> AddToGroup(string groupName) 
         {
             var group = await _messageRepository.GetMessageGroup(groupName);
             var connection = new Connection(Context.ConnectionId, Context.User.GetUsername());
@@ -162,7 +167,9 @@ namespace api.SignalR
 
             group.Connections.Add(connection);
 
-            return await _messageRepository.SaveAllAsync(); // this returns a boolean
+            if (await _messageRepository.SaveAllAsync()) return group;
+
+            throw new HubException("Failed to add to group");
         }  
 
         // this is called inside OnDisconnectedAsync method,
@@ -172,11 +179,15 @@ namespace api.SignalR
         // and we're not actually removing this from the message group in SignalR,
         // because when we do disconnect from SignalR inside OnDisconnectedAsync method,
         // then SignalR is automatically removing this connection from the SignalR group  
-        private async Task RemoveFromMessageGroup()
+        private async Task<Group> RemoveFromMessageGroup()
         {
-            var connection = await _messageRepository.GetConnection(Context.ConnectionId);
+            var group = await _messageRepository.GetGroupForConnection(Context.ConnectionId);
+            var connection = group.Connections.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             _messageRepository.RemoveConnection(connection);
-            await _messageRepository.SaveAllAsync();
+
+            if (await _messageRepository.SaveAllAsync()) return group;
+
+            throw new HubException("Failed to remove from group");
         }
     }
 }

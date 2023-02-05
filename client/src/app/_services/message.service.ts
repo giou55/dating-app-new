@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Group } from '../_models/group';
 import { Message } from '../_models/message';
 import { User } from '../_models/user';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
@@ -41,6 +42,23 @@ export class MessageService {
     // we get the messages back from SignalR
     this.hubConnection.on('ReceiveMessageTread', messages => {
       this.messageThreadSource.next(messages);
+    })
+
+    // 'UpdatedGroup' needs to match the name inside MessageHub.cs in our api,
+    // we get the group back from SignalR
+    this.hubConnection.on('UpdatedGroup', (group: Group) => {
+      if (group.connections.some(x => x.username === otherUsername)) {
+        this.messageThread$.pipe(take(1)).subscribe({
+          next: messages => {
+            messages.forEach(message => {
+              if (!message.dateRead) {
+                message.dateRead = new Date(Date.now());
+              }
+            });
+            this.messageThreadSource.next([...messages]);
+          }
+        })
+      }
     })
 
     // 'NewMessage' needs to match the name inside MessageHub.cs in our api,
