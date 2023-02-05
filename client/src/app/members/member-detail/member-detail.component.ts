@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { take } from 'rxjs';
@@ -38,13 +38,16 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     // we make it public, so that we can use the async pipe in the template
     public presenceService: PresenceService, 
-    public accountService: AccountService) 
+    public accountService: AccountService,
+    private router: Router) 
   {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user;
       }
-    })
+    });
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
   }
 
   ngOnInit(): void {

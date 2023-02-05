@@ -75,5 +75,18 @@ namespace api.SignalR
             return Task.FromResult(onlineUsers);
                 
         }
+
+        public static Task<List<string>> GetConnectionsForUser(string username)
+        {
+            List<string> connectionsIds;
+
+            lock(OnlineUsers) 
+            {
+                // we're getting a list of the connections for that particular user
+                connectionsIds = OnlineUsers.GetValueOrDefault(username);
+            }
+
+            return Task.FromResult(connectionsIds);
+        } 
     }
 }

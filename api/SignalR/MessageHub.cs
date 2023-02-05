@@ -14,16 +14,19 @@ namespace api.SignalR
         private readonly IMessageRepository _messageRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IHubContext<PresenceHub> _presenceHub;
 
         public MessageHub(
             IMessageRepository messageRepository, 
             IUserRepository userRepository,
-            IMapper mapper
+            IMapper mapper,
+            IHubContext<PresenceHub> presenceHub // this way we can access other hubs
         )
         {
             _messageRepository = messageRepository;
             _userRepository = userRepository;
             _mapper = mapper;
+            _presenceHub = presenceHub;
         }
 
         // we're going to override the two methods: OnConnectedAsync and OnDisconnectedAsync
@@ -86,7 +89,6 @@ namespace api.SignalR
             // return NotFound();
             throw new HubException("Not found user");
 
-
             var message = new Message 
             {
                 Sender = sender,
@@ -98,15 +100,27 @@ namespace api.SignalR
 
             var groupName = GetGroupName(sender.UserName, recipient.UserName);
 
-            // now we have the groupName, we can get the group from database 
+            // now that we have the groupName, we can get the group from database 
             var group = await _messageRepository.GetMessageGroup(groupName);
 
             // and now we can check our connections and see if we do have a username
             // inside there that matches the recipient username,
-            // and if so, then we can mark the message as read
+            // and if so, it means recipient is inside the same message group
+            // and we can mark the message as read
             if (group.Connections.Any(x => x.Username == recipient.UserName))
             {
                 message.DateRead = DateTime.UtcNow;
+            }
+            else
+            {
+                var connections = await PresenceTracker.GetConnectionsForUser(recipient.UserName);
+                if (connections != null) // then we know that the user is connected to our application 
+                {
+                    // we're sending a message to all of the clients connected from that user 
+                    await _presenceHub.Clients.Clients(connections)
+                        .SendAsync("NewMessageReceived", 
+                            new {username = sender.UserName, knownAs = sender.KnownAs});
+                }
             }
 
             // in order for Entity framework to track this, 
