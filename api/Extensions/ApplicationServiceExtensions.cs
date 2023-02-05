@@ -22,7 +22,7 @@ namespace api.Extensions
 
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // "CloudinarySettings" is a string key taken from appsetting.json 
@@ -34,8 +34,13 @@ namespace api.Extensions
             // this is a action filter class
             services.AddScoped<LogUserActivity>();
 
-            services.AddScoped<ILikesRepository, LikesRepository>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
+            // we're going to inject the UnitOfWork instead of these
+            // services.AddScoped<ILikesRepository, LikesRepository>();
+            // services.AddScoped<IMessageRepository, MessageRepository>();
+            // services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddSignalR();
 
             // we want the dictionary of OnlineUsers to be available application wide 

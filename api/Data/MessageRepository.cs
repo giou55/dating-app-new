@@ -121,9 +121,11 @@ namespace api.Data
             _context.Connections.Remove(connection);
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
+        // we're using UnitOfWork, so we don't need to implement this from interface,
+        // now we're going to rely on the Complete method from the UnitOfWork 
+        // public async Task<bool> SaveAllAsync()
+        // {
+        //     return await _context.SaveChangesAsync() > 0;
+        // }
     }
 }
