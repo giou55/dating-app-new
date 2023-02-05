@@ -9,13 +9,10 @@ namespace api.Controllers
 {
     public class LikesController : BaseApiController
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ILikesRepository _likesRepository;
-        public LikesController(IUserRepository userRepository, ILikesRepository likesRepository)
+        private readonly IUnitOfWork _uow;
+        public LikesController(IUnitOfWork uow)
         {
-            _likesRepository = likesRepository;
-            _userRepository = userRepository;
-            
+            _uow = uow;
         }
 
         [HttpPost("{username}")] // api/likes/{username}
@@ -24,14 +21,14 @@ namespace api.Controllers
             // this is the user that's going to be liking another user
             var sourceUserId = User.GetUserId();
 
-            var likedUser = await _userRepository.GetUserByUsernameAsync(username);
-            var sourceUser = await _likesRepository.GetUserWithLikes(sourceUserId);
+            var likedUser = await _uow.UserRepository.GetUserByUsernameAsync(username);
+            var sourceUser = await _uow.LikesRepository.GetUserWithLikes(sourceUserId);
 
             if (likedUser == null) return NotFound();
 
             if (sourceUser.UserName == username) return BadRequest("You cannot like yourself");
 
-            var userLike = await _likesRepository.GetUserLike(sourceUserId, likedUser.Id);
+            var userLike = await _uow.LikesRepository.GetUserLike(sourceUserId, likedUser.Id);
 
             // userLike must be null, which means than nothing found at database
             if (userLike != null) return BadRequest("You already like this user");
@@ -46,7 +43,9 @@ namespace api.Controllers
             sourceUser.LikedUsers.Add(userLike);
 
             // it seems wrong, but it works
-            if (await _userRepository.SaveAllAsync()) return Ok();
+            //if (await _userRepository.SaveAllAsync()) return Ok();
+            // now we're using Complete method of UnitOfWork
+            if (await _uow.Complete()) return Ok();
 
             return BadRequest("Failed to like user");
         }
@@ -60,7 +59,7 @@ namespace api.Controllers
             // inside likesParams we'll not have the UserId, so we get it from claims principal extensions 
             likesParams.UserId = User.GetUserId();
 
-            var users = await _likesRepository.GetUserLikes(likesParams);
+            var users = await _uow.LikesRepository.GetUserLikes(likesParams);
 
             Response.AddPaginationHeader(new PaginationHeader(
                 users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));

@@ -21,12 +21,12 @@ namespace api.Helpers
             var userId = resultContext.HttpContext.User.GetUserId();
 
             // also we need access to the repository, because we're going to update something for our user
-            var repo = resultContext.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
+            var uow = resultContext.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
 
             // now we can update the LastActive property of user
-            var user = await repo.GetUserByIdAsync(userId);
+            var user = await uow.UserRepository.GetUserByIdAsync(userId);
             user.LastActive = DateTime.UtcNow;
-            await repo.SaveAllAsync();
+            await uow.Complete();
         }
     }
 }

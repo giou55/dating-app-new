@@ -12,20 +12,17 @@ namespace api.SignalR
     [Authorize] // only authorized users are able to access this hub
     public class MessageHub: Hub
     {
-        private readonly IMessageRepository _messageRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
         private readonly IHubContext<PresenceHub> _presenceHub;
 
         public MessageHub(
-            IMessageRepository messageRepository, 
-            IUserRepository userRepository,
+            IUnitOfWork uow,
             IMapper mapper,
             IHubContext<PresenceHub> presenceHub // this way we can access other hubs
         )
         {
-            _messageRepository = messageRepository;
-            _userRepository = userRepository;
+            _uow = uow;
             _mapper = mapper;
             _presenceHub = presenceHub;
         }
@@ -53,7 +50,12 @@ namespace api.SignalR
             await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
             // we get the message thread between him and the user he is connected to
-            var messages = await _messageRepository.GetMessageThread(Context.User.GetUsername(), otherUser);
+            var messages = await _uow.MessageRepository.GetMessageThread(Context.User.GetUsername(), otherUser);
+
+            // when we get the message thread, potentially there are changes
+            // that Entity framework will be tracking,
+            // and we can use Unit Of Work to see if there are changes that need to be saved
+            if (_uow.HasChanges()) await _uow.Complete();
 
             // when a user connects to the Message hub,
             // he is going to receive the message thread from SignalR,
@@ -86,8 +88,8 @@ namespace api.SignalR
                 throw new HubException("You cannot send messages to yourself");
 
 
-            var sender = await _userRepository.GetUserByUsernameAsync(username);
-            var recipient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
+            var sender = await _uow.UserRepository.GetUserByUsernameAsync(username);
+            var recipient = await _uow.UserRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
 
             // recipient is a property we're receiving from the client, and we need a check
             if (recipient == null) 
@@ -106,7 +108,7 @@ namespace api.SignalR
             var groupName = GetGroupName(sender.UserName, recipient.UserName);
 
             // now that we have the groupName, we can get the group from database 
-            var group = await _messageRepository.GetMessageGroup(groupName);
+            var group = await _uow.MessageRepository.GetMessageGroup(groupName);
 
             // and now we can check our connections and see if we do have a username
             // inside there that matches the recipient username,
@@ -130,10 +132,10 @@ namespace api.SignalR
 
             // in order for Entity framework to track this, 
             // we need to use AddMessage to add the message
-            _messageRepository.AddMessage(message);
+            _uow.MessageRepository.AddMessage(message);
 
             // after the message is saved, it'll be sent to the client to be displayed to the view
-            if (await _messageRepository.SaveAllAsync()) 
+            if (await _uow.Complete()) 
             {
                 //return Ok(_mapper.Map<MessageDto>(message));
                 await Clients.Group(groupName).SendAsync("NewMessage", _mapper.Map<MessageDto>(message));
@@ -156,18 +158,18 @@ namespace api.SignalR
         // when the user connects to the Message hub
         private async Task<Group> AddToGroup(string groupName) 
         {
-            var group = await _messageRepository.GetMessageGroup(groupName);
+            var group = await _uow.MessageRepository.GetMessageGroup(groupName);
             var connection = new Connection(Context.ConnectionId, Context.User.GetUsername());
 
             if (group == null)
             {
                 group = new Group(groupName);
-                _messageRepository.AddGroup(group);
+                _uow.MessageRepository.AddGroup(group);
             }
 
             group.Connections.Add(connection);
 
-            if (await _messageRepository.SaveAllAsync()) return group;
+            if (await _uow.Complete()) return group;
 
             throw new HubException("Failed to add to group");
         }  
@@ -181,11 +183,11 @@ namespace api.SignalR
         // then SignalR is automatically removing this connection from the SignalR group  
         private async Task<Group> RemoveFromMessageGroup()
         {
-            var group = await _messageRepository.GetGroupForConnection(Context.ConnectionId);
+            var group = await _uow.MessageRepository.GetGroupForConnection(Context.ConnectionId);
             var connection = group.Connections.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
-            _messageRepository.RemoveConnection(connection);
+            _uow.MessageRepository.RemoveConnection(connection);
 
-            if (await _messageRepository.SaveAllAsync()) return group;
+            if (await _uow.Complete()) return group;
 
             throw new HubException("Failed to remove from group");
         }

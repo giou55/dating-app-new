@@ -109,8 +109,10 @@ namespace api.Data
                 {
                     message.DateRead = DateTime.UtcNow; // we update the DateRead with right now
                 }
-
-                await _context.SaveChangesAsync();
+                // we don't need to save changes here inside the repository,
+                // now the responsibility goes to OnConnectedAsync method inside MessageHub.cs
+                // with _uow.Complete() method
+                // await _context.SaveChangesAsync();
             }
 
             return _mapper.Map<IEnumerable<MessageDto>>(messages); 

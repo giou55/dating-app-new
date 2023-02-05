@@ -24,6 +24,8 @@ namespace api.Data
 
         public ILikesRepository LikesRepository => new LikesRepository(_context);
 
+        // now it's not the job of the repository to save changes,
+        // because we're using Complete method of Unit Of Work pattern
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;
