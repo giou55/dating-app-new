@@ -26,7 +26,11 @@
             No messages yet... say hi by using the message box below
         </div>
 
-        <ul *ngIf="messages.length > 0" class="chat">
+        <ul 
+            #scrollMe
+            style="overflow-y: scroll; height: 600px"
+            [scrollTop]="scrollMe.scrollHeight"
+            *ngIf="messages.length > 0" class="chat">
             <li *ngFor="let message of messages">
                 <div [ngClass]="message.senderUsername !== username 
                     ? 'd-flex flex-row' : 'd-flex flex-row-reverse'">
