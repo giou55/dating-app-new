@@ -62,6 +62,7 @@ namespace api.Controllers
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
             var currentUsername = User.GetUsername();
+
             return await _uow.UserRepository
                 .GetMemberAsync(username, isCurrentUser: currentUsername == username);
             // remove this because mapping now happened in UserRepository.cs
@@ -103,6 +104,7 @@ namespace api.Controllers
 
             // result is coming from cloudinary
             var result = await _photoService.AddPhotoAsync(file); 
+
             if (result.Error != null) return BadRequest(result.Error.Message);
 
             var photo = new Photo
@@ -125,8 +127,11 @@ namespace api.Controllers
 
                 // it returns a 201 created response along with location header about 
                 // where to find the newly created resource
-                return CreatedAtAction(
-                    nameof(GetUser), 
+                
+                //return CreatedAtAction(
+                return CreatedAtRoute(
+                    // nameof(GetUser), 
+                    "GetUser", 
                     new {username = user.UserName}, 
                     // also sends back the newly created resource
                     _mapper.Map<PhotoDto>(photo)

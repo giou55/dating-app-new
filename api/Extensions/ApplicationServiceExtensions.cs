@@ -29,6 +29,8 @@ namespace api.Extensions
             // <CloudinarySettings> is from Helpers.CloudinarySettings.cs file
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
 
+            // that is saying whenever a IPhotoService is required, 
+            // create a PhotoService and pass that in
             services.AddScoped<IPhotoService, PhotoService>();
 
             // this is a action filter class

@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using api.Entities;
 using api.Interfaces;
 using api.Services;
@@ -16,13 +15,13 @@ namespace api.Controllers
         // policies configurations are in IdentityServiceExtensions class
         private readonly UserManager<AppUser> _userManager;
         private readonly IUnitOfWork _uow;
-        private readonly PhotoService _photoService;
+        private readonly IPhotoService _photoService;
 
 
         public AdminController(
             UserManager<AppUser> userManager, 
             IUnitOfWork uow,
-            PhotoService photoService)
+            IPhotoService photoService)
         {
             _userManager = userManager;
             _uow = uow;
