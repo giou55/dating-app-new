@@ -5,6 +5,7 @@ namespace api.Interfaces
         IUserRepository UserRepository {get;}
         IMessageRepository MessageRepository {get;}
         ILikesRepository LikesRepository {get;}
+        IPhotoRepository PhotoRepository { get; }
 
         // if the Complete doesn't work, then everything rolls back to what it was before
         Task<bool> Complete();

@@ -29,6 +29,7 @@ namespace api.Data
 
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         // we override this method that's inside the DbContext class
         protected override void OnModelCreating(ModelBuilder builder)
@@ -93,6 +94,11 @@ namespace api.Data
                 // if a sender user deletes his profile, we want the recipient of the message 
                 // should still be able to see that message
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // a Query filter to only return approved photos
+            builder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);
+
+            //builder.ApplyUtcDateTimeConverter();
 
         }
     }

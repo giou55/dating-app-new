@@ -34,6 +34,7 @@ namespace api.Data
 
             foreach (var user in users)
             {
+                user.Photos.First().IsApproved = true;
                 user.UserName = user.UserName.ToLower();
                 await userManager.CreateAsync(user, "123456"); // stores the users to database
                 await userManager.AddToRoleAsync(user, "Member");

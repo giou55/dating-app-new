@@ -61,7 +61,9 @@ namespace api.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            return await _uow.UserRepository.GetMemberAsync(username);
+            var currentUsername = User.GetUsername();
+            return await _uow.UserRepository
+                .GetMemberAsync(username, isCurrentUser: currentUsername == username);
             // remove this because mapping now happened in UserRepository.cs
             // return _mapper.Map<MemberDto>(user);
         }
@@ -109,8 +111,10 @@ namespace api.Controllers
                 PublicId = result.PublicId
             };
 
-            // if it is the first photo that user uploads, set photo the main photo
-            if (user.Photos.Count == 0) photo.IsMain = true;
+            // we remove the logic when adding a photo to automatically 
+            // set a photo to main if they do not have a main photo 
+            // (no unapproved photos should be a users main photo)
+            // if (user.Photos.Count == 0) photo.IsMain = true;
 
             user.Photos.Add(photo);
 
@@ -163,7 +167,8 @@ namespace api.Controllers
             var username = User.GetUsername();
             var user = await _uow.UserRepository.GetUserByUsernameAsync(username); 
 
-            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+            //var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+            var photo = await _uow.PhotoRepository.GetPhotoById(photoId);
 
             if (photo == null) return NotFound();
 
