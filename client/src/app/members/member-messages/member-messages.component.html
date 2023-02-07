@@ -28,7 +28,7 @@
 
         <ul 
             #scrollMe
-            style="overflow-y: auto; height: 300px"
+            style="overflow-y: auto; max-height: 800px"
             [scrollTop]="scrollMe"
             *ngIf="messages.length > 0" class="chat">
             <li *ngFor="let message of messages">
