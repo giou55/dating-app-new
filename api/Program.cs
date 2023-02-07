@@ -72,7 +72,12 @@ try
     // that's going to truncate the Connections table when application starts or restarts,
     // and this a SQL query without using Entity framework
     // await context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [Connections]"); // doesn't work for SQLite
-    await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]"); // we use this for SQLite
+    //await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]"); // we use this for SQLite
+    //await context.Database.ExecuteSqlRawAsync("DELETE FROM \"Connections\""); // we use this for Postgres
+
+    // finally we use this approach to remove all of connections from our database,
+    // using a static method from Seed.cs
+    await Seed.ClearConnections(context);  
     
     //await Seed.SeedUsers(context);
 

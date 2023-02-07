@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ix3Z2Uj0Zzd7yMC4KqjzdXNghOJYCcpRZtd361n4L2l9XYoIz/vApdtuwXbe1dWjkpPJqzUUih7JcaH1u/2e1g==",
+  "dgSpecHash": "XRL/oHnAkqzmY3ytmm6ShGukefpmQF70+Uq3gEUaYFj2W2XNEA6/F+2USRQGo/oCZaon7UGR4O3ruOgQgJrZWg==",
   "success": true,
   "projectFilePath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\api.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,8 @@
     "C:\\Users\\giour\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\giour\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\giour\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\giour\\.nuget\\packages\\npgsql\\7.0.1\\npgsql.7.0.1.nupkg.sha512",
+    "C:\\Users\\giour\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.1\\npgsql.entityframeworkcore.postgresql.7.0.1.nupkg.sha512",
     "C:\\Users\\giour\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.2\\sqlitepclraw.bundle_e_sqlite3.2.1.2.nupkg.sha512",
     "C:\\Users\\giour\\.nuget\\packages\\sqlitepclraw.core\\2.1.2\\sqlitepclraw.core.2.1.2.nupkg.sha512",
     "C:\\Users\\giour\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.2\\sqlitepclraw.lib.e_sqlite3.2.1.2.nupkg.sha512",

@@ -8,6 +8,17 @@ namespace api.Data
     // in this class we are using Identity to store the users and add roles 
     public class Seed
     {
+        public static async Task ClearConnections(DataContext context)
+        {
+            // this method is called in Program.cs,
+            // everytime our application starts or restarts, 
+            // this removes all of connections from our database,
+            // this is a remove operation and it is good for small scale,
+            // but if we have thousands of rows in database, that could cause a problem
+            context.Connections.RemoveRange(context.Connections);
+            await context.SaveChangesAsync();
+        }
+
         public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             if(await userManager.Users.AnyAsync()) return;
@@ -36,6 +47,9 @@ namespace api.Data
             {
                 user.Photos.First().IsApproved = true;
                 user.UserName = user.UserName.ToLower();
+                // postgres wants datetimes in UTC format
+                user.Created = DateTime.SpecifyKind(user.Created, DateTimeKind.Utc);
+                user.LastActive = DateTime.SpecifyKind(user.LastActive, DateTimeKind.Utc);
                 await userManager.CreateAsync(user, "123456"); // stores the users to database
                 await userManager.AddToRoleAsync(user, "Member");
             }

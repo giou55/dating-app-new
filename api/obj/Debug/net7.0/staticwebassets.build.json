@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WLVTO0PITg8LJG0zTwWVHmmPKWl77s5Ip3kr/jgjXBE=",
+  "Hash": "gbX3+OaVbWAnAEwa+oeRmwijwMD5tEwmhvOT8Phfg5E=",
   "Source": "api",
   "BasePath": "_content/api",
   "Mode": "Default",
@@ -221,12 +221,12 @@
       "OriginalItemSpec": "wwwroot\\index.html"
     },
     {
-      "Identity": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\wwwroot\\main.d3968b632f0882a1.js",
+      "Identity": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\wwwroot\\main.b96e87b5b322a993.js",
       "SourceId": "api",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\wwwroot\\",
       "BasePath": "_content/api",
-      "RelativePath": "main.d3968b632f0882a1.js",
+      "RelativePath": "main.b96e87b5b322a993.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -235,7 +235,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\main.d3968b632f0882a1.js"
+      "OriginalItemSpec": "wwwroot\\main.b96e87b5b322a993.js"
     },
     {
       "Identity": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app\\api\\wwwroot\\polyfills.d7bd9d69524573e2.js",

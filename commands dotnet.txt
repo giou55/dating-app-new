@@ -7,6 +7,7 @@ dotnet sln list (display all projects in a solution file)
 
 MIGRATIONS:
 dotnet ef migrations add InitialCreate --context StoreDbContext
+dotnet ef migrations add PostgresInitial -o Data/Migrations
 dotnet ef migrations remove (removes the last migration)
 dotnet ef migrations list
 dotnet ef migrations script
