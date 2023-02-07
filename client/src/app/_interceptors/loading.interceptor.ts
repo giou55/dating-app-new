@@ -5,8 +5,9 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { delay, finalize, Observable } from 'rxjs';
+import { delay, finalize, identity, Observable } from 'rxjs';
 import { BusyService } from '../_services/busy.service';
+import { environment } from 'src/environments/environment';
 
 // interceptors handles and transform the outgoing request
 // or the response
@@ -21,8 +22,9 @@ export class LoadingInterceptor implements HttpInterceptor {
     this.busyService.busy();
 
     return next.handle(request).pipe(
-      // we add a delay so we can see the spinner
-      delay(1000),
+      // we add a delay so we can see the spinner,
+      // but only in development mode
+      (environment.production ? identity : delay(1000)), // identity is a operator that's does nothing
       // once the request has completed, turn off the spinner
       finalize(() => {
         this.busyService.idle();

@@ -33,7 +33,7 @@
             *ngIf="messages.length > 0" class="chat">
             <li *ngFor="let message of messages">
                 <div [ngClass]="message.senderUsername !== username 
-                    ? 'd-flex flex-row' : 'd-flex flex-row-reverse'">
+                    ? 'd-flex flex-row' : 'd-flex flex-row-reverse me-3'">
                     <span class="chat-img float-end">
                         <img class="rounded-circle"
                             src="{{message.senderPhotoUrl || './assets/user.png'}}" 

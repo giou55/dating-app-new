@@ -34,11 +34,21 @@ app.UseCors(policyBuilder =>
 app.UseAuthentication();
 app.UseAuthorization();
 
+// when we say default files, it means that is going to look for the index.html from WWW root folder 
+app.UseDefaultFiles();
+// when we say static files, it means that is going to look a WWW root folder and 
+// serve the content from inside there
+app.UseStaticFiles();
+
 app.MapControllers();
 
 // we create the endpoints for SignalR, so client can find our hubs
 app.MapHub<PresenceHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/message");
+
+// we specify the action and the fallback controller
+// when our API doesn't know how to handle a specific route
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
