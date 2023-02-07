@@ -28,8 +28,8 @@
 
         <ul 
             #scrollMe
-            style="overflow-y: scroll; height: 600px"
-            [scrollTop]="scrollMe.scrollHeight"
+            style="overflow-y: auto; height: 300px"
+            [scrollTop]="scrollMe"
             *ngIf="messages.length > 0" class="chat">
             <li *ngFor="let message of messages">
                 <div [ngClass]="message.senderUsername !== username 

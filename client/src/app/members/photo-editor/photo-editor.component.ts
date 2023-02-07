@@ -78,11 +78,12 @@ export class PhotoEditorComponent implements OnInit {
     });
 
     this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false
+      file.withCredentials = false;
     }
 
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
+        console.log("response:" + response);
         const photo = JSON.parse(response);
         this.member?.photos.push(photo);
 

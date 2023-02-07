@@ -128,10 +128,10 @@ namespace api.Controllers
                 // it returns a 201 created response along with location header about 
                 // where to find the newly created resource
                 
-                //return CreatedAtAction(
-                return CreatedAtRoute(
-                    // nameof(GetUser), 
-                    "GetUser", 
+                return CreatedAtAction(
+                //return CreatedAtRoute(
+                    nameof(GetUser), 
+                    //"GetUser", 
                     new {username = user.UserName}, 
                     // also sends back the newly created resource
                     _mapper.Map<PhotoDto>(photo)
