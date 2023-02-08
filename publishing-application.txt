@@ -94,6 +94,64 @@ dotnet run
 
 ------------------------------------------------------------------------------------
 
-Πάμε στο PostgreSQL explorer package να δούμε την βάση μας
+Πάμε στο PostgreSQL explorer extension στον VS Code να δούμε την βάση μας
 
 -----------------------------------------------------------------------------------
+
+Πάμε στο localhost:5001 να δούμε την εφαρμογή μας να τρέχει,
+αυτή την φορά χρησιμοποιώντας σαν βάση την Postgres
+
+-----------------------------------------------------------------------------------
+
+Εγκαθιστάμε το Docker extension για το VS Code (by Microsoft)
+The Docker extension makes it easy to build, manage, and deploy containerized 
+applications from Visual Studio Code.
+
+--------------------------------------------------------------------------------
+
+Τώρα θα κάνουμε dockerize την εφαρμογή μας, δηλαδή θα φτιάξουμε το docker image.
+Αυτό χρειάζεται για να κάνουμε deploy το app στο Fly.io (deploy via Dockerfile)
+Μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα Dockerfile 
+και γράφουμε τις εντολές.
+Επίσης μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα .dockerignore
+και γράφουμε τα αρχεία που δεν θέλουμε.
+
+Μετά στο terminal μέσα στο api folder γράφουμε:
+docker build -t giourme/datingapp .
+και δημιουργείται το docker image
+
+----------------------------------------------------------------------------------
+
+Τώρα θα τρέξουμε το docker image που φτιάξαμε.
+Μετά στο terminal μέσα στο api folder γράφουμε:
+docker run --rm -it -p 8080:80 giourme/datingapp:latest
+
+-------------------------------------------------------------------------------
+
+Για να μπορεί η εφαρμογή μας να συνδεθεί με την Postgres μέσα στο Docker,
+πρέπει να έχουμε αλλάξουμε τον server στο αρχείο appsettings.json: 
+
+"DefaultConnection": "Server=localhost; Port=5432; User Id=postgres; Password=postgrespw; Database=datingapp"
+
+"DefaultConnection": "Server=host.docker.internal; Port=5432; User Id=postgres; Password=postgrespw; Database=datingapp"
+
+Για κάθε αλλαγή κάνουμε ξανά 
+docker build -t giourme/datingapp .
+και μετά 
+docker run --rm -it -p 8080:80 giourme/datingapp:latest
+
+Εννοείται οτι ο Postgres server τρέχει ήδη στο docker.
+
+--------------------------------------------------------------------------------
+
+Τώρα θα στείλουμε το image στο docker hub repository για να είναι διαθέσιμο στις 
+cloud πλατφόρμες όπου θα γίνει το deploy.
+Μετά στο terminal μέσα στο api folder γράφουμε:
+docker push giourme/datingapp:latest
+
+Αν δεν έχουμε access, πρέπει να κάνουμε login:
+docker login 
+ή βάζοντας και τα credentials
+docker login -u <username> -p <password>
+
+-------------------------------------------------------------------------------
