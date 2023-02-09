@@ -6,7 +6,7 @@ kill_timeout = 5
 processes = []
 
 [build]
-  image = "giourme/datingapp:latest"
+  image = "giourme/datingapp"
 
 [env]
   ASPNETCORE_URLS="http://+:8080"

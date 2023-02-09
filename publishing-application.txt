@@ -155,7 +155,8 @@ docker push giourme/datingapp:latest
 Αν δεν έχουμε access, πρέπει να κάνουμε login:
 docker login 
 ή βάζοντας και τα credentials
-docker login -u <username> -p <password>
+docker login -u <username> -p <password> grofbdfkejmbvoldjmggf
+docker login -u giourme -p dckr_pat_4cz-bHeZQVTDhL9Guqm9fvO2SyE
 
 -------------------------------------------------------------------------------
 
