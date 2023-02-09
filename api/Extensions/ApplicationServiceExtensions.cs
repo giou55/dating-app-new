@@ -15,11 +15,14 @@ namespace api.Extensions
             IConfiguration config
         )
         {
-            services.AddDbContext<DataContext>(options => 
-            {
+            // when we're going to deploy in fly.io
+            // we must remove these lines,
+            // and add some code inside Program.cs
+            //services.AddDbContext<DataContext>(options => 
+            //{
                 //options.UseSqlite(config.GetConnectionString("DefaultConnection"));
-                options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-            });
+                //options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            //});
 
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
