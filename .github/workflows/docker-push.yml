@@ -25,4 +25,4 @@ jobs:
         with:
           context: "{{defaultContext}}:api"
           push: true
-          tags: giourme/datingapp
+          tags: giourme/datingapp:latest
