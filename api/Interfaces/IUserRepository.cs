@@ -7,6 +7,7 @@ namespace api.Interfaces
     public interface IUserRepository
     {
         void Update(AppUser user);
+        void Remove(AppUser user);
 
         // we're using UnitOfWork, so we don't need this
         // Task<bool> SaveAllAsync();

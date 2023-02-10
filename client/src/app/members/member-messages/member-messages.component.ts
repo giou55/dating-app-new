@@ -15,6 +15,7 @@ export class MemberMessagesComponent implements OnInit {
   // @Input() messages: Message[] = [];
   messageContent = '';
   messages: Message[] = [];
+  loading = false;
 
   constructor(private messageService: MessageService) { }
 
@@ -52,11 +53,14 @@ export class MemberMessagesComponent implements OnInit {
   // this.messageService.sendMessage is returning a promise
   sendMessage() {
     if (!this.username) return;
-      this.messageService.sendMessage(this.username, this.messageContent).then(() => {
+    this.loading = true;
+      this.messageService.sendMessage(this.username, this.messageContent)
+        .then(() => {
         // we don't need to do anything with the message we get back,
         // because messageThread$ observable from MessageService class is handling that
         this.messageForm?.reset();
-      })
+        })
+        .finally(() => this.loading = false);
   }
 
 }

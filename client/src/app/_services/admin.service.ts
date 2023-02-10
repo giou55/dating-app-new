@@ -22,6 +22,10 @@ export class AdminService {
     );
   }
 
+  deleteUser(username: string) {
+    return this.http.delete(this.baseUrl + 'user/delete-user/' + username);
+  }
+
   getPhotosForApproval() {
     return this.http.get<Photo[]>(this.baseUrl + 'admin/photos-to-moderate');
   }

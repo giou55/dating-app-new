@@ -93,6 +93,16 @@ namespace api.Controllers
             return BadRequest("Failed to update user");
         }
 
+        [HttpDelete("delete-user/{username}")]
+        public async Task<ActionResult> DeleteUser(string username) 
+        {
+            var user = await _uow.UserRepository.GetUserByUsernameAsync(username); 
+            if (user == null) return NotFound();
+            _uow.UserRepository.Remove(user);
+             if (await _uow.Complete()) return Ok();
+            return BadRequest("Problem deleting user");
+        }
+
         [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {

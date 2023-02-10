@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Group } from '../_models/group';
 import { Message } from '../_models/message';
 import { User } from '../_models/user';
+import { BusyService } from './busy.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({
@@ -21,11 +22,13 @@ export class MessageService {
   // so we'll have something to subscribe to from our components
   messageThread$ = this.messageThreadSource.asObservable();
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private busyService: BusyService) { }
 
   createHubConnection(user: User, otherUsername: string) {
     // the otherUsername we're going to get from the member-detail component,
     // which will get it from the route parameter  
+
+    this.busyService.busy(); // start the loading spinner
 
     this.hubConnection = new HubConnectionBuilder()
       // 'message' needs to match the name of our endpoint
@@ -36,7 +39,9 @@ export class MessageService {
       .withAutomaticReconnect()
       .build();
 
-    this.hubConnection.start().catch(error => console.log(error));
+    this.hubConnection.start()
+      .catch(error => console.log(error))
+      .finally(() => this.busyService.idle()); // stop the loading spinner
 
     // 'ReceiveMessageTread' needs to match the name inside MessageHub.cs in our api,
     // we get the messages back from SignalR
@@ -75,6 +80,10 @@ export class MessageService {
 
   stopHubConnection() {
     if (this.hubConnection) {
+      // it clears the messages, when they move away from the member-messages component,
+      // so the next time that somebody loads that component, the message thread will be empty,
+      // and they're not going to display the previous messages
+      this.messageThreadSource.next([]);   
       this.hubConnection.stop();
     }
   }

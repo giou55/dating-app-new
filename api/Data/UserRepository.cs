@@ -120,6 +120,11 @@ namespace api.Data
             _context.Entry(user).State = EntityState.Modified;
         }
 
+        public void Remove(AppUser user)
+        {
+            _context.Users.Remove(user);
+        }
+
         public async Task<AppUser> GetUserByPhotoId(int photoId)
         {
             return await _context.Users

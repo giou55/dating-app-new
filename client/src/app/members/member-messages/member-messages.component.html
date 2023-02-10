@@ -1,6 +1,9 @@
 <div class="card">
-    <div class="card-body">
-
+    <div class="card-body"
+        #scrollMe
+        style="overflow-y: auto; height: 550px"
+        [scrollTop]="scrollMe"
+    >
         <!-- 
 
         if we want to use messageService.messageThread$ observable,
@@ -26,11 +29,7 @@
             No messages yet... say hi by using the message box below
         </div>
 
-        <ul 
-            #scrollMe
-            style="overflow-y: auto; max-height: 800px"
-            [scrollTop]="scrollMe"
-            *ngIf="messages.length > 0" class="chat">
+        <ul *ngIf="messages.length > 0" class="chat">
             <li *ngFor="let message of messages">
                 <div [ngClass]="message.senderUsername !== username 
                     ? 'd-flex flex-row' : 'd-flex flex-row-reverse me-3'">
@@ -72,7 +71,10 @@
                     class="form-control input-sm" 
                     placeholder="Send a private message">
                 <div class="input-group-append">
-                    <button [disabled]="!messageForm.valid" class="btn btn-primary" type="submit">Send</button>
+                    <button [disabled]="!messageForm.valid || loading" 
+                        class="btn btn-primary" type="submit">
+                            Send <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                    </button>
                 </div>
             </div>
         </form>

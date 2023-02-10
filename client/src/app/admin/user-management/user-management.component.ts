@@ -50,10 +50,16 @@ export class UserManagementComponent implements OnInit {
         if (!this.arrayEqual(selectedRoles!, user.roles)) {
           this.adminService.updateUserRoles(user.username, selectedRoles).subscribe({
             next: roles => user.roles = roles
-          })
+          });
         }
       }
     })
+  }
+
+  deleteUser(username: string) {
+    this.adminService.deleteUser(username).subscribe({
+      next: () => console.log(username)
+    });
   }
 
   private arrayEqual(arr1: any[], arr2: any[]) {
