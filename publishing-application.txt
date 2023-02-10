@@ -191,7 +191,7 @@ fly secrets list
 Θα προσθέσουμε το ApiSecret και το token key, γράφοντας τα παρακάτω:
 fly secrets set CloudinarySettings__ApiSecret=************
 και μετά
-fly secrets set TokenKey=***********
+fly secrets set TokenKey=*******************
 
 -------------------------------------------------------------------------------
 
