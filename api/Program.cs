@@ -17,35 +17,35 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
 
-// we add this code, when we're going to deploy our app to fly.io
-var connString = "";
+// // we add this code, when we're going to deploy our app to fly.io
+// var connString = "";
 
-if (builder.Environment.IsDevelopment()) 
-    connString = builder.Configuration.GetConnectionString("DefaultConnection");
-else 
-{
-// Use connection string provided at runtime by Fly.io.
-        var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+// if (builder.Environment.IsDevelopment()) 
+//     connString = builder.Configuration.GetConnectionString("DefaultConnection");
+// else 
+// {
+// // Use connection string provided at runtime by Fly.io.
+//         var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-        // Parse connection URL to connection string for Npgsql
-        connUrl = connUrl.Replace("postgres://", string.Empty);
-        var pgUserPass = connUrl.Split("@")[0];
-        var pgHostPortDb = connUrl.Split("@")[1];
-        var pgHostPort = pgHostPortDb.Split("/")[0];
-        var pgDb = pgHostPortDb.Split("/")[1];
-        var pgUser = pgUserPass.Split(":")[0];
-        var pgPass = pgUserPass.Split(":")[1];
-        var pgHost = pgHostPort.Split(":")[0];
-        var pgPort = pgHostPort.Split(":")[1];
+//         // Parse connection URL to connection string for Npgsql
+//         connUrl = connUrl.Replace("postgres://", string.Empty);
+//         var pgUserPass = connUrl.Split("@")[0];
+//         var pgHostPortDb = connUrl.Split("@")[1];
+//         var pgHostPort = pgHostPortDb.Split("/")[0];
+//         var pgDb = pgHostPortDb.Split("/")[1];
+//         var pgUser = pgUserPass.Split(":")[0];
+//         var pgPass = pgUserPass.Split(":")[1];
+//         var pgHost = pgHostPort.Split(":")[0];
+//         var pgPort = pgHostPort.Split(":")[1];
 
-        connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
-}
+//         connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
+// }
 
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseNpgsql(connString);
-});
-// end of code for deploy
+// builder.Services.AddDbContext<DataContext>(opt =>
+// {
+//     opt.UseNpgsql(connString);
+// });
+// // end of code for deploy
 
 
 var app = builder.Build();
@@ -68,9 +68,10 @@ app.UseAuthorization();
 
 // when we say default files, it means that is going to look for the index.html from WWW root folder 
 app.UseDefaultFiles();
+
 // when we say static files, it means that is going to look a WWW root folder and 
 // serve the content from inside there
-app.UseStaticFiles();
+//app.UseStaticFiles();
 
 app.MapControllers();
 

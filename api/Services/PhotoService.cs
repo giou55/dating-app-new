@@ -31,7 +31,7 @@ namespace api.Services
                 {
                     File = new FileDescription(file.FileName, stream),
                     Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face"),
-                    Folder = "dating-dotnet"
+                    Folder = "dating-dotnet-new"
                 };
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
