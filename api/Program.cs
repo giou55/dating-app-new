@@ -81,7 +81,7 @@ app.MapHub<MessageHub>("hubs/message");
 
 // we specify the action and the fallback controller
 // when our API doesn't know how to handle a specific route
-app.MapFallbackToController("Index", "Fallback");
+//app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

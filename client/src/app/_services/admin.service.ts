@@ -23,7 +23,7 @@ export class AdminService {
   }
 
   deleteUser(username: string) {
-    return this.http.delete(this.baseUrl + 'user/delete-user/' + username);
+    return this.http.delete(this.baseUrl + 'users/delete-user/' + username);
   }
 
   getPhotosForApproval() {

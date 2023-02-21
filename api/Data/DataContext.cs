@@ -86,14 +86,14 @@ namespace api.Data
                 .WithMany(m => m.MessagesReceived)
                 // if a sender user deletes his profile, we want the recipient of the message 
                 // should still be able to see that message
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Message>()
                 .HasOne(u => u.Sender)
                 .WithMany(m => m.MessagesSent)
                 // if a sender user deletes his profile, we want the recipient of the message 
                 // should still be able to see that message
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             // a Query filter to only return approved photos
             builder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);

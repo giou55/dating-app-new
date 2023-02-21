@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wt2VrmfYgv9e4y+pYbdWujXYxSnhNAOLjI41S4V5F1dTJd8onplnUfiTtSiUb3MC/inJ6d+Pb7FcFUvGSNj5IA==",
+  "dgSpecHash": "SlCN2uPAhacdreSPN37uzZL5oUS+ez4tBVclDIRlhBtyCBpLJyCYtCk/kUJNyT/8U1c1lnwTR+t1e/c6LzBQyg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-local\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\giour\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\giour\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

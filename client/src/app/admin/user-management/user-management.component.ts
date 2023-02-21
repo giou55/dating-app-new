@@ -58,7 +58,10 @@ export class UserManagementComponent implements OnInit {
 
   deleteUser(username: string) {
     this.adminService.deleteUser(username).subscribe({
-      next: () => console.log(username)
+      // remove the user from the users array
+      next: () => {
+        this.users?.splice(this.users.findIndex(u => u.username === username), 1)
+      }
     });
   }
 

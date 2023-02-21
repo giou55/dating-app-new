@@ -2427,11 +2427,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-local\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-local\\api\\api.csproj",
+      "projectPath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\api.csproj",
       "packagesPath": "C:\\Users\\giour\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-local\\api\\obj\\",
+      "outputPath": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\giour\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -100,7 +100,7 @@ namespace api.Controllers
             if (user == null) return NotFound();
             _uow.UserRepository.Remove(user);
              if (await _uow.Complete()) return Ok();
-            return BadRequest("Problem deleting user");
+            return BadRequest("Problem deleting the user");
         }
 
         [HttpPost("add-photo")]
