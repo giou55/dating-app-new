@@ -46,9 +46,15 @@ because we use resolver
     <tabset class="member-tabset" #memberTabs>
         <tab heading="Σχετικά με {{member.knownAs}}" (selectTab)="onTabActivated($event)">
             <h4>Περιγραφή</h4>
-            <p>{{member.introduction}}</p>
+            <p 
+              #scroll1
+              style="overflow-y: auto; height: 250px"
+              [scrollTop]="scroll1">{{member.introduction}}</p>
             <h4>Ψάχνει για</h4>
-            <p>{{member.lookingFor}}</p>
+            <p
+              #scroll2
+              style="overflow-y: auto; height: 250px"
+              [scrollTop]="scroll2">{{member.lookingFor}}</p>
         </tab>
         <tab heading="Ενδιαφέροντα" (selectTab)="onTabActivated($event)">
             <h4>Ενδιαφέροντα</h4>
