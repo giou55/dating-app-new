@@ -26,7 +26,7 @@
          -->
 
         <div *ngIf="messages.length === 0">
-            No messages yet... say hi by using the message box below
+            Δεν υπάρχουν ακόμα μηνύματα με τον χρήστη... στείλε εσύ πρώτος ένα μήνυμα!
         </div>
 
         <ul *ngIf="messages.length > 0" class="chat">
@@ -69,11 +69,11 @@
                     [(ngModel)]="messageContent"
                     type="text" 
                     class="form-control input-sm" 
-                    placeholder="Send a private message">
+                    placeholder="Γράψε το μήνυμά σου...">
                 <div class="input-group-append">
                     <button [disabled]="!messageForm.valid || loading" 
                         class="btn btn-primary" type="submit">
-                            Send <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                            Αποστολή <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
                     </button>
                 </div>
             </div>

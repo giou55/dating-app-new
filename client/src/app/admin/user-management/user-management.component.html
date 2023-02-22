@@ -2,8 +2,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th style="width: 30%;">Username</th>
-                <th style="width: 45%;">Active roles</th>
+                <th style="width: 30%;">Όνομα χρήστη</th>
+                <th style="width: 45%;">Ενεργοί ρόλοι</th>
                 <th style="width: 25%;"></th>
             </tr>
         </thead>
@@ -12,8 +12,8 @@
                 <td>{{user.username}}</td>
                 <td>{{user.roles}}</td>
                 <td>
-                    <button (click)="openRolesModal(user)" class="btn btn-info me-1">Edit Roles</button>
-                    <button (click)="deleteUser(user.username)" class="btn btn-danger">Delete</button>
+                    <button (click)="openRolesModal(user)" class="btn btn-info me-1">Επεξεργασία ρόλων</button>
+                    <button (click)="deleteUser(user.username)" class="btn btn-danger">Διαγραφή</button>
                 </td>
             </tr>
         </tbody>

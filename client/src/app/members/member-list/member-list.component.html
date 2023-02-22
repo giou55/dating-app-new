@@ -1,8 +1,8 @@
-<div class="text-center mt-3">
-  <h2>Your matches - {{ pagination?.totalItems }} found</h2>
+<div class="text-center">
+  <h4>Αποτελέσματα - Βρέθηκαν {{ pagination?.totalItems }}</h4>
 </div>
 
-<div class="container mt-3" *ngIf="userParams">
+<div class="container mt-5" *ngIf="userParams">
   <form
     #form="ngForm"
     class="d-flex mb-3"
@@ -10,7 +10,7 @@
     autocomplete="off"
   >
     <div class="d-flex mx-2">
-      <label class="col-form-label">Age from: </label>
+      <label class="col-form-label">Ηλικία από: </label>
       <input
         type="number"
         class="form-control ms-1"
@@ -20,7 +20,7 @@
       />
     </div>
     <div class="d-flex mx-2">
-      <label class="col-form-label">Age to: </label>
+      <label class="col-form-label">ως: </label>
       <input
         type="number"
         class="form-control ms-1"
@@ -31,7 +31,7 @@
     </div>
 
     <div class="d-flex px-2">
-      <label class="col-form-label me-2">Show: </label>
+      <label class="col-form-label me-2">Φύλο: </label>
       <select
         name="gender"
         style="width: 150px"
@@ -44,9 +44,9 @@
       </select>
     </div>
 
-    <button class="btn btn-primary ms-1" type="submit">Apply Filters</button>
+    <button class="btn btn-primary ms-1" type="submit">Εφαρμογή φίλτρων</button>
     <button (click)="resetFilters()" class="btn btn-info ms-1" type="submit">
-      Reset Filters
+      Επαναφορά φίλτρων
     </button>
 
     <div class="col">
@@ -59,7 +59,7 @@
           btnRadio="lastActive"
           (click)="loadMembers()"
         >
-          Last Active
+          Πρόσφατα ενεργά μέλη
         </button>
         <button
           type="button"
@@ -69,20 +69,24 @@
           btnRadio="created"
           (click)="loadMembers()"
         >
-          Newest members
+          Νεότερα μέλη
         </button>
       </div>
     </div>
   </form>
 </div>
 
-<div class="row">
+<div class="row text-center mt-5" *ngIf="!members || members.length === 0">
+  <h5>Δεν βρέθηκαν αποτελέσματα</h5>
+</div>
+
+<div class="row mt-5">
   <div class="col-2" *ngFor="let member of members">
     <app-member-card [member]="member"></app-member-card>
   </div>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<div class="d-flex justify-content-center mt-5" *ngIf="pagination && members && members.length > 0">
   <pagination
     [boundaryLinks]="true"
     [totalItems]="pagination.totalItems"

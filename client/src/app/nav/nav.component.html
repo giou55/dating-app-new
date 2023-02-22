@@ -1,43 +1,52 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
-    <img class="border-0" src="./assets/logo2.png" alt="user photo">
+    <img class="border-0" src="./assets/logo3.png" alt="user photo" />
     <a class="navbar-brand ms-2" routerLink="/" routerLinkActive="active"
-      >Dating App</a
+      >Matcher</a
     >
 
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
       <ng-container *ngIf="accountService.currentUser$ | async">
         <li class="nav-item">
           <a class="nav-link" 
-            routerLink="/members" 
-            [routerLinkActiveOptions]="{exact: true}"
+            routerLink="/" 
+            [routerLinkActiveOptions]="{ exact: true }"
             routerLinkActive="active"
-            >Matches
-          </a
+            >Αρχική</a
           >
         </li>
         <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/members"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active"
+            >Αναζήτηση
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" routerLink="/lists" routerLinkActive="active"
-            >Lists</a
+            >Likes</a
           >
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/messages" routerLinkActive="active"
-            >Messages</a
+            >Μηνύματα</a
           >
         </li>
         <!-- here we're using our custom directive to display or not the link -->
-        <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
+        <li *appHasRole="['Admin', 'Moderator']" class="nav-item">
           <a class="nav-link" routerLink="/admin" routerLinkActive="active"
             >Admin</a
           >
         </li>
+        <!-- here we're using our custom directive to display or not the link -->
+        <li *appHasRole="['Admin', 'Moderator']" class="nav-item">
+          <a class="nav-link" routerLink="/errors" routerLinkActive="active"
+            >Errors</a
+          >
+        </li>
       </ng-container>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/errors" routerLinkActive="active"
-          >Errors</a
-        >
-      </li>
     </ul>
 
     <div
@@ -45,13 +54,22 @@
       *ngIf="accountService.currentUser$ | async as user"
       dropdown
     >
-      <img class="rounded-circle" src="{{user.photoUrl || './assets/user.png'}}" alt="user photo">
-      <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>
-        Welcome {{ user.knownAs }}
+      <img
+        class="rounded-circle"
+        src="{{ user.photoUrl || './assets/user.png' }}"
+        alt="user photo"
+      />
+      <a
+        class="dropdown-toggle text-light text-decoration-none ms-2"
+        dropdownToggle
+      >
+        Καλωσήρθες {{ user.knownAs }}
       </a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
-        <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
-        <a class="dropdown-item" (click)="logout()">Logout</a>
+        <a class="dropdown-item" routerLink="/member/edit"
+          >Επεξεργασία προφίλ</a
+        >
+        <a class="dropdown-item" (click)="logout()">Αποσύνδεση</a>
       </div>
     </div>
 
@@ -68,19 +86,16 @@
         [(ngModel)]="model.username"
         class="form-control me-2"
         type="text"
-        placeholder="Username"
+        placeholder="Όνομα χρήστη"
       />
       <input
         name="password"
         [(ngModel)]="model.password"
         class="form-control me-2"
         type="password"
-        placeholder="Password"
+        placeholder="Κωδικός"
       />
-      <button class="btn btn-success" type="submit">Login</button>
+      <button class="btn btn-success" type="submit">Σύνδεση</button>
     </form>
   </div>
 </nav>
-
-
-

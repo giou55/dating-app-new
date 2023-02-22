@@ -1,8 +1,9 @@
 <div class="text-center mt-3">
-    <h2>{{predicate === 'liked' ? 'Members I like' : 'Members who like me'}}</h2>
+    <!-- <h4>{{predicate === 'liked' ? 'Members I like' : 'Members who like me'}}</h4> -->
+    <h4>Likes</h4>
 </div>
 
-<div class="container mt-3">
+<div class="container mt-5">
     <div class="d-flex">
         <div class="btn-group" name="predicate">
             <button
@@ -12,7 +13,7 @@
               btnRadio="liked"
               (click)="loadLikes()"
             >
-              Members I like
+              Μέλη που με ενδιαφέρουν
             </button>
             <button
               type="button"
@@ -21,9 +22,13 @@
               btnRadio="likedBy"
               (click)="loadLikes()"
             >
-            Members who like me
+            Μέλη που εδιαφέρονται για μένα
             </button>
           </div>
+    </div>
+
+    <div class="row text-center mt-5" *ngIf="!members || members.length === 0">
+      <h5>Δεν υπάρχουν Likes</h5>
     </div>
 
     <div class="row mt-3">
@@ -33,7 +38,7 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<div class="d-flex justify-content-center mt-5" *ngIf="pagination && members && members.length > 0">
   <pagination
     [boundaryLinks]="true"
     [totalItems]="pagination.totalItems"

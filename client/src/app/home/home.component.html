@@ -3,19 +3,20 @@
         <img class="img-fluid mb-5" src="./assets/main-photo.jpg" alt="main photo">
     </div>
     <div *ngIf="!registerMode" style="text-align: center;">
-        <h1>Find your match</h1>
-        <p class="lead">Come on in to view your matches...all you need to do is sign up!</p>
+        <h1>Βρες το ταίρι σου</h1>
+        <p class="lead">Είναι εύκολο να κάνεις νέες γνωριμίες και σχέσεις...ξεκίνα κάνοντας την εγγραφή σου!</p>
         <div class="text-center">
-            <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">Register</button>
-            <button class="btn btn-primary btn-info btn-lg">Learn more</button>
+            <!-- <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">Εγγραφή</button> -->
+            <a routerLink="/register" class="btn btn-primary btn-lg me-2">Εγγραφή</a>
+            <a class="btn btn-primary btn-info btn-lg">Μάθε περισσότερα</a>
         </div>
     </div>
 
-    <div *ngIf="registerMode" class="container">
+    <!-- <div *ngIf="registerMode" class="container">
         <div class="row justify-content-center">
             <div class="col-4">
                 <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

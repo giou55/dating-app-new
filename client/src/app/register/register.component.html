@@ -1,9 +1,14 @@
 <!-- this is a reactive form -->
-<form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off">
-  <h2 class="text-center text-primary">Sign up</h2>
-  <hr />
+<div style="max-width:400px; margin:auto">
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="registerForm.valid && register()"
+    autocomplete="off"
+  >
+    <h2 class="text-center text-primary">Εγγραφή</h2>
+    <hr />
 
-  <!-- old input control without using reusable input component 
+    <!-- old input control without using reusable input component 
   <input
     class="form-control"
     [class.is-invalid]="
@@ -17,69 +22,88 @@
   <div class="invalid-feedback">Please enter a username</div>
   -->
 
-  <div class="mb-3">
-    <label style="margin-right: 10px;">I am a: </label>
-    <label class="form-check-label">
-      <input type="radio" class="form-check-input" value="male" formControlName="gender"> Male
-    </label>
-    <label class="form-check-label">
-      <input type="radio" class="form-check-input ms-3" value="female" formControlName="gender"> Female
-    </label>
-  </div>
+    <div class="mb-3 mt-5">
+      <label style="margin-right: 10px">Είμαι: </label>
+      <label class="form-check-label">
+        <input
+          type="radio"
+          class="form-check-input"
+          value="male"
+          formControlName="gender"
+        />
+        Άνδρας
+      </label>
+      <label class="form-check-label">
+        <input
+          type="radio"
+          class="form-check-input ms-3"
+          value="female"
+          formControlName="gender"
+        />
+        Γυναίκα
+      </label>
+    </div>
 
-  <app-text-input
-    [formControl]="$any(registerForm.controls['username'])"
-    [label]="'Username'"
-  ></app-text-input>
+    <app-text-input
+      [formControl]="$any(registerForm.controls['username'])"
+      [label]="'Όνομα χρήστη'"
+    ></app-text-input>
 
-  <app-text-input
-    [formControl]="$any(registerForm.controls['knownAs'])"
-    [label]="'Known As'"
-  ></app-text-input>
+    <app-text-input
+      [formControl]="$any(registerForm.controls['knownAs'])"
+      [label]="'Ψευδώνυμο'"
+    ></app-text-input>
 
-  <app-date-picker
-    [formControl]="$any(registerForm.controls['dateOfBirth'])"
-    [label]="'Date of Birth'"
-    [maxDate]="maxDate"
-  ></app-date-picker>
+    <app-date-picker
+      [formControl]="$any(registerForm.controls['dateOfBirth'])"
+      [label]="'Ημερομηνία γέννησης'"
+      [maxDate]="maxDate"
+    ></app-date-picker>
 
-  <app-text-input
-    [formControl]="$any(registerForm.controls['city'])"
-    [label]="'City'"
-  ></app-text-input>
+    <app-text-input
+      [formControl]="$any(registerForm.controls['city'])"
+      [label]="'Πόλη'"
+    ></app-text-input>
 
-  <app-text-input
-    [formControl]="$any(registerForm.controls['country'])"
-    [label]="'Country'"
-  ></app-text-input>
+    <app-text-input
+      [formControl]="$any(registerForm.controls['country'])"
+      [label]="'Χώρα'"
+    ></app-text-input>
 
-  <app-text-input
-    [formControl]="$any(registerForm.controls['password'])"
-    [label]="'Password'"
-    [type]="'password'"
-  ></app-text-input>
+    <app-text-input
+      [formControl]="$any(registerForm.controls['password'])"
+      [label]="'Password'"
+      [type]="'password'"
+    ></app-text-input>
 
-  <app-text-input
-    [formControl]="$any(registerForm.controls['confirmPassword'])"
-    [label]="'Confirm Password'"
-    [type]="'password'"
-  ></app-text-input>
+    <app-text-input
+      [formControl]="$any(registerForm.controls['confirmPassword'])"
+      [label]="'Επικύρωση κωδικού'"
+      [type]="'password'"
+    ></app-text-input>
 
-  <div class="row" *ngIf="validationErrors">
-    <ul class="text-danger">
-      <li *ngFor="let error of validationErrors">
-        {{error}}
-      </li>
-    </ul>
-  </div>
+    <div class="row" *ngIf="validationErrors">
+      <ul class="text-danger">
+        <li *ngFor="let error of validationErrors">
+          {{ error }}
+        </li>
+      </ul>
+    </div>
 
-  <div class="text-center">
-    <button [disabled]="!registerForm.valid" class="btn btn-success me-2" type="submit">Register</button>
-    <button class="btn btn-default" type="button" (click)="cancel()">
+    <div class="text-center">
+      <button
+        [disabled]="!registerForm.valid"
+        class="btn btn-success me-2"
+        type="submit"
+      >
+        Εγγραφή
+      </button>
+      <!-- <button class="btn btn-default" type="button" (click)="cancel()">
       Cancel
-    </button>
-  </div>
-</form>
+    </button> -->
+    </div>
+  </form>
+</div>
 
 <!-- 
 <p>Form value: {{registerForm.value | json}}</p> ------displays all values of form as object

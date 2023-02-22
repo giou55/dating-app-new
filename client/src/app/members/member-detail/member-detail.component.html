@@ -16,27 +16,27 @@ because we use resolver
           <i class="fa fa-user-circle text-success"></i> Online now
         </div>
         <div>
-          <strong>Location:</strong>
+          <strong>Τοποθεσία:</strong>
           <p>{{ member.city }}, {{ member.country }}</p>
         </div>
         <div>
-          <strong>Age:</strong>
+          <strong>Ηλικία:</strong>
           <p>{{ member.age }}</p>
         </div>
         <div>
-          <strong>Last active:</strong>
+          <strong>Τελευταία ενεργός:</strong>
           <!-- for Last Active we use ngx-pipes package -->
           <p>{{ lastActiveDate | timeAgo }}</p>
         </div>
         <div>
-          <strong>Member since:</strong>
+          <strong>Μέλος από:</strong>
           <p>{{ member.created | date: 'dd MMM yyyy' }}</p>
         </div>
       </div>
       <div class="card-footer">
         <div class="btn-group d-flex">
           <button class="btn btn-primary">Like</button>
-          <button (click)="selectTab('Messages')" class="btn btn-success">Messages</button>
+          <button (click)="selectTab('Μηνύματα')" class="btn btn-success">Μηνύματα</button>
         </div>
       </div>
     </div>
@@ -44,20 +44,20 @@ because we use resolver
 
   <div class="col-8">
     <tabset class="member-tabset" #memberTabs>
-        <tab heading="About {{member.knownAs}}" (selectTab)="onTabActivated($event)">
-            <h4>Description</h4>
+        <tab heading="Σχετικά με {{member.knownAs}}" (selectTab)="onTabActivated($event)">
+            <h4>Περιγραφή</h4>
             <p>{{member.introduction}}</p>
-            <h4>Looking for</h4>
+            <h4>Ψάχνει για</h4>
             <p>{{member.lookingFor}}</p>
         </tab>
-        <tab heading="Interests" (selectTab)="onTabActivated($event)">
-            <h4>Interests</h4>
+        <tab heading="Ενδιαφέροντα" (selectTab)="onTabActivated($event)">
+            <h4>Ενδιαφέροντα</h4>
             <p>{{member.interests}}</p>
         </tab>
-        <tab heading="Photos" (selectTab)="onTabActivated($event)">
+        <tab heading="Φωτογραφίες" (selectTab)="onTabActivated($event)">
             <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
         </tab>
-        <tab heading="Messages" (selectTab)="onTabActivated($event)">
+        <tab heading="Μηνύματα" (selectTab)="onTabActivated($event)">
             <!-- we no longer need the messages inside here, because we receive them from SignalR
             <app-member-messages [messages]="messages" [username]="member.userName"></app-member-messages> -->
             <app-member-messages [username]="member.userName"></app-member-messages>
