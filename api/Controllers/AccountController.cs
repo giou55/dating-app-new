@@ -30,7 +30,7 @@ namespace api.Controllers
         [HttpPost("register")] // api/account/register
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if(await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+            if(await UserExists(registerDto.Username)) return BadRequest("Το username αυτό χρησιμοποιείται από άλλον χρήστη");
 
             var user = _mapper.Map<AppUser>(registerDto);
 

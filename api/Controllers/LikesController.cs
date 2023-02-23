@@ -26,12 +26,12 @@ namespace api.Controllers
 
             if (likedUser == null) return NotFound();
 
-            if (sourceUser.UserName == username) return BadRequest("You cannot like yourself");
+            if (sourceUser.UserName == username) return BadRequest("Δεν μπορείτε να κάνετε like στον εαυτό σας");
 
             var userLike = await _uow.LikesRepository.GetUserLike(sourceUserId, likedUser.Id);
 
             // userLike must be null, which means than nothing found at database
-            if (userLike != null) return BadRequest("You already like this user");
+            if (userLike != null) return BadRequest("Έχετε ήδη κάνει like στον χρήστη");
 
             userLike = new UserLike 
             {

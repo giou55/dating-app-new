@@ -1,14 +1,11 @@
 <div class="row" *ngIf="member">
   <div class="col-4">
-    <h3>Your profile</h3>
+    <h3>Το προφίλ σας</h3>
   </div>
 
   <div class="col-8">
     <div class="alert alert-info pb-0" *ngIf="editForm.dirty">
-      <p>
-        <strong>Information: </strong>You have made changes. Any unsaved changes
-        will be lost
-      </p>
+      <p>Έχουν γίνει αλλαγές. Κάντε αποθήκευση αλλιώς οι αλλαγές θα χαθούν</p>
     </div>
   </div>
 
@@ -22,20 +19,20 @@
         />
         <div class="card-body">
           <div>
-            <strong>Location:</strong>
+            <strong>Τοποθεσία:</strong>
             <p>{{ member.city }}, {{ member.country }}</p>
           </div>
           <div>
-            <strong>Age:</strong>
+            <strong>Ηλικία:</strong>
             <p>{{ member.age }}</p>
           </div>
           <div>
-            <strong>Last active:</strong>
+            <strong>Τελευταία ενεργός:</strong>
             <!-- for Last Active we use ngx-pipes package -->
             <p>{{ lastActiveDate | timeAgo }}</p>
           </div>
           <div>
-            <strong>Member since:</strong>
+            <strong>Μέλος από:</strong>
             <p>{{ member.created | date : "dd MMM yyyy" }}</p>
           </div>
         </div>
@@ -46,7 +43,7 @@
             form="editForm"
             class="btn btn-success col-12"
           >
-            Save changes
+            Αποθήκευση
           </button>
         </div>
       </div>
@@ -54,9 +51,9 @@
 
     <div class="col-8">
       <tabset class="member-tabset">
-        <tab heading="About {{ member.knownAs }}">
+        <tab heading="Σχετικά με {{ member.knownAs }}">
           <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
-            <h5 class="mt-2">Description</h5>
+            <h5 class="mt-2">Περιγραφή</h5>
             <textarea
               class="form-control"
               [(ngModel)]="member.introduction"
@@ -64,7 +61,7 @@
               rows="6"
             >
             </textarea>
-            <h5 class="mt-2">Looking for</h5>
+            <h5 class="mt-2">Ψάχνω για</h5>
             <textarea
               class="form-control"
               [(ngModel)]="member.lookingFor"
@@ -72,7 +69,7 @@
               rows="6"
             >
             </textarea>
-            <h5 class="mt-2">Interests</h5>
+            <h5 class="mt-2">Ενδιαφέροντα</h5>
             <textarea
               class="form-control"
               [(ngModel)]="member.interests"
@@ -80,16 +77,16 @@
               rows="6"
             >
             </textarea>
-            <h5 class="mt-2">Location Details:</h5>
+            <h5 class="mt-2">Τοποθεσία:</h5>
             <div class="d-flex flex-row align-items-center">
-              <label for="city">City: </label>
+              <label for="city">Πόλη: </label>
               <input
                 type="text"
                 [(ngModel)]="member.city"
                 name="city"
                 class="form-control mx-2"
               />
-              <label for="country">Country: </label>
+              <label for="country">Χώρα: </label>
               <input
                 type="text"
                 [(ngModel)]="member.country"
@@ -99,7 +96,7 @@
             </div>
           </form>
         </tab>
-        <tab heading="Edit Photos">
+        <tab heading="Επεξεργασία φωτογραφιών">
           <app-photo-editor [member]="member"></app-photo-editor>
         </tab>
       </tabset>
