@@ -45,19 +45,19 @@ because we use resolver
   <div class="col-8">
     <tabset class="member-tabset" #memberTabs>
         <tab heading="Σχετικά με {{member.knownAs}}" (selectTab)="onTabActivated($event)">
-            <h4>Περιγραφή</h4>
+            <h5>Περιγραφή</h5>
             <p 
               #scroll1
               style="overflow-y: auto; height: 250px"
               [scrollTop]="scroll1">{{member.introduction}}</p>
-            <h4>Ψάχνει για</h4>
+            <h5>Ψάχνει για</h5>
             <p
               #scroll2
               style="overflow-y: auto; height: 250px"
               [scrollTop]="scroll2">{{member.lookingFor}}</p>
         </tab>
         <tab heading="Ενδιαφέροντα" (selectTab)="onTabActivated($event)">
-            <h4>Ενδιαφέροντα</h4>
+            <h5>Ενδιαφέροντα</h5>
             <p>{{member.interests}}</p>
         </tab>
         <tab heading="Φωτογραφίες" (selectTab)="onTabActivated($event)">

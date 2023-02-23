@@ -53,14 +53,14 @@ export class MemberMessagesComponent implements OnInit {
   // this.messageService.sendMessage is returning a promise
   sendMessage() {
     if (!this.username) return;
-    this.loading = true;
+    this.loading = true; // start the loading spinner
       this.messageService.sendMessage(this.username, this.messageContent)
         .then(() => {
         // we don't need to do anything with the message we get back,
         // because messageThread$ observable from MessageService class is handling that
         this.messageForm?.reset();
         })
-        .finally(() => this.loading = false);
+        .finally(() => this.loading = false); // stop the loading spinner
   }
 
 }
