@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   validationErrors: string[] | undefined;
 
   constructor(
-    private accountService: AccountService,
+    public accountService: AccountService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private router: Router
@@ -87,19 +87,24 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    const dob = this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);
+    if (localStorage.getItem('user') === null) {
+      const dob = this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);
 
-    // we update the value of dateOfBirth with the new value
-    const values = {...this.registerForm.value, dateOfBirth: dob};
+      // we update the value of dateOfBirth with the new value
+      const values = {...this.registerForm.value, dateOfBirth: dob};
 
-    this.accountService.register(values).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/members');
-      },
-      error: error => {
-        this.validationErrors = error;
-      }
-    })
+      this.accountService.register(values).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/members');
+        },
+        error: error => {
+          this.validationErrors = error;
+        }
+      })
+    }
+    else {
+      this.toastr.error('Πρέπει να αποσυνδεθείς για να κάνεις εγγραφή');
+    }
   }
 
   cancel() {
