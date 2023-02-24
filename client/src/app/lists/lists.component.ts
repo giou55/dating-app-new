@@ -12,7 +12,7 @@ export class ListsComponent implements OnInit {
   members: Member[] | undefined;
   predicate = 'liked';
   pageNumber = 1;
-  pageSize = 5;
+  pageSize = 12;
   pagination: Pagination | undefined;
   
   constructor(private memberService: MembersService) { }

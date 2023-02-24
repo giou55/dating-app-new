@@ -7,7 +7,7 @@ namespace api.Helpers
         // if the client want to get users with no query string,
         // then our API is going to use these default values 
         public int PageNumber { get; set; } = 1;
-        private int _pageSize = 10;
+        private int _pageSize = 12;
         public int PageSize
         {
             // get { return _pageSize; }

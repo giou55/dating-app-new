@@ -1,0 +1,12 @@
+Για το pagination ρυθμίζουμε πόσα μέλη θα εμφανίζονται σε κάθε σελίδα:
+για την σελίδα Likes στο αρχείο lists/lists.component.ts
+για την σελίδα Αναζήτηση στο αρχείο client/src/app/_models/userParams.ts
+
+if the client want to get users with no query string,
+then our API is going to use these default values
+μέσα στο αρχείο api/Helpers/PaginationParams.cs 
+---------------------------------------------------------------------------
+Οι ρυθμίσεις για το validation του password και του username
+όταν κάνει register ο χρήστης 
+βρίσκονται στο αρχείο api/Extensions/IdentityServiceExtensions.cs
+--------------------------------------------------------------------------
