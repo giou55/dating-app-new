@@ -1,0 +1,7 @@
+.username {
+    color: black;
+}
+.username:hover {
+    font-weight: bold;
+    background-color: #f8f8f8;
+}
