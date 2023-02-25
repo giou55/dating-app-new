@@ -27,8 +27,9 @@ ng build
 
 ----------------------------------------------------------------------------
 
-Αφού έχουμε εγκαταστημένο το docker, γράφουμε στο terminal:
+Αφού πρώτα τρέξουμε στον υπολογιστή μας το Docker Desktop, γράφουμε στο terminal:
 docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
+έτσι δημιουργείται το container με το Postgres
 και τρέχει ο PostgreSQL server στο localhost:5432 ή 0.0.0.0:5432,
 και μπορούμε να συνδεθούμε
 
@@ -39,7 +40,7 @@ PostgreSQL (PostgreSQL Management Tool by Chris Kolkman)
 
 ------------------------------------------------------------------------------
 
-Μέσα από το NuGet gallery εγκαθιστάμε το package:
+Μέσα από το NuGet gallery εγκαθιστούμε το package:
 Npgsql.EntityFrameworkCore.PostgreSQL (by Shay Rojansky, Austin Drenski, Yoh Deadfall)
 
 ------------------------------------------------------------------------------------
@@ -50,7 +51,7 @@ dotnet ef database drop
 
 -----------------------------------------------------------------------------------
 
-Πάμε στο αρχείο appsettings.Development.json και αλλάζουμε το connection string:
+Πάμε στο αρχείο api/appsettings.Development.json και αλλάζουμε το connection string:
 
 "ConnectionStrings": {
     "DefaultConnection": "Data source=datingapp.db"
@@ -62,7 +63,7 @@ dotnet ef database drop
 
 ------------------------------------------------------------------------------------
 
-Κάνουμε την παρακάτω αλλαγή στο αρχείο ApplicationServiceExtensions.cs:
+Κάνουμε την παρακάτω αλλαγή στο αρχείο api/Extensions/ApplicationServiceExtensions.cs:
 
 services.AddDbContext<DataContext>(options => 
 {
@@ -76,8 +77,8 @@ services.AddDbContext<DataContext>(options =>
 
 ----------------------------------------------------------------------------------------
 
-Διαγράφουμε τον φάκελο Migrations μαζί με τα περιεχόμενά του.
-Και μετά γράφουμε:
+Διαγράφουμε τον φάκελο api/Data/Migrations μαζί με τα περιεχόμενά του.
+Πάμε στον φάκελο api στο terminal και γράφουμε:
 dotnet ef migrations add PostgresInitial -o Data/Migrations
 και δημιουργείται ένα νέο μεγάλο migration για το Postgres
 
@@ -98,8 +99,8 @@ dotnet run
 
 -----------------------------------------------------------------------------------
 
-Πάμε στο localhost:5001 να δούμε την εφαρμογή μας να τρέχει,
-αυτή την φορά χρησιμοποιώντας σαν βάση την Postgres
+Πάμε στο localhost:5001 να δούμε την εφαρμογή μας να τρέχει locally,
+αυτή την φορά χρησιμοποιώντας ως βάση την Postgres
 
 -----------------------------------------------------------------------------------
 
@@ -110,13 +111,14 @@ applications from Visual Studio Code.
 --------------------------------------------------------------------------------
 
 Τώρα θα κάνουμε dockerize την εφαρμογή μας, δηλαδή θα φτιάξουμε το docker image.
-Αυτό χρειάζεται για να κάνουμε deploy το app στο Fly.io (deploy via Dockerfile)
+Αυτό χρειάζεται για να γίνει το deploy στο Fly.io (με την επιλογή deploy via Dockerfile)
+
 Μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα Dockerfile 
-και γράφουμε τις εντολές.
+και γράφουμε τις κατάλληλες εντολές.
 Επίσης μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα .dockerignore
 και γράφουμε τα αρχεία που δεν θέλουμε.
 
-Μετά στο terminal μέσα στο api folder γράφουμε:
+Αφού σταματήσουμε τον server, στο terminal μέσα στο api folder γράφουμε:
 docker build -t giourme/datingapp .
 και δημιουργείται το docker image
 
@@ -125,6 +127,7 @@ docker build -t giourme/datingapp .
 Τώρα θα τρέξουμε το docker image που φτιάξαμε.
 Μετά στο terminal μέσα στο api folder γράφουμε:
 docker run --rm -it -p 8080:80 giourme/datingapp:latest
+και η εφαρμογή τρέχει τώρα σε production mode
 
 -------------------------------------------------------------------------------
 
@@ -135,10 +138,16 @@ docker run --rm -it -p 8080:80 giourme/datingapp:latest
 
 "DefaultConnection": "Server=host.docker.internal; Port=5432; User Id=postgres; Password=postgrespw; Database=datingapp"
 
-Για κάθε αλλαγή κάνουμε ξανά 
-docker build -t giourme/datingapp .
-και μετά 
-docker run --rm -it -p 8080:80 giourme/datingapp:latest
+---------------------------------------------------------------------------------
+
+Για κάθε αλλαγή στον κώδικα κάνουμε ξανά 
+ng build (στον φάκελο client)
+για να δημιουργηθούν ξανά τα στατικά αρχεία μέσα στον φάκελο api/wwwroot
+μετά πάλι
+docker build -t giourme/datingapp . (στον φάκελο api)
+για να φτιαχτεί ξανά το image,
+και μετά πάλι 
+docker run --rm -it -p 8080:80 giourme/datingapp:latest (στον φάκελο api)
 
 Εννοείται οτι ο Postgres server τρέχει ήδη στο docker.
 

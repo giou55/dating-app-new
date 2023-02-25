@@ -20,8 +20,8 @@ namespace api.Extensions
             // and add some code inside Program.cs
             services.AddDbContext<DataContext>(options => 
             {
-                options.UseSqlite(config.GetConnectionString("DefaultConnection"));
-                //options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+                //options.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
 
             services.AddCors();

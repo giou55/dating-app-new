@@ -1,0 +1,93 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\3rdpartylicenses.txt",
+      "PackagePath": "staticwebassets\\3rdpartylicenses.txt"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\logo.png",
+      "PackagePath": "staticwebassets\\assets\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\logo2.png",
+      "PackagePath": "staticwebassets\\assets\\logo2.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\logo3.png",
+      "PackagePath": "staticwebassets\\assets\\logo3.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\main-photo.jpg",
+      "PackagePath": "staticwebassets\\assets\\main-photo.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\members.jpg",
+      "PackagePath": "staticwebassets\\assets\\members.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\user.png",
+      "PackagePath": "staticwebassets\\assets\\user.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\fontawesome-webfont.2b13baa7dd4f54c9.eot",
+      "PackagePath": "staticwebassets\\fontawesome-webfont.2b13baa7dd4f54c9.eot"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\fontawesome-webfont.8a7cb27d142e3e19.ttf",
+      "PackagePath": "staticwebassets\\fontawesome-webfont.8a7cb27d142e3e19.ttf"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\fontawesome-webfont.cf011583fb81df9f.woff",
+      "PackagePath": "staticwebassets\\fontawesome-webfont.cf011583fb81df9f.woff"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\fontawesome-webfont.da909aa098b0ee2d.svg",
+      "PackagePath": "staticwebassets\\fontawesome-webfont.da909aa098b0ee2d.svg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\fontawesome-webfont.e9955780856cf8aa.woff2",
+      "PackagePath": "staticwebassets\\fontawesome-webfont.e9955780856cf8aa.woff2"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\main.4e72700f57bfcc1f.js",
+      "PackagePath": "staticwebassets\\main.4e72700f57bfcc1f.js"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\polyfills.d7bd9d69524573e2.js",
+      "PackagePath": "staticwebassets\\polyfills.d7bd9d69524573e2.js"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\runtime.01fec06f14767966.js",
+      "PackagePath": "staticwebassets\\runtime.01fec06f14767966.js"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\styles.3e781c5c335f3a9c.css",
+      "PackagePath": "staticwebassets\\styles.3e781c5c335f3a9c.css"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.api.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.api.props",
+      "PackagePath": "build\\api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.api.props",
+      "PackagePath": "buildMultiTargeting\\api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.api.props",
+      "PackagePath": "buildTransitive\\api.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

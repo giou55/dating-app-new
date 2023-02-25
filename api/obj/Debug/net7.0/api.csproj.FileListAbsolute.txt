@@ -244,3 +244,5 @@ C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app-new\api\obj\D
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app-new\api\obj\Debug\net7.0\api.genruntimeconfig.cache
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app-new\api\obj\Debug\net7.0\ref\api.dll
 C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app-new\api\bin\Debug\net7.0\Data\UserSeedData-old.json
+C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app-new\api\bin\Debug\net7.0\api.staticwebassets.runtime.json
+C:\Users\giour\OneDrive\Υπολογιστής\Projects\dating-app-new\api\bin\Debug\net7.0\appsettings.json
