@@ -156,8 +156,8 @@ docker run --rm -it -p 8080:80 giourme/datingapp:latest (στον φάκελο a
 
 --------------------------------------------------------------------------------
 
-Τώρα θα στείλουμε το image στο docker hub repository για να είναι διαθέσιμο στις 
-cloud πλατφόρμες όπου θα γίνει το deploy.
+Τώρα θα στείλουμε το image στο docker hub repository για να είναι διαθέσιμο 
+στις cloud πλατφόρμες για να γίνει το deploy.
 Μετά στο terminal μέσα στο api folder γράφουμε:
 docker push giourme/datingapp:latest
 
@@ -165,7 +165,6 @@ docker push giourme/datingapp:latest
 docker login 
 ή βάζοντας και τα credentials
 docker login -u <username> -p <password>
-docker login -u giourme -p dckr_pat_1wW-L7l4VjT0xfA2L_KnuAJ-TXc
 
 -------------------------------------------------------------------------------
 
@@ -195,7 +194,7 @@ Hostname: datingapp-gg.fly.dev
 Για να δούμε τα μυστικά δεδομένα της εφαρμογής:
 fly secrets list
 
-Για την δική μας εφαρμογή θα εμφανίσει το URL για τη σύνδεση με την βάση.
+Για την εφαρμογή μας θα εμφανίσει το DATABASE_URL για τη σύνδεση με την βάση.
 
 Θα προσθέσουμε το ApiSecret και το token key, γράφοντας τα παρακάτω:
 fly secrets set CloudinarySettings__ApiSecret=************
@@ -209,10 +208,10 @@ ApplicationServiceExtensions.cs και Program.cs
 για να μπορεί η εφαρμογή μας να φτιάξει το connection string για την βάση
 διαβάζοντας το Environment Variable "DATABASE_URL" του fly.io
 
-Μετά κάνουμε ξανά build
-docker build -t giourme/datingapp .
+Μετά κάνουμε ξανά
+docker build -t giourme/datingapp . (στον φάκελο api)
 και ξανά push
-docker push giourme/datingapp:latest
+docker push giourme/datingapp:latest (στον φάκελο api)
 
 ------------------------------------------------------------------------------
 
