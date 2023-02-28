@@ -1,6 +1,6 @@
-# fly.toml file generated for datingapp-gg on 2023-02-09T18:21:21+02:00
+# fly.toml file generated for matcher-datingapp on 2023-02-28T11:23:23+02:00
 
-app = "datingapp-gg"
+app = "matcher-datingapp"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

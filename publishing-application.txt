@@ -171,7 +171,7 @@ docker login -u <username> -p <password>
 Εγκατάσταση του fly.io στα Windows:
 iwr https://fly.io/install.ps1 -useb | iex
 
-Γράφουμε τις παρακάτω τρεις εντολές:
+Γράφουμε τις παρακάτω τρεις εντολές: (στον root φάκελο)
 flyctl auth signup
 fly auth login
 flyctl launch --image giourme/datingapp:latest
@@ -199,7 +199,10 @@ fly secrets list
 Θα προσθέσουμε το ApiSecret και το token key, γράφοντας τα παρακάτω:
 fly secrets set CloudinarySettings__ApiSecret=************
 και μετά
-fly secrets set TokenKey=*******************
+fly secrets set TokenKey=***********************
+
+Για το TokenKey πάω delinea.com και κάνω generate ένα password,
+αφού πρώτα ξετσεκάρω το Allow Symbols.
 
 -------------------------------------------------------------------------------
 
