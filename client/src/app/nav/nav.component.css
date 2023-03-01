@@ -2,8 +2,13 @@
     cursor: pointer;
 }
 
-img {
+img.logo {
     max-height: 60px;
+    display: inline;
+}
+
+img.user {
+    max-height: 40px;
     border: 2px solid white;
     display: inline;
 }
