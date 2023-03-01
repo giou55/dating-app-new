@@ -18,33 +18,33 @@ builder.Services.AddIdentityServices(builder.Configuration);
 
 
 // we add this code for deploying our app to fly.io
-var connString = "";
+// var connString = "";
 
-if (builder.Environment.IsDevelopment()) 
-    connString = builder.Configuration.GetConnectionString("DefaultConnection");
-else 
-{
-// Use connection string provided at runtime by Fly.io.
-    var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+// if (builder.Environment.IsDevelopment())
+//     connString = builder.Configuration.GetConnectionString("DefaultConnection");
+// else
+// {
+// // Use connection string provided at runtime by Fly.io.
+//     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-    // Parse connection URL to connection string for Npgsql
-    connUrl = connUrl.Replace("postgres://", string.Empty);
-    var pgUserPass = connUrl.Split("@")[0];
-    var pgHostPortDb = connUrl.Split("@")[1];
-    var pgHostPort = pgHostPortDb.Split("/")[0];
-    var pgDb = pgHostPortDb.Split("/")[1];
-    var pgUser = pgUserPass.Split(":")[0];
-    var pgPass = pgUserPass.Split(":")[1];
-    var pgHost = pgHostPort.Split(":")[0];
-    var pgPort = pgHostPort.Split(":")[1];
+//     // Parse connection URL to connection string for Npgsql
+//     connUrl = connUrl.Replace("postgres://", string.Empty);
+//     var pgUserPass = connUrl.Split("@")[0];
+//     var pgHostPortDb = connUrl.Split("@")[1];
+//     var pgHostPort = pgHostPortDb.Split("/")[0];
+//     var pgDb = pgHostPortDb.Split("/")[1];
+//     var pgUser = pgUserPass.Split(":")[0];
+//     var pgPass = pgUserPass.Split(":")[1];
+//     var pgHost = pgHostPort.Split(":")[0];
+//     var pgPort = pgHostPort.Split(":")[1];
 
-    connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
-}
+//     connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
+// }
 
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseNpgsql(connString);
-});
+// builder.Services.AddDbContext<DataContext>(opt =>
+// {
+//     opt.UseNpgsql(connString);
+// });
 // end of code for deploy to fly.io
 
 
@@ -53,23 +53,23 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseCors(policyBuilder => 
+app.UseCors(policyBuilder =>
     policyBuilder
         .AllowAnyHeader()
         .AllowAnyMethod()
-        // we need to add AllowCredentials, otherwise we get a problem from SignalR 
+        // we need to add AllowCredentials, otherwise we get a problem from SignalR
         // authenticating to the server from the client
-        .AllowCredentials() 
+        .AllowCredentials()
         .WithOrigins("http://localhost:4200")
 );
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// when we say default files, it means that is going to look for the index.html from WWW root folder 
+// when we say default files, it means that is going to look for the index.html from WWW root folder
 app.UseDefaultFiles();
 
-// when we say static files, it means that is going to look a WWW root folder and 
+// when we say static files, it means that is going to look a WWW root folder and
 // serve the content from inside there
 app.UseStaticFiles();
 
@@ -110,8 +110,8 @@ try
 
     // finally we use this approach to remove all of connections from our database,
     // using a static method from Seed.cs
-    await Seed.ClearConnections(context);  
-    
+    await Seed.ClearConnections(context);
+
     //await Seed.SeedUsers(context);
 
     // we add this because we are using Identity for authentication and roles

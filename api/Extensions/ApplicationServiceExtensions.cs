@@ -18,22 +18,22 @@ namespace api.Extensions
             // when we're going to deploy in fly.io
             // we must remove these lines,
             // and add some code inside Program.cs
-            // services.AddDbContext<DataContext>(options => 
-            // {
-            //     //options.UseSqlite(config.GetConnectionString("DefaultConnection"));
-            //     options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-            // });
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                //options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
-            
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            // "CloudinarySettings" is a string key taken from appsetting.json 
+            // "CloudinarySettings" is a string key taken from appsetting.json
             // <CloudinarySettings> is from Helpers.CloudinarySettings.cs file
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
 
-            // that is saying whenever a IPhotoService is required, 
+            // that is saying whenever a IPhotoService is required,
             // create a PhotoService and pass that in
             services.AddScoped<IPhotoService, PhotoService>();
 
@@ -49,7 +49,7 @@ namespace api.Extensions
 
             services.AddSignalR();
 
-            // we want the dictionary of OnlineUsers to be available application wide 
+            // we want the dictionary of OnlineUsers to be available application wide
             // for every user that connects to our service
             services.AddSingleton<PresenceTracker>();
 
