@@ -12,10 +12,10 @@
 
 We configure API server to serve default and static files inside Program.cs:
 
-// when we say default files, it means that is going to look for the index.html from WWW root folder 
+// when we say default files, it means that is going to look for the index.html from WWW root folder
 app.UseDefaultFiles();
 
-// when we say static files, it means that is going to look a WWW root folder and 
+// when we say static files, it means that is going to look a WWW root folder and
 // serve the content from inside there
 app.UseStaticFiles();
 
@@ -45,7 +45,7 @@ Npgsql.EntityFrameworkCore.PostgreSQL (by Shay Rojansky, Austin Drenski, Yoh Dea
 
 ------------------------------------------------------------------------------------
 
-Πάμε στον φάκελο api, ελέγχουμε οτι ο local server έχει σταματήσει, 
+Πάμε στον φάκελο api, ελέγχουμε οτι ο local server έχει σταματήσει,
 και διαγράφουμε την υπάρχουσα βάση SQLite:
 dotnet ef database drop
 
@@ -65,12 +65,12 @@ dotnet ef database drop
 
 Κάνουμε την παρακάτω αλλαγή στο αρχείο api/Extensions/ApplicationServiceExtensions.cs:
 
-services.AddDbContext<DataContext>(options => 
+services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlite(config.GetConnectionString("DefaultConnection"));
 });
 
-services.AddDbContext<DataContext>(options => 
+services.AddDbContext<DataContext>(options =>
 {
     options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
 });
@@ -87,9 +87,9 @@ dotnet ef migrations add PostgresInitial -o Data/Migrations
 Τρέχουμε τον server, να τρέξουν και τα migrations, να φτιαχτεί η βάση,
 και να γίνει το seeding των users:
 dotnet run
-Αν υπάρξει πρόβλημα στα migrations και στην δημιουργία της βάσης, 
+Αν υπάρξει πρόβλημα στα migrations και στην δημιουργία της βάσης,
 βρίσκουμε το πρόβλημα και κάνουμε πάλι:
-dotnet ef database drop 
+dotnet ef database drop
 και μετά πάλι:
 dotnet run
 
@@ -105,7 +105,7 @@ dotnet run
 -----------------------------------------------------------------------------------
 
 Εγκαθιστάμε το Docker extension για το VS Code (by Microsoft)
-The Docker extension makes it easy to build, manage, and deploy containerized 
+The Docker extension makes it easy to build, manage, and deploy containerized
 applications from Visual Studio Code.
 
 --------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ applications from Visual Studio Code.
 Τώρα θα κάνουμε dockerize την εφαρμογή μας, δηλαδή θα φτιάξουμε το docker image.
 Αυτό χρειάζεται για να γίνει το deploy στο Fly.io (με την επιλογή deploy via Dockerfile)
 
-Μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα Dockerfile 
+Μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα Dockerfile
 και γράφουμε τις κατάλληλες εντολές.
 Επίσης μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα .dockerignore
 και γράφουμε τα αρχεία που δεν θέλουμε.
@@ -132,7 +132,7 @@ docker run --rm -it -p 8080:80 giourme/datingapp:latest
 -------------------------------------------------------------------------------
 
 Για να μπορεί η εφαρμογή μας να συνδεθεί με την Postgres μέσα στο Docker,
-πρέπει να έχουμε αλλάξουμε τον server στο αρχείο appsettings.json: 
+πρέπει να έχουμε αλλάξουμε τον server στο αρχείο appsettings.json:
 
 "DefaultConnection": "Server=localhost; Port=5432; User Id=postgres; Password=postgrespw; Database=datingapp"
 
@@ -140,29 +140,31 @@ docker run --rm -it -p 8080:80 giourme/datingapp:latest
 
 ---------------------------------------------------------------------------------
 
-Για κάθε αλλαγή στον κώδικα κάνουμε ξανά 
+Για κάθε αλλαγή στον κώδικα κάνουμε ξανά
 ng build (στον φάκελο client)
 για να δημιουργηθούν ξανά τα στατικά αρχεία μέσα στον φάκελο api/wwwroot
 μετά πάλι
 docker build -t giourme/datingapp . (στον φάκελο api)
 για να φτιαχτεί ξανά το image,
-και μετά πάλι 
+και μετά πάλι
 docker run --rm -it -p 8080:80 giourme/datingapp:latest (στον φάκελο api)
 
 Εννοείται οτι ο Postgres server τρέχει ήδη στο docker.
+Αν δεν τρέχει, γράφουμε:
+docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
 
 Τώρα μπορούμε να δούμε την εφαρμογή μας να τρέχει στο localhost,
 αυτή τη φορά με docker και Postgres.
 
 --------------------------------------------------------------------------------
 
-Τώρα θα στείλουμε το image στο docker hub repository για να είναι διαθέσιμο 
+Τώρα θα στείλουμε το image στο docker hub repository για να είναι διαθέσιμο
 στις cloud πλατφόρμες για να γίνει το deploy.
 Μετά στο terminal μέσα στο api folder γράφουμε:
 docker push giourme/datingapp:latest
 
 Αν δεν έχουμε access, πρέπει να κάνουμε login:
-docker login 
+docker login
 ή βάζοντας και τα credentials
 docker login -u <username> -p <password>
 
@@ -219,7 +221,7 @@ docker push giourme/datingapp:latest (στον φάκελο api)
 ------------------------------------------------------------------------------
 
 Μετά κάνουμε το deploy:
-fly deploy
+fly deploy (στον root φάκελο)
 
 --------------------------------------------------------------------------------
 

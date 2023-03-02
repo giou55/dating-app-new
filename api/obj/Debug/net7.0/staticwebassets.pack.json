@@ -17,8 +17,20 @@
       "PackagePath": "staticwebassets\\assets\\logo3.png"
     },
     {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\logo4.png",
+      "PackagePath": "staticwebassets\\assets\\logo4.png"
+    },
+    {
       "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\main-photo.jpg",
       "PackagePath": "staticwebassets\\assets\\main-photo.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\main-photo.png",
+      "PackagePath": "staticwebassets\\assets\\main-photo.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\main-photo2.jpg",
+      "PackagePath": "staticwebassets\\assets\\main-photo2.jpg"
     },
     {
       "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\members.jpg",
@@ -57,8 +69,8 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\main.ed2d184ef85d324c.js",
-      "PackagePath": "staticwebassets\\main.ed2d184ef85d324c.js"
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\main.8be675716e4f5ca3.js",
+      "PackagePath": "staticwebassets\\main.8be675716e4f5ca3.js"
     },
     {
       "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\polyfills.d7bd9d69524573e2.js",
@@ -69,8 +81,8 @@
       "PackagePath": "staticwebassets\\runtime.01fec06f14767966.js"
     },
     {
-      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\styles.3e781c5c335f3a9c.css",
-      "PackagePath": "staticwebassets\\styles.3e781c5c335f3a9c.css"
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\styles.869d199d27ec5bcf.css",
+      "PackagePath": "staticwebassets\\styles.869d199d27ec5bcf.css"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.api.Microsoft.AspNetCore.StaticWebAssets.props",
