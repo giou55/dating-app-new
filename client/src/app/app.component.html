@@ -4,9 +4,31 @@
 
 <app-nav></app-nav>
 
-<div class="container" style="margin-top: 100px">
+<div class="container mt-5">
     <router-outlet></router-outlet>
-    <img class="border-0 img-fluid mt-5" src="./assets/members.jpg" alt="members" />
+    <div class="row justify-content-around mt-5 p-5">
+        <div class="col-6 col-lg-3 d-flex flex-column align-items-center p-3">
+            <img class="border-0 img-fluid" src="./assets/total-members.jpg" alt="members" />
+            <strong style="font-size: 1.5rem;" class="mb-0">1611</strong>
+            <strong>Total Members</strong>
+        </div>
+        <div class="col-6 col-lg-3 d-flex flex-column align-items-center p-3">
+            <img class="border-0 img-fluid" src="./assets/members-online.jpg" alt="members" />
+            <strong style="font-size: 1.5rem;" class="mb-0">500</strong>
+            <strong>Members online</strong>
+        </div>
+        <div class="col-6 col-lg-3 d-flex flex-column align-items-center p-3">
+            <img class="border-0 img-fluid" src="./assets/male-icon.jpg" alt="members" />
+            <strong style="font-size: 1.5rem;" class="mb-0">300</strong>
+            <strong>Men online</strong>
+        </div>
+        <div class="col-6 col-lg-3 d-flex flex-column align-items-center p-3">
+            <img class="border-0 img-fluid" src="./assets/female-icon.jpg" alt="members" />
+            <strong style="font-size: 1.5rem;" class="mb-0">200</strong>
+            <strong>Women online</strong>
+        </div>
+
+    </div>
 </div>
 
 <app-footer></app-footer>
