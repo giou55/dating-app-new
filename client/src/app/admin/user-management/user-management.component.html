@@ -1,10 +1,10 @@
 <div class="row">
-    <table class="table">
+    <table class="table table-responsive">
         <thead>
             <tr>
-                <th style="width: 25%;">Όνομα χρήστη</th>
-                <th style="width: 40%;">Ενεργοί ρόλοι</th>
-                <th style="width: 35%;"></th>
+                <th>Όνομα χρήστη</th>
+                <th>Ενεργοί ρόλοι</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -12,8 +12,8 @@
                 <td class="username" style="cursor: pointer;" routerLink="/members/{{user.username}}">{{user.username}}</td>
                 <td>{{user.roles}}</td>
                 <td>
-                    <button (click)="openRolesModal(user)" class="btn btn-info me-1">Επεξεργασία ρόλων</button>
-                    <button (click)="deleteUser(user.username)" class="btn btn-danger">Διαγραφή</button>
+                    <button (click)="openRolesModal(user)" class="btn btn-info btn-sm me-1">Επεξεργασία ρόλων</button>
+                    <button (click)="deleteUser(user.username)" class="btn btn-danger btn-sm">Διαγραφή</button>
                 </td>
             </tr>
         </tbody>
