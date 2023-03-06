@@ -5,7 +5,7 @@
 <div class="mb-4 mt-5 d-flex">
     <div class="btn-group" name="container">
         <!-- this is the default selected button -->
-        <button 
+        <button
             class="btn btn-primary"
             btnRadio="Unread"
             [(ngModel)]="container"
@@ -13,7 +13,7 @@
         >
             <i class="fa fa-envelope"></i> Μη διαβασμένα
         </button>
-        <button 
+        <button
             class="btn btn-primary"
             btnRadio="Inbox"
             [(ngModel)]="container"
@@ -21,7 +21,7 @@
         >
             <i class="fa fa-envelope-open"></i> Εισερχόμενα
         </button>
-        <button 
+        <button
             class="btn btn-primary"
             btnRadio="Outbox"
             [(ngModel)]="container"
@@ -37,22 +37,22 @@
 </div>
 
 <div class="row" *ngIf="messages && messages.length > 0">
-    <table class="table table-hover" style="cursor: pointer;">
+    <table class="table table-hover table-responsive" style="cursor: pointer;">
         <thead>
             <tr>
-                <th style="width: 40%">Μήνυμα</th>
-                <th *ngIf="container !== 'Outbox'" style="width: 20%">Αποστολές</th>
-                <th *ngIf="container === 'Outbox'" style="width: 20%">Προς</th>
-                <th *ngIf="container !== 'Outbox'" style="width: 20%">Από</th>
-                <th *ngIf="container === 'Outbox'" style="width: 20%">Στάλθηκε</th>
-                <th style="width: 20%"></th>
+                <th>Μήνυμα</th>
+                <th *ngIf="container !== 'Outbox'">Αποστολές</th>
+                <th *ngIf="container === 'Outbox'">Προς</th>
+                <th *ngIf="container !== 'Outbox'">Από</th>
+                <th *ngIf="container === 'Outbox'">Στάλθηκε</th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="align-middle">
             <!-- we add queryParams and we're passing an object using single curly brackets
                 and not using interpolation  -->
             <tr [hidden]="loading" *ngFor="let message of messages"
-                routerLink="{{container === 'Outbox' 
+                routerLink="{{container === 'Outbox'
                     ? '/members/' + message.recipientUsername
                     : '/members/' + message.senderUsername}}"
                 [queryParams]="{tab: 'Messages'}"
@@ -60,24 +60,24 @@
                 <td>{{message.content}}</td>
                 <td>
                     <div *ngIf="container === 'Outbox'">
-                        <img 
+                        <img
                             class="img-circle rounded-circle me-2"
-                            src="{{message.recipientPhotoUrl || './assets/user.png'}}" 
+                            src="{{message.recipientPhotoUrl || './assets/user.png'}}"
                             alt="recipient photo">
                         <strong>{{message.recipientUsername | titlecase}}</strong>
                     </div>
                     <div *ngIf="container !== 'Outbox'">
-                        <img 
+                        <img
                             class="img-circle rounded-circle me-2"
-                            src="{{message.senderPhotoUrl || './assets/user.png'}}" 
+                            src="{{message.senderPhotoUrl || './assets/user.png'}}"
                             alt="sender photo">
                         <strong>{{message.senderUsername | titlecase}}</strong>
                     </div>
                 </td>
                 <td>{{message.messageSent | timeAgo}}</td>
-                <!-- stopPropagation means that the routerLink for the row will not be working, 
+                <!-- stopPropagation means that the routerLink for the row will not be working,
                 if the button is clicked -->
-                <td><button (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)" class="btn btn-danger">Διαγραφή</button></td>
+                <td><button (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)" class="btn btn-sm btn-danger">Διαγραφή</button></td>
             </tr>
         </tbody>
     </table>

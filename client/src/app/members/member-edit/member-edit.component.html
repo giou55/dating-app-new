@@ -1,16 +1,16 @@
 <div class="row" *ngIf="member">
-  <div class="col-4">
+  <div class="col-12 text-center">
     <h3>Το προφίλ σας</h3>
   </div>
 
-  <div class="col-8">
+  <div class="col-12">
     <div class="alert alert-info pb-0" *ngIf="editForm.dirty">
-      <p>Έχουν γίνει αλλαγές. Κάντε αποθήκευση αλλιώς οι αλλαγές θα χαθούν</p>
+      <p>Έχουν γίνει αλλαγές. Κάντε αποθήκευση αλλιώς οι αλλαγές θα χαθούν.</p>
     </div>
   </div>
 
-  <div class="row mt-3">
-    <div class="col-4">
+  <div class="row d-flex flex-column flex-md-row mt-5">
+    <div class="col-12 col-md-4 mb-5">
       <div class="card">
         <img
           src="{{ member.photoUrl || './assets/user.png' }}"
@@ -49,11 +49,12 @@
       </div>
     </div>
 
-    <div class="col-8">
+    <div class="col-12 col-md-8">
       <tabset class="member-tabset">
-        <tab heading="Σχετικά με {{ member.knownAs }}">
+        <tab heading="Επεξεργασία προφίλ">
           <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
-            <h5 class="mt-2">Περιγραφή</h5>
+            <h5 class="mt-3">Περιγραφή</h5>
+
             <textarea
               class="form-control"
               [(ngModel)]="member.introduction"
@@ -61,7 +62,8 @@
               rows="6"
             >
             </textarea>
-            <h5 class="mt-2">Ψάχνω για</h5>
+
+            <h5 class="mt-3">Ψάχνω για</h5>
             <textarea
               class="form-control"
               [(ngModel)]="member.lookingFor"
@@ -69,7 +71,8 @@
               rows="6"
             >
             </textarea>
-            <h5 class="mt-2">Ενδιαφέροντα</h5>
+
+            <h5 class="mt-3">Ενδιαφέροντα</h5>
             <textarea
               class="form-control"
               [(ngModel)]="member.interests"
@@ -77,22 +80,30 @@
               rows="6"
             >
             </textarea>
-            <h5 class="mt-2">Τοποθεσία:</h5>
-            <div class="d-flex flex-row align-items-center">
-              <label for="city">Πόλη: </label>
-              <input
-                type="text"
-                [(ngModel)]="member.city"
-                name="city"
-                class="form-control mx-2"
-              />
-              <label for="country">Χώρα: </label>
-              <input
-                type="text"
-                [(ngModel)]="member.country"
-                name="country"
-                class="form-control mx-2"
-              />
+
+            <h5 class="mt-3">Τοποθεσία</h5>
+            <div class="form-group row">
+              <label for="city" class="col-2 col-lg-1 col-form-label">Πόλη: </label>
+              <div class="col-10 col-lg-11">
+                <input
+                  type="text"
+                  [(ngModel)]="member.city"
+                  name="city"
+                  class="form-control mt-1"
+                />
+              </div>
+
+              <label for="country" class="col-2 col-lg-1 col-form-label"
+                >Χώρα:
+              </label>
+              <div class="col-10 col-lg-11">
+                <input
+                  type="text"
+                  [(ngModel)]="member.country"
+                  name="country"
+                  class="form-control mt-1"
+                />
+              </div>
             </div>
           </form>
         </tab>
