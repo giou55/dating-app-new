@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="accountService.currentUser$ | async as currentuUser">
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -9,11 +9,23 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
-                <td class="username" style="cursor: pointer;" routerLink="/members/{{user.username}}">{{user.username}}</td>
-                <td>{{user.roles}}</td>
+                <td class="username" style="cursor: pointer;" routerLink="/members/{{user.username}}">
+                    {{user.username}}
+                </td>
                 <td>
-                    <button (click)="openRolesModal(user)" class="btn btn-info btn-sm me-1">Επεξεργασία ρόλων</button>
-                    <button (click)="deleteUser(user.username)" class="btn btn-danger btn-sm">Διαγραφή</button>
+                    {{user.roles}}
+                </td>
+                <td>
+                    <button (click)="openRolesModal(user)" class="btn btn-info btn-sm me-1">
+                        Επεξεργασία ρόλων
+                    </button>
+                    <button
+                        [disabled]="user.roles.includes('Admin') && user.username === 'admin'
+                                    || currentuUser.username === user.username"
+                        (click)="deleteUser(user.username)"
+                        class="btn btn-danger btn-sm">
+                            Διαγραφή
+                    </button>
                 </td>
             </tr>
         </tbody>

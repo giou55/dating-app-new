@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from 'src/app/modals/roles-modal/roles-modal.component';
 import { User } from 'src/app/_models/user';
+import { AccountService } from 'src/app/_services/account.service';
 import { AdminService } from 'src/app/_services/admin.service';
 
 @Component({
@@ -18,7 +19,10 @@ export class UserManagementComponent implements OnInit {
     'Member'
   ];
 
-  constructor(private adminService: AdminService, private modalService: BsModalService) { }
+  constructor(
+    private adminService: AdminService,
+    private modalService: BsModalService,
+    public accountService: AccountService) { }
 
   ngOnInit(): void {
     this.getUsersWithRoles();
@@ -41,7 +45,7 @@ export class UserManagementComponent implements OnInit {
     };
     this.bsModalRef = this.modalService.show(RolesModalComponent, config);
     this.bsModalRef.onHide?.subscribe({
-      // when the modal is hidden, we only want to do something if 
+      // when the modal is hidden, we only want to do something if
       // the user has actually updated the roles,
       // so we need to check for equality of two arrays
       // before call adminService method
