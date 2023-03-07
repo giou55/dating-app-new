@@ -140,40 +140,34 @@ docker run --rm -it -p 8080:80 giourme/datingapp:latest
 
 ---------------------------------------------------------------------------------
 
-Για κάθε αλλαγή στον κώδικα κάνουμε ξανά
+Για κάθε αλλαγή στον κώδικα κάνουμε τα παρακάτω:
+
 ng build (στον φάκελο client)
 για να δημιουργηθούν ξανά τα στατικά αρχεία μέσα στον φάκελο api/wwwroot
-μετά πάλι
+μετά αφού τρέχει το Docker Desktop, κάνουμε πάλι
 docker build -t giourme/datingapp . (στον φάκελο api)
 για να φτιαχτεί ξανά το image,
-και μετά πάλι
-docker run --rm -it -p 8080:80 giourme/datingapp:latest (στον φάκελο api)
 
-Για να δούμε locally την εφαρμογή μας με την Postgres,
-πρέπει να τρέχει στο docker. Αν δεν τρέχει, γράφουμε:
+Αν θέλουμε να δούμε locally την εφαρμογή μας με την Postgres,
+γράφουμε
 docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
+και μετά
+docker run --rm -it -p 8080:80 giourme/datingapp:latest (στον φάκελο api)
 
 Τώρα μπορούμε να δούμε την εφαρμογή μας να τρέχει στο localhost,
 αυτή τη φορά με docker και Postgres.
 
-Αν δεν θέλουμε να δούμε την εφαρμογή μας locally,
-αλλά απλά να κάνουμε deploy,
-δεν χρειάζεται να γράψουμε
-docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
-ούτε να τρέξουμε την Postgres
-docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
-
---------------------------------------------------------------------------------
-
-Τώρα θα στείλουμε το image στο docker hub repository για να είναι διαθέσιμο
-στις cloud πλατφόρμες για να γίνει το deploy.
-Μετά στο terminal μέσα στο api folder γράφουμε:
-docker push giourme/datingapp:latest
+Μετά θα στείλουμε το image στο docker hub repository για να είναι διαθέσιμο
+στις cloud πλατφόρμες για να γίνει το deploy:
+docker push giourme/datingapp:latest (στον φάκελο api)
 
 Αν δεν έχουμε access, πρέπει να κάνουμε login:
 docker login
 ή βάζοντας και τα credentials
 docker login -u <username> -p <password>
+
+Μετά κάνουμε το deploy:
+fly deploy (στον root φάκελο)
 
 -------------------------------------------------------------------------------
 
@@ -221,16 +215,6 @@ ApplicationServiceExtensions.cs και Program.cs
 για να μπορεί η εφαρμογή μας να φτιάξει το connection string για την βάση
 διαβάζοντας το Environment Variable "DATABASE_URL" του fly.io
 
-Μετά κάνουμε ξανά
-docker build -t giourme/datingapp . (στον φάκελο api)
-και ξανά push
-docker push giourme/datingapp:latest (στον φάκελο api)
-
 ------------------------------------------------------------------------------
-
-Μετά κάνουμε το deploy:
-fly deploy (στον root φάκελο)
-
---------------------------------------------------------------------------------
 
 

@@ -30,7 +30,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   member: Member = {} as Member;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
-  lastActiveDate: Date | undefined; 
+  lastActiveDate: Date | undefined;
   activeTab?: TabDirective;
   messages: Message[] = [];
   user?: User;
@@ -39,11 +39,11 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private messageService: MessageService,
     // we make it public, so that we can use the async pipe in the template
-    public presenceService: PresenceService, 
+    public presenceService: PresenceService,
     public accountService: AccountService,
     private router: Router,
     private memberService: MembersService,
-    private toastr: ToastrService,) 
+    private toastr: ToastrService,)
   {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
@@ -58,7 +58,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     // we no longer need to use this, because we're going to get the member from our route instead
     //this.loadMember();
 
-    // our resolver is going to place the member here 
+    // our resolver is going to place the member here
     this.route.data.subscribe({
       next: data => {
         this.member = data['member'];
@@ -82,6 +82,15 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide,
         preview: false
+      },
+      {
+        breakpoint: 800,
+        width: '100%',
+        height: '500px',
+        imagePercent: 100,
+        thumbnailsColumns: 4,
+        imageAnimation: NgxGalleryAnimation.Slide,
+        preview: false
       }
     ];
 
@@ -92,7 +101,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     // if we move somewhere else in our application, stop the hub connection
     this.messageService.stopHubConnection();
   }
-  
+
   getImages() {
     if (!this.member) return [];
     const imageUrls = [];
@@ -145,7 +154,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   onTabActivated(data: TabDirective) {
     this.activeTab = data;
-    
+
     if (this.activeTab.heading === 'Μηνύματα' && this.user) {
       // if we are on the messages tab, we load the messages
       // this.loadMessages();

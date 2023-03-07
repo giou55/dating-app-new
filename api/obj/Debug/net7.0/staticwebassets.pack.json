@@ -5,16 +5,8 @@
       "PackagePath": "staticwebassets\\3rdpartylicenses.txt"
     },
     {
-      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\logo.png",
-      "PackagePath": "staticwebassets\\assets\\logo.png"
-    },
-    {
-      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\logo2.png",
-      "PackagePath": "staticwebassets\\assets\\logo2.png"
-    },
-    {
-      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\logo3.png",
-      "PackagePath": "staticwebassets\\assets\\logo3.png"
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\female-icon.jpg",
+      "PackagePath": "staticwebassets\\assets\\female-icon.jpg"
     },
     {
       "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\logo4.png",
@@ -25,16 +17,56 @@
       "PackagePath": "staticwebassets\\assets\\main-photo.jpg"
     },
     {
-      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\main-photo.png",
-      "PackagePath": "staticwebassets\\assets\\main-photo.png"
-    },
-    {
       "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\main-photo2.jpg",
       "PackagePath": "staticwebassets\\assets\\main-photo2.jpg"
     },
     {
-      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\members.jpg",
-      "PackagePath": "staticwebassets\\assets\\members.jpg"
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\male-icon.jpg",
+      "PackagePath": "staticwebassets\\assets\\male-icon.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\members-online.jpg",
+      "PackagePath": "staticwebassets\\assets\\members-online.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\logo.png",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\logo2.png",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\logo2.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\logo3.png",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\logo3.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\main-photo.png",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\main-photo.png"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\members-online.jpg",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\members-online.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\members.jpg",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\members.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\men-online.jpg",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\men-online.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\total-members.jpg",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\total-members.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\old-icons\\women-online.jpg",
+      "PackagePath": "staticwebassets\\assets\\old-icons\\women-online.jpg"
+    },
+    {
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\total-members.jpg",
+      "PackagePath": "staticwebassets\\assets\\total-members.jpg"
     },
     {
       "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\assets\\user.png",
@@ -69,8 +101,8 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\main.8be675716e4f5ca3.js",
-      "PackagePath": "staticwebassets\\main.8be675716e4f5ca3.js"
+      "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\main.7a8c952718d0d36b.js",
+      "PackagePath": "staticwebassets\\main.7a8c952718d0d36b.js"
     },
     {
       "Id": "C:\\Users\\giour\\OneDrive\\Υπολογιστής\\Projects\\dating-app-new\\api\\wwwroot\\polyfills.d7bd9d69524573e2.js",
