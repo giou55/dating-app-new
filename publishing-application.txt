@@ -149,12 +149,19 @@ docker build -t giourme/datingapp . (στον φάκελο api)
 και μετά πάλι
 docker run --rm -it -p 8080:80 giourme/datingapp:latest (στον φάκελο api)
 
-Εννοείται οτι ο Postgres server τρέχει ήδη στο docker.
-Αν δεν τρέχει, γράφουμε:
+Για να δούμε locally την εφαρμογή μας με την Postgres,
+πρέπει να τρέχει στο docker. Αν δεν τρέχει, γράφουμε:
 docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
 
 Τώρα μπορούμε να δούμε την εφαρμογή μας να τρέχει στο localhost,
 αυτή τη φορά με docker και Postgres.
+
+Αν δεν θέλουμε να δούμε την εφαρμογή μας locally,
+αλλά απλά να κάνουμε deploy,
+δεν χρειάζεται να γράψουμε
+docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
+ούτε να τρέξουμε την Postgres
+docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
 
 --------------------------------------------------------------------------------
 
@@ -203,7 +210,8 @@ fly secrets set CloudinarySettings__ApiSecret=************
 και μετά
 fly secrets set TokenKey=***********************
 
-Για το TokenKey πάω delinea.com και κάνω generate ένα password,
+Για το TokenKey πάω https://delinea.com/resources/password-generator-it-tool
+και κάνω generate ένα password,
 αφού πρώτα ξετσεκάρω το Allow Symbols.
 
 -------------------------------------------------------------------------------

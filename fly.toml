@@ -1,4 +1,4 @@
-# fly.toml file generated for matcher-datingapp on 2023-02-28T11:23:23+02:00
+# fly.toml file generated for matcher-datingapp on 2023-03-07T18:37:57+02:00
 
 app = "matcher-datingapp"
 kill_signal = "SIGINT"
@@ -9,9 +9,9 @@ processes = []
   image = "giourme/datingapp:latest"
 
 [env]
-  ASPNETCORE_URLS="http://+:8080"
-  CloudinarySettings__CloudName="dzikvg6da"
-  CloudinarySettings__ApiKey="859196814844654"
+  ASPNETCORE_URLS = "http://+:8080"
+  CloudinarySettings__ApiKey = "859196814844654"
+  CloudinarySettings__CloudName = "dzikvg6da"
 
 [experimental]
   auto_rollback = true
