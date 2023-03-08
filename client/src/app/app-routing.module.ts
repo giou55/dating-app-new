@@ -18,20 +18,15 @@ import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: '', 
+  {path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
       {path: 'members', component: MemberListComponent},
-      // we specify that we want to resolve and get back a member using MemberDetailedResolver, 
-      // and we can use member property, which is going to be part of our route     
       {path: 'members/:username', component: MemberDetailComponent, resolve: {member: MemberDetailedResolver}},
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},
-      // admin area can be accessed only by authenticated users with specific roles,
-      // so we add a new guard to check the roles of user,
-      // and we are able to do this because we have access to the users token
       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]}
     ]
   },
@@ -47,4 +42,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
- 

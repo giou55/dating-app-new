@@ -18,15 +18,8 @@ import { PresenceService } from 'src/app/_services/presence.service';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit, OnDestroy {
-  // we don't have access to the View until the View has actually been created,
-  // so we make memberTabs optional
-  // @ViewChild('memberTabs') memberTabs?: TabsetComponent;
-
-  // we add the static property, so instead of waiting for the view to load
-  // we can specify that it is static and not dynamic
   @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
 
-  //member: Member | undefined;
   member: Member = {} as Member;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
@@ -38,7 +31,6 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private messageService: MessageService,
-    // we make it public, so that we can use the async pipe in the template
     public presenceService: PresenceService,
     public accountService: AccountService,
     private router: Router,
@@ -55,10 +47,6 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // we no longer need to use this, because we're going to get the member from our route instead
-    //this.loadMember();
-
-    // our resolver is going to place the member here
     this.route.data.subscribe({
       next: data => {
         this.member = data['member'];
@@ -66,10 +54,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       }
     })
 
-    // we access the queryParams of our route and it returns an observable
     this.route.queryParams.subscribe({
       next: params => {
-        // this line is to make sure that we have the params before we attempt to use the params
         params['tab'] && this.selectTab(params['tab'])
       }
     })
@@ -98,7 +84,6 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // if we move somewhere else in our application, stop the hub connection
     this.messageService.stopHubConnection();
   }
 
@@ -115,21 +100,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     return imageUrls;
   }
 
-  // we don't need this because we now use resolver to get the member
-  // loadMember() {
-  //   const username = this.route.snapshot.paramMap.get('username');
-  //   if (!username) return;
-  //   this.membersService.getMember(username).subscribe({
-  //     next: member => {
-  //       this.member = member;
-  //       this.lastActiveDate = new Date(member.lastActive + 'Z');
-  //       this.galleryImages = this.getImages();
-  //     }
-  //   })
-  // }
-
   selectTab(heading: string) {
-    // inside memberTabs we have a tabs array
     if (this.memberTabs) {
       this.memberTabs.tabs.find(x => x.heading === heading)!.active = true;
     }
@@ -156,14 +127,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     this.activeTab = data;
 
     if (this.activeTab.heading === 'Μηνύματα' && this.user) {
-      // if we are on the messages tab, we load the messages
-      // this.loadMessages();
-
-      // if we are on the messages tab, instead of load the messages,
-      // we're going to create the hub connection
       this.messageService.createHubConnection(this.user, this.member.userName);
     } else {
-      // if we are not on the messages tab, stop the hub connection
       this.messageService.stopHubConnection();
     }
   }

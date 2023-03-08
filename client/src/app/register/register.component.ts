@@ -90,7 +90,6 @@ export class RegisterComponent implements OnInit {
     if (localStorage.getItem('user') === null) {
       const dob = this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);
 
-      // we update the value of dateOfBirth with the new value
       const values = {...this.registerForm.value, dateOfBirth: dob};
 
       this.accountService.register(values).subscribe({
@@ -111,7 +110,6 @@ export class RegisterComponent implements OnInit {
     this.cancelRegister.emit(false);
   }
 
-  // a method for getting only the date without the time
   private getDateOnly(dob: string | undefined) {
     if (!dob) return;
     let theDob = new Date(dob);

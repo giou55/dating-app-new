@@ -4,7 +4,6 @@ import { Message } from 'src/app/_models/message';
 import { MessageService } from 'src/app/_services/message.service';
 
 @Component({
-  //changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-member-messages',
   templateUrl: './member-messages.component.html',
   styleUrls: ['./member-messages.component.css']
@@ -12,7 +11,6 @@ import { MessageService } from 'src/app/_services/message.service';
 export class MemberMessagesComponent implements OnInit {
   @ViewChild('messageForm') messageForm?: NgForm;
   @Input() username?: string;
-  // @Input() messages: Message[] = [];
   messageContent = '';
   messages: Message[] = [];
   loading = false;
@@ -35,32 +33,14 @@ export class MemberMessagesComponent implements OnInit {
     })
   }
 
-  // sendMessage method is different now with SignalR,
-  // we're not subscribing anymore to this.messageService.sendMessage
-  // because now it's returning a promise
-
-  // sendMessage() {
-  //   if (!this.username) return;
-  //   this.messageService.sendMessage(this.username, this.messageContent).subscribe({
-  //     next: message => {
-  //       message.messageSent = new Date(message.messageSent + 'Z');
-  //         this.messages.push(message);
-  //         this.messageForm?.reset();
-  //     }
-  //   })
-  // }
-
-  // this.messageService.sendMessage is returning a promise
   sendMessage() {
     if (!this.username) return;
-    this.loading = true; // start the loading spinner
+    this.loading = true;
       this.messageService.sendMessage(this.username, this.messageContent)
         .then(() => {
-        // we don't need to do anything with the message we get back,
-        // because messageThread$ observable from MessageService class is handling that
         this.messageForm?.reset();
         })
-        .finally(() => this.loading = false); // stop the loading spinner
+        .finally(() => this.loading = false);
   }
 
 }

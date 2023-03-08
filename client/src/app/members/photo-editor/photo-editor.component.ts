@@ -65,10 +65,7 @@ export class PhotoEditorComponent implements OnInit {
 
   initializeUploader() {
     this.uploader = new FileUploader({
-      // where we send the image
       url: this.baseUrl + 'users/add-photo',
-      // because this is outside of our angular HTTP requests, 
-      // we do not use interceptor for authorization header
       authToken: 'Bearer ' + this.user?.token,
       isHTML5: true,
       allowedFileType: ['image'],
@@ -87,13 +84,10 @@ export class PhotoEditorComponent implements OnInit {
         const photo = JSON.parse(response);
         this.member?.photos.push(photo);
 
-        // when we upload a photo and it's the user's first photo
-        // then the photo will be the main by the API
-        // and the photo url will be that first photo 
         if (photo.isMain && this.user && this.member) {
-          this.user.photoUrl = photo.url;      
-          this.member.photoUrl = photo.url;  
-          this.accountService.setCurrentUser(this.user);    
+          this.user.photoUrl = photo.url;
+          this.member.photoUrl = photo.url;
+          this.accountService.setCurrentUser(this.user);
         }
       }
     }

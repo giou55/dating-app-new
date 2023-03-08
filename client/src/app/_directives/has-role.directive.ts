@@ -4,7 +4,6 @@ import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
 
 @Directive({
-  // if the user is in those roles, then element is displayed in the DOM
   selector: '[appHasRole]' // *appHasRole='["Admin", "Moderator"]'
 })
 export class HasRoleDirective implements OnInit {
@@ -22,7 +21,7 @@ export class HasRoleDirective implements OnInit {
         }
       })
     }
-  
+
   ngOnInit(): void {
     if (this.user.roles.some(r => this.appHasRole.includes(r))) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);

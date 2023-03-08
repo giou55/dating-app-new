@@ -15,8 +15,7 @@ export class MemberCardComponent implements OnInit {
   constructor(
     private memberService: MembersService,
     private toastr: ToastrService,
-    // we make it public, so that we can use the async pipe in the template
-    public presenceService: PresenceService 
+    public presenceService: PresenceService
   ) {}
 
   ngOnInit(): void {}

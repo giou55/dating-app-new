@@ -45,10 +45,6 @@ export class UserManagementComponent implements OnInit {
     };
     this.bsModalRef = this.modalService.show(RolesModalComponent, config);
     this.bsModalRef.onHide?.subscribe({
-      // when the modal is hidden, we only want to do something if
-      // the user has actually updated the roles,
-      // so we need to check for equality of two arrays
-      // before call adminService method
       next: () => {
         const selectedRoles = this.bsModalRef.content?.selectedRoles;
         if (!this.arrayEqual(selectedRoles!, user.roles)) {
@@ -62,7 +58,6 @@ export class UserManagementComponent implements OnInit {
 
   deleteUser(username: string) {
     this.adminService.deleteUser(username).subscribe({
-      // remove the user from the users array
       next: () => {
         this.users?.splice(this.users.findIndex(u => u.username === username), 1)
       }

@@ -21,7 +21,7 @@ export class MemberEditComponent implements OnInit {
   }
   member: Member | undefined;
   user: User | null = null;
-  lastActiveDate: Date | undefined; 
+  lastActiveDate: Date | undefined;
 
   constructor(
     private accountService: AccountService,
@@ -49,7 +49,6 @@ export class MemberEditComponent implements OnInit {
 
   updateMember() {
     this.membersService.updateMember(this.editForm?.value).subscribe({
-      // nothing to return here
       next: _ => {
         this.toastr.success('Το προφίλ σας ενημερώθηκε');
         this.editForm?.reset(this.member);

@@ -12,10 +12,6 @@ namespace api.Interfaces
         Task<PagedList<MessageDto>> GetMessagesForUser(MessageParams messageParams);
         Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserName, string recipientUserName);
         
-        // // we're using UnitOfWork, so we don't need this
-        // Task<bool> SaveAllAsync();
-
-        // methods for tracking of our group
         void AddGroup(Group group);
         void RemoveConnection(Connection connection);
         Task<Connection> GetConnection(string connectionId);

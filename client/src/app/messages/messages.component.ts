@@ -9,15 +9,13 @@ import { MessageService } from '../_services/message.service';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-  // this is an alternative approach to add a property:
-  // messages: Message[] | undefined;
   messages?: Message[];
   pagination?: Pagination;
   container = 'Unread';
   pageNumber = 1;
   pageSize = 5;
   loading = false;
-  
+
   constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -42,7 +40,6 @@ export class MessagesComponent implements OnInit {
 
   deleteMessage(id: number) {
     this.messageService.deleteMessage(id).subscribe({
-      // remove the message from the messages array
       next: () => this.messages?.splice(this.messages.findIndex(m => m.id === id), 1)
     })
   }
