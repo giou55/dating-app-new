@@ -2,11 +2,9 @@ namespace api.Entities
 {
     public class Connection
     {
-        // to satisfy Entity framework when it creates the schema for our database,
-        // we have to give this an empty constructor with no parameters
         public Connection() {}
 
-        public Connection(string connectionId, string username) 
+        public Connection(string connectionId, string username)
         {
             ConnectionId = connectionId;
             Username = username;

@@ -10,9 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
-
-// in this class we are using Identity for user authentication,
-// rather than our custom user authentication system
 {
     public class AccountController : BaseApiController
     {
@@ -60,7 +57,7 @@ namespace api.Controllers
             var user = await _userManager.Users
                 .Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
-            
+
             if (user == null) return Unauthorized("Invalid username");
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);

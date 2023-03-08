@@ -11,38 +11,32 @@ namespace api.Helpers
         {
             CreateMap<AppUser, MemberDto>()
                 .ForMember(
-                    dest => dest.PhotoUrl, 
+                    dest => dest.PhotoUrl,
                     opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url)
                 )
                 .ForMember(
-                    dest => dest.Age, 
+                    dest => dest.Age,
                     opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge())
                 );
 
             CreateMap<Photo, PhotoDto>();
 
-            // because the property names of MemberUpdateDto match exactly with what we have inside
-            // the AppUser, we do not need to add any additional configuration
             CreateMap<MemberUpdateDto, AppUser>();
 
-            // because the property names of RegisterDto match exactly with what we have inside
-            // the AppUser, we do not need to add any additional configuration
             CreateMap<RegisterDto, AppUser>();
 
             CreateMap<Message, MessageDto>()
                 .ForMember(
-                    d => d.SenderPhotoUrl, 
+                    d => d.SenderPhotoUrl,
                     o => o.MapFrom(s => s.Sender.Photos.FirstOrDefault(x => x.IsMain).Url)
                 )
                 .ForMember(
-                    d => d.RecipientPhotoUrl, 
+                    d => d.RecipientPhotoUrl,
                     o => o.MapFrom(s => s.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url)
                 );
 
-            // it is about the MessageSent
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
 
-            // it is about the DateRead, which is optional
             CreateMap<DateTime?, DateTime?>()
                 .ConvertUsing(d => d.HasValue ? DateTime.SpecifyKind(d.Value, DateTimeKind.Utc) : null);
 

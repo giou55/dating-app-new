@@ -1,7 +1,5 @@
 namespace api.DTOs
 {
-    // this will contain the properties that we want to display inside a member card
-    // inside the list of users that have liked 
     public class LikeDto
     {
         public int Id { get; set; }

@@ -15,7 +15,7 @@ namespace api.Data
         public MessageRepository(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
-            _context = context;  
+            _context = context;
         }
 
         public void AddGroup(Group group)
@@ -41,7 +41,7 @@ namespace api.Data
         public async Task<Group> GetGroupForConnection(string connectionId)
         {
             return await _context.Groups
-                .Include(x => x.Connections) 
+                .Include(x => x.Connections)
                 .Where(x => x.Connections.Any(c => c.ConnectionId == connectionId))
                 .FirstOrDefaultAsync();
         }
@@ -72,7 +72,7 @@ namespace api.Data
                     u => u.SenderUsername == messageParams.Username && u.SenderDeleted == false),
                 // the default case is going to be the unread messages
                 _ => query.Where(
-                    u => u.RecipientUsername == messageParams.Username && u.RecipientDeleted == false 
+                    u => u.RecipientUsername == messageParams.Username && u.RecipientDeleted == false
                         && u.DateRead == null)
             };
 
@@ -91,11 +91,11 @@ namespace api.Data
                 .Include(u => u.Sender).ThenInclude(p => p.Photos)
                 .Include(u => u.Recipient).ThenInclude(p => p.Photos)
                 .Where(
-                    m => m.RecipientUsername == currentUserName 
-                        && m.RecipientDeleted == false 
-                        && m.SenderUsername == recipientUserName || 
+                    m => m.RecipientUsername == currentUserName
+                        && m.RecipientDeleted == false
+                        && m.SenderUsername == recipientUserName ||
                         m.RecipientUsername == recipientUserName
-                        && m.SenderDeleted == false 
+                        && m.SenderDeleted == false
                         && m.SenderUsername == currentUserName
                 )
                 .OrderBy(m => m.MessageSent)
@@ -104,17 +104,17 @@ namespace api.Data
             // this is the new better query
             var query = _context.Messages
                 .Where(
-                    m => m.RecipientUsername == currentUserName 
-                        && m.RecipientDeleted == false 
-                        && m.SenderUsername == recipientUserName || 
+                    m => m.RecipientUsername == currentUserName
+                        && m.RecipientDeleted == false
+                        && m.SenderUsername == recipientUserName ||
                         m.RecipientUsername == recipientUserName
-                        && m.SenderDeleted == false 
+                        && m.SenderDeleted == false
                         && m.SenderUsername == currentUserName
                 )
                 .OrderBy(m => m.MessageSent)
                 .AsQueryable();
-            
-            // we replaced messages with query for the new query 
+
+            // we replaced messages with query for the new query
             var unreadMessages = query
                 .Where(m => m.DateRead == null && m.RecipientUsername == currentUserName)
                 .ToList();
@@ -125,28 +125,14 @@ namespace api.Data
                 {
                     message.DateRead = DateTime.UtcNow; // we update the DateRead with right now
                 }
-                // we don't need to save changes here inside the repository,
-                // now the responsibility goes to OnConnectedAsync method inside MessageHub.cs
-                // with _uow.Complete method
-                // await _context.SaveChangesAsync();
             }
 
-            // this is what we return for the old query without projection
-            //return _mapper.Map<IEnumerable<MessageDto>>(messages); 
-
-            return await query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider).ToListAsync(); 
+            return await query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public void RemoveConnection(Connection connection)
         {
             _context.Connections.Remove(connection);
         }
-
-        // we're using UnitOfWork, so we don't need to implement this from interface,
-        // now we're going to rely on the Complete method from the UnitOfWork 
-        // public async Task<bool> SaveAllAsync()
-        // {
-        //     return await _context.SaveChangesAsync() > 0;
-        // }
     }
 }

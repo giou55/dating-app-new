@@ -1,8 +1,5 @@
 namespace api.DTOs
 {
-    // when the user logs in or register
-    // these properties of UserDto will be sent by the API
-    // and will be stored inside local storage of the browser
     public class UserDto
     {
         public string Username { get; set; }

@@ -20,33 +20,26 @@ namespace api.Data
 
         public async Task<UserLike> GetUserLike(int sourceUserId, int targetUserId)
         {
-            // the primary key for Likes table is made up of two integers
             return await _context.Likes.FindAsync(sourceUserId, targetUserId);
         }
 
-        // the userId parameter can be the source userId or the target userId
         public async Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams)
         {
-            var users = _context.Users.OrderBy(u => u.UserName).AsQueryable(); // nothing is being executed at database yet 
-            var likes = _context.Likes.AsQueryable(); // nothing is being executed at database yet
+            var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+            var likes = _context.Likes.AsQueryable();
 
-            // we want the users that the current user likes
             if (likesParams.Predicate == "liked")
             {
-                likes = likes.Where(like => like.SourceUserId == likesParams.UserId); // nothing is being executed at database yet
-                users = likes.Select(like => like.TargetUser); // nothing is being executed at database yet
+                likes = likes.Where(like => like.SourceUserId == likesParams.UserId);
+                users = likes.Select(like => like.TargetUser);
             }
 
-            // we want the users that like the current user
             if (likesParams.Predicate == "likedBy")
             {
-                likes = likes.Where(like => like.TargetUserId == likesParams.UserId); // nothing is being executed at database yet
-                users = likes.Select(like => like.SourceUser); // nothing is being executed at database yet
+                likes = likes.Where(like => like.TargetUserId == likesParams.UserId);
+                users = likes.Select(like => like.SourceUser);
             }
 
-            // Queryable.Select method projects each element of a sequence into a new form
-            // If users is not Queryable, we will write:
-            // users.AsQueryable().Select()
             var likedUsers = users.Select(user => new LikeDto
             {
                 UserName = user.UserName,
@@ -63,8 +56,7 @@ namespace api.Data
                 likesParams.PageSize
             );
         }
-
-        // this is going to allow us to check to see if a user already has been liked by another user
+        
         public async Task<AppUser> GetUserWithLikes(int userId)
         {
             return await _context.Users

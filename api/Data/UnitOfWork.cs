@@ -3,11 +3,6 @@ using AutoMapper;
 
 namespace api.Data
 {
-    // we're going to be injecting this into our controllers
-    // instead of the repositories
-
-    // when this is created, it's going to create a new instance of anything
-    // we're using inside that class
     public class UnitOfWork : IUnitOfWork
     {
         private readonly IMapper _mapper;
@@ -26,15 +21,11 @@ namespace api.Data
 
         public IPhotoRepository PhotoRepository => new PhotoRepository(_context);
 
-        // now it's not the job of the repository to save changes,
-        // because we're using Complete method of Unit Of Work pattern
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;
         }
 
-        // we want to know if the context has changes that it is tracking,
-        // in other words, if Entity framework is tracking any changes to our entities in memory
         public bool HasChanges()
         {
             return _context.ChangeTracker.HasChanges();

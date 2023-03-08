@@ -5,16 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
-    // in this class we are using Identity to store the users and add roles 
     public class Seed
     {
         public static async Task ClearConnections(DataContext context)
         {
-            // this method is called in Program.cs,
-            // everytime our application starts or restarts, 
-            // this removes all of connections from our database,
-            // this is a remove operation and it is good for small scale,
-            // but if we have thousands of rows in database, that could cause a problem
             context.Connections.RemoveRange(context.Connections);
             await context.SaveChangesAsync();
         }
@@ -31,7 +25,7 @@ namespace api.Data
 
             //var users = JsonConvert.DeserializeObject<List<AppUser>>(userData);
 
-            var roles = new List<AppRole> 
+            var roles = new List<AppRole>
             {
                 new AppRole{Name = "Member"},
                 new AppRole{Name = "Admin"},
