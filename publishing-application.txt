@@ -116,7 +116,7 @@ applications from Visual Studio Code.
 Μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα Dockerfile
 και γράφουμε τις κατάλληλες εντολές.
 Επίσης μέσα στον φάκελο api φτιάχνουμε ένα νέο αρχείο με όνομα .dockerignore
-και γράφουμε τα αρχεία που δεν θέλουμε.
+και γράφουμε τα αρχεία που δεν θέλουμε να γίνονται copy.
 
 Αφού σταματήσουμε τον server, στο terminal μέσα στο api folder γράφουμε:
 docker build -t giourme/datingapp .

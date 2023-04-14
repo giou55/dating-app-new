@@ -1,7 +1,7 @@
 # specify your base image to use for any subsequent instructions that follοw
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 
-# Set the working directory for any subsequent ADD, COPY, CMD, ENTRYPOINT, 
+# Set the working directory for any subsequent ADD, COPY, CMD, ENTRYPOINT,
 # or RUN instructions that follow it in the Dockerfile
 WORKDIR /app
 
@@ -27,6 +27,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 
 # with --from we use the previous build stage as the source location instead of the build's context
+# everything inside app/out directory is going to be copied to the root directory of our container
 COPY --from=build-env /app/out .
 
 ENTRYPOINT ["dotnet", "api.dll"]
