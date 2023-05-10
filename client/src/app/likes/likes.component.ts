@@ -4,17 +4,17 @@ import { Pagination } from '../_models/pagination';
 import { MembersService } from '../_services/members.service';
 
 @Component({
-  selector: 'app-lists',
-  templateUrl: './lists.component.html',
-  styleUrls: ['./lists.component.css']
+  selector: 'app-likes',
+  templateUrl: './likes.component.html',
+  styleUrls: ['./likes.component.css']
 })
-export class ListsComponent implements OnInit {
+export class LikesComponent implements OnInit {
   members: Member[] | undefined;
   predicate = 'liked';
   pageNumber = 1;
   pageSize = 12;
   pagination: Pagination | undefined;
-  
+
   constructor(private memberService: MembersService) { }
 
   ngOnInit(): void {
